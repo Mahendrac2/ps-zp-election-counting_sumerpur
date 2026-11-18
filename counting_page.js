@@ -51,24 +51,48 @@ function initSSE() {
     }
 }
 
-// Fetch all counting data from server
+// Fetch all counting data from server (with static fallback for GitHub Pages)
 async function fetchCountingData(silent = false) {
     try {
         const res = await fetch('/api/counting');
-        const data = await res.json();
-        if (data.success) {
-            countingData = data;
-            if (data.kpi && data.kpi.activeRound && selectedRound === 1 && data.kpi.activeRound > 1) {
-                selectedRound = data.kpi.activeRound;
-            }
-            renderAll();
-            if (!silent) {
-                const syncTimeEl = document.getElementById('syncTimeText');
-                if (syncTimeEl) syncTimeEl.textContent = `अंतिम सिंक: ${new Date().toLocaleTimeString('en-IN')}`;
+        if (res.ok) {
+            const data = await res.json();
+            if (data && data.success) {
+                countingData = data;
+                if (data.kpi && data.kpi.activeRound && selectedRound === 1 && data.kpi.activeRound > 1) {
+                    selectedRound = data.kpi.activeRound;
+                }
+                renderAll();
+                if (!silent) {
+                    const syncTimeEl = document.getElementById('syncTimeText');
+                    if (syncTimeEl) syncTimeEl.textContent = `अंतिम सिंक: ${new Date().toLocaleTimeString('en-IN')}`;
+                }
+                return;
             }
         }
     } catch (err) {
-        console.error('Error fetching counting data:', err);
+        console.warn('Backend API not responding, checking static counting_data.json fallback...', err);
+    }
+
+    // Static fallback for GitHub Pages
+    try {
+        const resStatic = await fetch('counting_data.json');
+        if (resStatic.ok) {
+            const data = await resStatic.json();
+            if (data) {
+                countingData = data;
+                if (data.kpi && data.kpi.activeRound && selectedRound === 1 && data.kpi.activeRound > 1) {
+                    selectedRound = data.kpi.activeRound;
+                }
+                renderAll();
+                if (!silent) {
+                    const syncTimeEl = document.getElementById('syncTimeText');
+                    if (syncTimeEl) syncTimeEl.textContent = `GitHub Pages मोड • अंतिम सिंक: ${new Date().toLocaleTimeString('en-IN')}`;
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Static counting data fallback failed:', e);
     }
 }
 
