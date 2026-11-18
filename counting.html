@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सुमेरपुर मतगणना मॉनिटरिंग सिस्टम 2026 (PS & ZP Counting Control Room)</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            font-family: 'Outfit', 'Noto Sans Devanagari', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Executive Counting Top Header */
+        .counting-main-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #312e81 100%);
+            color: #ffffff;
+            padding: 14px 24px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .brand-icon {
+            font-size: 32px;
+            color: #fde047;
+            background: rgba(253, 224, 71, 0.15);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid rgba(253, 224, 71, 0.3);
+        }
+        .brand-text h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+        .brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        /* Scope Switcher */
+        .scope-pills-wrap {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .scope-pill-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .scope-pill-btn.active {
+            background: #fde047;
+            color: #1e1b4b;
+            box-shadow: 0 2px 8px rgba(253, 224, 71, 0.3);
+        }
+
+        /* Primary Counting Nav Bar */
+        .counting-nav-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 24px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            position: sticky;
+            top: 78px;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .counting-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 14px 18px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #64748b;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .counting-tab-btn:hover {
+            color: #1e1b4b;
+            background: #f8fafc;
+        }
+        .counting-tab-btn.active {
+            color: #3730a3;
+            border-bottom-color: #4f46e5;
+            background: #f5f3ff;
+        }
+
+        /* Container */
+        .counting-container {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 20px 24px;
+        }
+
+        /* KPI Banner */
+        .kpi-banner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .kpi-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-box::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+        }
+        .kpi-box.electors::before { background: #3b82f6; }
+        .kpi-box.polled::before { background: #0284c7; }
+        .kpi-box.counted::before { background: #10b981; }
+        .kpi-box.round::before { background: #6366f1; }
+        .kpi-box.booths::before { background: #06b6d4; }
+        .kpi-box.declared::before { background: #f59e0b; }
+        .kpi-box.tally::before { background: #8b5cf6; }
+
+        .kpi-box .lbl { font-size: 11.5px; font-weight: 700; color: #64748b; text-transform: uppercase; }
+        .kpi-box .val { font-size: 22px; font-weight: 900; margin-top: 4px; line-height: 1.1; }
+        .kpi-box .sub { font-size: 11px; margin-top: 3px; font-weight: 600; }
+
+        /* Round Selector Pills (1 to 14) */
+        .round-nav-wrap {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .round-nav-pill {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 8px 14px;
+            cursor: pointer;
+            min-width: 95px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s;
+        }
+        .round-nav-pill:hover {
+            transform: translateY(-2px);
+            border-color: #6366f1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .round-nav-pill.active {
+            background: #1e1b4b;
+            border-color: #6366f1;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        }
+        .round-nav-pill .r-title { font-size: 13.5px; font-weight: 800; }
+        .round-nav-pill.active .r-title { color: #fde047; }
+        .round-nav-pill .r-sub { font-size: 10.5px; font-weight: 700; color: #64748b; }
+        .round-nav-pill.active .r-sub { color: #cbd5e1; }
+        .round-nav-pill.status-completed { background: #f0fdf4; border-color: #86efac; }
+        .round-nav-pill.status-completed.active { background: #1e1b4b; border-color: #22c55e; }
+        .round-nav-pill.status-counting { background: #fefce8; border-color: #fde047; }
+
+        /* 15 Table Cards Grid */
+        .table-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+            gap: 16px;
+        }
+        .counting-card {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: all 0.2s;
+        }
+        .counting-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+        .counting-card.completed { border-color: #86efac; }
+        .counting-card.counting { border-color: #fde047; background: #fffef7; }
+
+        .counting-card .card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+        .table-pill {
+            background: #1e1b4b;
+            color: #fde047;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        .booth-pill {
+            background: #eff6ff;
+            color: #1e40af;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 6px;
+            border: 1px solid #bfdbfe;
+        }
+        .booth-pill-reserved {
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 6px;
+        }
+        .ward-pill {
+            background: #fdf2f8;
+            color: #be185d;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 6px;
+            border: 1px solid #fbcfe8;
+        }
+        .status-indicator {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .status-indicator.completed { background: #dcfce7; color: #15803d; }
+        .status-indicator.counting { background: #fef3c7; color: #b45309; }
+        .status-indicator.pending { background: #f1f5f9; color: #64748b; }
+
+        .counting-card .card-body-meta .gp-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .counting-card .card-body-meta .stats-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .candidate-votes-box {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .cand-vote-line {
+            display: grid;
+            grid-template-columns: 110px 1fr 40px;
+            align-items: center;
+            gap: 8px;
+        }
+        .cand-vote-line .c-name {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #334155;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cand-vote-line .c-bar-wrap {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .cand-vote-line .c-bar { height: 100%; border-radius: 4px; transition: width 0.3s; }
+        .cand-vote-line .c-count { font-size: 12.5px; font-weight: 800; text-align: right; color: #0f172a; }
+
+        .card-footer-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .tot-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #475569;
+        }
+        .lead-row {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #15803d;
+            background: #f0fdf4;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid #bbf7d0;
+        }
+        .tag-verified {
+            font-size: 11px;
+            font-weight: 700;
+            color: #15803d;
+            background: #dcfce7;
+            padding: 3px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .tag-mismatch {
+            font-size: 11px;
+            font-weight: 700;
+            color: #b45309;
+            background: #fef3c7;
+            padding: 3px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .btn-card-action {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #1e1b4b;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-card-action:hover {
+            background: #1e1b4b;
+            color: #ffffff;
+            border-color: #1e1b4b;
+        }
+
+        /* 21 Wards Table Styles */
+        .ward-title-pill {
+            font-size: 13.5px;
+            font-weight: 800;
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #c7d2fe;
+            display: inline-block;
+        }
+        .mini-bar-track {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        .mini-bar-fill {
+            height: 100%;
+            background: #10b981;
+        }
+        .party-badge {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .margin-badge {
+            font-weight: 800;
+            color: #15803d;
+            background: #ecfdf5;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid #bbf7d0;
+            display: inline-block;
+        }
+
+        /* ZP Cards Styles */
+        .zp-ward-card {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .zp-ward-card.declared { border-color: #86efac; }
+        .zp-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+        }
+        .zp-badge { font-size: 17px; font-weight: 900; color: #1e1b4b; }
+        .zp-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+        .zp-stats-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid #f1f5f9;
+            margin-bottom: 16px;
+        }
+        .zp-stat-box .lbl { font-size: 11px; font-weight: 700; color: #64748b; }
+        .zp-stat-box .val { font-size: 20px; font-weight: 900; margin-top: 2px; }
+        .zp-cand-row {
+            display: grid;
+            grid-template-columns: 220px 1fr 100px;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .zp-bar-track { height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+        .zp-bar-fill { height: 100%; border-radius: 5px; }
+
+        /* Buttons & Actions */
+        .btn-sync-action {
+            background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+            color: #ffffff;
+            border: 1px solid #22c55e;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(22, 101, 52, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-sync-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(22, 101, 52, 0.3);
+        }
+        .btn-war-room {
+            background: linear-gradient(135deg, #4338ca 0%, #312e81 100%);
+            color: #fde047;
+            border: 1.5px solid #818cf8;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .btn-war-room:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+        }
+        .btn-back-link {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-back-link:hover { background: rgba(255, 255, 255, 0.25); }
+
+        /* ================= RIGHT-ALIGNED CONTROLS & 3-DOT / HAMBURGER MENU ================= */
+        .header-actions-strip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .header-clock-pill {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #f8fafc;
+        }
+        .header-menu-container {
+            position: relative;
+        }
+        .btn-header-menu {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .btn-header-menu:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.45);
+            transform: translateY(-1px);
+        }
+        .header-menu-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 330px;
+            max-width: 92vw;
+            background: #0f172a;
+            border: 1.5px solid #334155;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            z-index: 10000;
+            overflow: hidden;
+            animation: menuFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes menuFadeIn {
+            from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .menu-dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            font-size: 13px;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+        .menu-close-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .menu-close-btn:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+        }
+        .menu-section-title {
+            padding: 10px 16px 4px 16px;
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+        .menu-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: background 0.15s ease;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.35);
+            cursor: pointer;
+        }
+        .menu-dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .menu-dropdown-item:hover {
+            background: #1e293b;
+            color: #ffffff;
+        }
+        .menu-dropdown-item i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .menu-dropdown-item .item-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+        .menu-dropdown-item .item-desc {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 1px;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 38px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #334155;
+            transition: .25s;
+            border-radius: 22px;
+            border: 1px solid #475569;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .25s;
+            border-radius: 50%;
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #22c55e;
+            border-color: #16a34a;
+        }
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(16px);
+        }
+
+        /* ================= AUTO-ADJUST & FLUID RESPONSIVE PORTAL STYLES ================= */
+        :root {
+            --brand-title-size: clamp(15px, 1.6vw, 21px);
+            --brand-sub-size: clamp(10.5px, 0.9vw, 12.5px);
+            --kpi-val-size: clamp(18px, 1.8vw, 24px);
+            --kpi-lbl-size: clamp(10px, 0.9vw, 11.5px);
+            --tab-font-size: clamp(12px, 1.05vw, 13.5px);
+        }
+        .brand-text h1 { font-size: var(--brand-title-size) !important; }
+        .brand-text p { font-size: var(--brand-sub-size) !important; }
+        .counting-container {
+            max-width: 1560px;
+            margin: 0 auto;
+            padding: clamp(12px, 1.5vw, 20px) clamp(12px, 1.8vw, 24px) !important;
+        }
+        .kpi-banner-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(130px, 11vw, 185px), 1fr)) !important;
+            gap: clamp(8px, 1vw, 14px) !important;
+            margin-bottom: clamp(12px, 1.5vw, 20px) !important;
+        }
+        .kpi-box {
+            padding: clamp(10px, 1.1vw, 14px) clamp(12px, 1.3vw, 16px) !important;
+        }
+        .kpi-box .val { font-size: var(--kpi-val-size) !important; }
+        .kpi-box .lbl { font-size: var(--kpi-lbl-size) !important; }
+        .counting-nav-bar {
+            padding: 0 clamp(12px, 1.8vw, 24px) !important;
+            scrollbar-width: thin;
+        }
+        .counting-tab-btn {
+            font-size: var(--tab-font-size) !important;
+            padding: clamp(10px, 1.2vw, 14px) clamp(12px, 1.4vw, 18px) !important;
+        }
+        .table-cards-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(260px, 26vw, 330px), 1fr)) !important;
+            gap: clamp(10px, 1.2vw, 16px) !important;
+        }
+        .counting-card {
+            padding: clamp(12px, 1.3vw, 16px) !important;
+        }
+        .round-nav-pill {
+            min-width: clamp(75px, 6.5vw, 95px) !important;
+            padding: clamp(6px, 0.8vw, 8px) clamp(8px, 1vw, 14px) !important;
+        }
+        .round-nav-pill .r-title {
+            font-size: clamp(11.5px, 1vw, 13.5px) !important;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .btn-sync-action span { display: none; }
+            .btn-sync-action { padding: 7px 10px; }
+            .header-clock-pill { display: none; }
+        }
+        @media (max-width: 768px) {
+            .counting-main-header { padding: 10px 14px !important; }
+            .header-top-row { gap: 10px; }
+            .brand-icon { width: 38px; height: 38px; font-size: 20px; }
+            .btn-war-room span { display: none; }
+            .btn-war-room { padding: 7px 10px; }
+            .btn-sync-action { display: none; }
+        }
+
+        .spinning i {
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Toast notifications */
+        .toast-box {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 9999999;
+        }
+        .toast-item {
+            background: #ffffff;
+            border-left: 4px solid #3b82f6;
+            padding: 12px 18px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            min-width: 280px;
+            transition: opacity 0.3s;
+        }
+        .toast-success { border-left-color: #10b981; }
+        .toast-warning { border-left-color: #f59e0b; }
+        .toast-error { border-left-color: #ef4444; }
+    </style>
+</head>
+<body>
+
+    <!-- EXECUTIVE TOP HEADER -->
+    <header class="counting-main-header">
+        <div class="header-top-row">
+            <div class="brand-box">
+                <div class="brand-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>सुमेरपुर पंचायत समिति एवं जिला परिषद मतगणना 2026</h1>
+                    <p>कार्यालय निर्वाचक रजिस्ट्रीकरण अधिकारी (SDM) सुमेरपुर, जिला - पाली (राजस्थान) • कंट्रोल रूम</p>
+                </div>
+            </div>
+
+            <!-- Scope Switcher: PS vs ZP -->
+            
+
+            <!-- Actions Header Strip (Clean Right-Aligned Controls with 3-Dots / Hamburger Menu) -->
+            <div class="header-actions-strip">
+                <!-- Clock -->
+                <div class="header-clock-pill">
+                    <i class="far fa-clock"></i> <span id="portalClock">00:00:00 AM</span>
+                </div>
+
+                <!-- Google Sheet Quick Sync Button -->
+                <button id="btnSyncGoogle" class="btn-sync-action" onclick="triggerGoogleSheetSync()" title="Google Sheet से मतगणना डेटा सिंक करें">
+                    <i class="fas fa-arrows-rotate"></i> <span>Google Sheet सिंक</span>
+                </button>
+
+                <!-- TV War Room Button (Prominent) -->
+                <button class="btn-war-room" onclick="openWarRoom()" title="प्रोजेक्टर / बड़ी स्क्रीन वॉर रूम मोड">
+                    <i class="fas fa-tv"></i> <span>वॉर-रूम टीवी</span>
+                </button>
+
+                <!-- Modern Three-Dots / Hamburger Menu Button -->
+                <div class="header-menu-container">
+                    <button id="btnHeaderMenu" class="btn-header-menu" onclick="toggleHeaderMenu(event)" title="कंट्रोल मेनू एवं टूल्स">
+                        <i class="fas fa-ellipsis-vertical"></i>
+                        <span>टूल्स मेनू</span>
+                    </button>
+
+                    <!-- The Dropdown Menu -->
+                    <div id="headerMenuDropdown" class="header-menu-dropdown" style="display:none;">
+                        <div class="menu-dropdown-header">
+                            <span><i class="fas fa-sliders" style="color:#60a5fa; margin-right:6px;"></i> मतगणना टूल्स व सेटिंग्स</span>
+                            <button class="menu-close-btn" onclick="closeHeaderMenu()">&times;</button>
+                        </div>
+
+                        <!-- Group 1: Sync & Automation -->
+                        <div class="menu-section-title">डेटा सिंक व ऑटोमेशन</div>
+                        <a href="javascript:void(0)" class="menu-dropdown-item" onclick="triggerGoogleSheetSync(); closeHeaderMenu();">
+                            <i class="fas fa-arrows-rotate" style="color:#22c55e;"></i>
+                            <div>
+                                <div class="item-title">Google Sheet तुरंत सिंक करें</div>
+                                <div class="item-desc">नवीनतम मतगणना आंकड़े खींचें</div>
+                            </div>
+                        </a>
+
+                        <div class="menu-dropdown-item" style="justify-content:space-between;">
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <i class="fas fa-clock-rotate-left" style="color:#38bdf8;"></i>
+                                <div>
+                                    <div class="item-title">ऑटो-सिंक (प्रत्येक 30s)</div>
+                                    <div class="item-desc">स्वतः बैकग्राउंड डेटा रिफ्रेश</div>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="autoSyncToggle" onchange="toggleAutoSync(this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <a href="javascript:void(0)" class="menu-dropdown-item" onclick="openSheetSettingsModal(); closeHeaderMenu();">
+                            <i class="fas fa-gear" style="color:#f59e0b;"></i>
+                            <div>
+                                <div class="item-title">Google Sheet सेटिंग्स</div>
+                                <div class="item-desc">Sheet ID व GID विन्यास बदलें</div>
+                            </div>
+                        </a>
+
+                        <!-- Group 2: Testing & Simulations -->
+                        <div class="menu-section-title">परीक्षण व सिमुलेशन</div>
+                        <a href="javascript:void(0)" class="menu-dropdown-item" onclick="openMockTestModal(); closeHeaderMenu();">
+                            <i class="fas fa-flask" style="color:#ec4899;"></i>
+                            <div>
+                                <div class="item-title">मॉक टेस्ट एवं सिमुलेशन</div>
+                                <div class="item-desc">राउंड 1 टेस्ट, सभी 14 राउंड सिमुलेशन या रीसेट</div>
+                            </div>
+                        </a>
+
+                        <!-- Group 3: Export & Reports -->
+                        <div class="menu-section-title">रिपोर्ट्स व एक्सपोर्ट</div>
+                        <a href="javascript:void(0)" class="menu-dropdown-item" onclick="downloadTemplateCSV(); closeHeaderMenu();">
+                            <i class="fas fa-file-csv" style="color:#10b981;"></i>
+                            <div>
+                                <div class="item-title">नमूना Google Sheet CSV डाउनलोड</div>
+                                <div class="item-desc">15 टेबल x 14 राउंड का खाली फॉर्मेट</div>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0)" class="menu-dropdown-item" onclick="exportExcel(); closeHeaderMenu();">
+                            <i class="fas fa-file-excel" style="color:#16a34a;"></i>
+                            <div>
+                                <div class="item-title">मतगणना परिणाम Excel (.csv) डाउनलोड</div>
+                                <div class="item-desc">वर्तमान स्थिति का पूर्ण डेटा एक्सपोर्ट</div>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0)" class="menu-dropdown-item" onclick="switchSubtab('bulletin'); closeHeaderMenu();">
+                            <i class="fab fa-whatsapp" style="color:#25d366;"></i>
+                            <div>
+                                <div class="item-title">WhatsApp बुलेटिन रिपोर्ट</div>
+                                <div class="item-desc">RO/सुपरवाइजर राउंड-वार बुलेटिन</div>
+                            </div>
+                        </a>
+
+                        <!-- Group 4: Navigation -->
+                        <div class="menu-section-title">नेविगेशन</div>
+                        <a href="javascript:void(0)" class="menu-dropdown-item" onclick="openWarRoom(); closeHeaderMenu();">
+                            <i class="fas fa-tv" style="color:#fde047;"></i>
+                            <div>
+                                <div class="item-title">मतगणना वॉर-रूम टीवी</div>
+                                <div class="item-desc">बड़ी स्क्रीन / प्रोजेक्टर फुलस्क्रीन मोड</div>
+                            </div>
+                        </a>
+                        <a href="index.html" class="menu-dropdown-item">
+                            <i class="fas fa-arrow-left" style="color:#cbd5e1;"></i>
+                            <div>
+                                <div class="item-title">मतदान दिवस पोर्टल पर जाएं</div>
+                                <div class="item-desc">10 जोनल मजिस्ट्रेट व 152 बूथ मॉनिटरिंग</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- PRIMARY COUNTING NAVIGATION BAR -->
+    <nav class="counting-nav-bar">
+        <button class="counting-tab-btn active" data-tab="round_cards" onclick="switchSubtab('round_cards')">
+            <i class="fas fa-layer-group"></i> 1. राउंड-वार टेबल कार्ड्स (14 राउंड • 15 टेबल)
+        </button>
+        <button class="counting-tab-btn" data-tab="ps_wards" onclick="switchSubtab('ps_wards')">
+            <i class="fas fa-trophy"></i> 2. पंचायत समिति 21 वार्ड परिणाम
+        </button>
+        <button class="counting-tab-btn" data-tab="zp_wards" onclick="switchSubtab('zp_wards')">
+            <i class="fas fa-landmark"></i> 3. जिला परिषद सदस्य परिणाम (Z-7, Z-8, Z-9, Z-10)
+        </button>
+        <button class="counting-tab-btn" data-tab="master_matrix" onclick="switchSubtab('master_matrix')">
+            <i class="fas fa-table-cells"></i> 4. 15 टेबल x 14 राउंड मास्टर मैट्रिक्स
+        </button>
+        <button class="counting-tab-btn" data-tab="manual_entry" onclick="switchSubtab('manual_entry')">
+            <i class="fas fa-table-list"></i> 5. मतगणना प्रविष्टि (तालिका दृश्य)
+        </button>
+        <button class="counting-tab-btn" data-tab="bulletin" onclick="switchSubtab('bulletin')">
+            <i class="fab fa-whatsapp" style="color:#16a34a;"></i> 6. WhatsApp बुलेटिन व रिपोर्ट
+        </button>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="counting-container">
+
+        <!-- SYNC STATUS BANNER -->
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:8px 16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#64748b;">
+            <div id="syncStatusIndicator">
+                <i class="fas fa-circle-check" style="color:#10b981;"></i> Google Sheet सिंक सक्रिय • 15 टेबल • 14 राउंड • 152 मतदान केंद्र
+            </div>
+            <div style="display:flex; gap:14px; align-items:center;">
+                <span id="syncTimeText">अंतिम सिंक: अभी</span>
+                <a href="javascript:void(0)" onclick="downloadTemplateCSV()" style="color:#4f46e5; font-weight:700; text-decoration:none;">
+                    <i class="fas fa-download"></i> टेम्पलेट CSV डाउनलोड
+                </a>
+                <a href="javascript:void(0)" onclick="exportExcel()" style="color:#15803d; font-weight:700; text-decoration:none;">
+                    <i class="fas fa-file-excel"></i> Excel एक्सपोर्ट
+                </a>
+            </div>
+        </div>
+
+        <!-- TOP METRIC KPI RIBBON (SEPARATED GENERAL, PS & ZP STATS) -->
+        <div class="kpi-master-container">
+            <!-- 1. General Polling & Progress Overview -->
+            <div class="kpi-section-banner">
+                <div class="kpi-box electors">
+                    <div class="lbl">कुल पंजीकृत मतदाता</div>
+                    <div class="val" style="color:#1e293b;">1,44,905</div>
+                    <div class="sub" style="color:#3b82f6;">152 मतदान केंद्र</div>
+                </div>
+
+                <div class="kpi-box polled">
+                    <div class="lbl">EVM डाले गए मत (17C)</div>
+                    <div class="val" id="kpiTotalPolled" style="color:#0284c7;">71,943</div>
+                    <div class="sub" style="color:#0369a1;">मतदान: 49.65%</div>
+                </div>
+
+                <div class="kpi-box counted">
+                    <div class="lbl">अब तक गिने गए मत</div>
+                    <div class="val" id="kpiTotalCounted" style="color:#15803d;">0</div>
+                    <div class="sub" style="color:#16a34a;">वैध + नोटा मत</div>
+                </div>
+
+                <div class="kpi-box round">
+                    <div class="lbl">सक्रिय राउंड</div>
+                    <div class="val" id="kpiActiveRound" style="color:#4338ca;">राउंड 1 / 14</div>
+                    <div class="sub" id="kpiActiveRoundSub" style="color:#6366f1;">15 टेबल प्रति राउंड</div>
+                </div>
+
+                <div class="kpi-box booths">
+                    <div class="lbl">गिनी गई EVMs / बूथ</div>
+                    <div class="val" id="kpiCountedBooths" style="color:#0891b2;">0 / 152 (0.0%)</div>
+                    <div style="width:100%; height:4px; background:#e2e8f0; border-radius:2px; margin-top:4px; overflow:hidden;">
+                        <div id="countingProgressBar" style="width:0%; height:100%; background:#0891b2;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Distinct Side-by-Side Standings: PS (21 Wards) vs ZP (4 Wards) -->
+            <div class="kpi-separate-stands-grid">
+                <!-- Card A: Panchayat Samiti (21 Wards) -->
+                <div class="kpi-stand-card ps-stand">
+                    <div class="stand-head">
+                        <div class="stand-title">
+                            <i class="fas fa-landmark" style="color:#2563eb;"></i> पंचायत समिति सदस्य सांख्यिकी (कुल 21 वार्ड)
+                        </div>
+                        <span class="stand-badge ps" id="kpiPSDeclaredBadge">0 / 21 वार्ड घोषित</span>
+                    </div>
+                    <div class="stand-tally-row">
+                        <div class="stand-party bjp">
+                            <span class="sp-name"><i class="fas fa-sun"></i> भाजपा</span>
+                            <span class="sp-count" id="psTallyBjp">0</span>
+                            <small id="psTallyBjpSub">जीत: 0 | आगे: 0</small>
+                        </div>
+                        <div class="stand-party inc">
+                            <span class="sp-name"><i class="fas fa-hand"></i> कांग्रेस</span>
+                            <span class="sp-count" id="psTallyInc">0</span>
+                            <small id="psTallyIncSub">जीत: 0 | आगे: 0</small>
+                        </div>
+                        <div class="stand-party ind">
+                            <span class="sp-name"><i class="fas fa-user"></i> अन्य</span>
+                            <span class="sp-count" id="psTallyInd">0</span>
+                            <small id="psTallyIndSub">जीत: 0 | आगे: 0</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card B: Zila Parishad (4 Wards) -->
+                <div class="kpi-stand-card zp-stand">
+                    <div class="stand-head">
+                        <div class="stand-title">
+                            <i class="fas fa-building-columns" style="color:#7c3aed;"></i> जिला परिषद सदस्य सांख्यिकी (वार्ड संख्या 7, 8, 9, 10)
+                        </div>
+                        <span class="stand-badge zp" id="kpiZPDeclaredBadge">0 / 4 वार्ड घोषित</span>
+                    </div>
+                    <div class="stand-tally-row">
+                        <div class="stand-party bjp">
+                            <span class="sp-name"><i class="fas fa-sun"></i> भाजपा</span>
+                            <span class="sp-count" id="zpTallyBjp">0</span>
+                            <small id="zpTallyBjpSub">जीत: 0 | आगे: 0</small>
+                        </div>
+                        <div class="stand-party inc">
+                            <span class="sp-name"><i class="fas fa-hand"></i> कांग्रेस</span>
+                            <span class="sp-count" id="zpTallyInc">0</span>
+                            <small id="zpTallyIncSub">जीत: 0 | आगे: 0</small>
+                        </div>
+                        <div class="stand-party ind">
+                            <span class="sp-name"><i class="fas fa-user"></i> अन्य</span>
+                            <span class="sp-count" id="zpTallyInd">0</span>
+                            <small id="zpTallyIndSub">जीत: 0 | आगे: 0</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 1: ROUND-BY-ROUND 15 TABLES CARDS ================= -->
+        <section id="view_round_cards">
+            <!-- Round Pills 1 to 14 -->
+            <div style="margin-bottom:8px; font-size:12px; font-weight:700; color:#475569;">
+                <i class="fas fa-hand-pointer"></i> राउंड चयन करें (राउंड 1 से 14):
+            </div>
+            <div id="roundPillsContainer" class="round-nav-wrap"></div>
+
+            <!-- Selected Round Summary Strip -->
+            <div id="selectedRoundHeaderBar" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 18px; margin-bottom:16px;"></div>
+
+            <!-- 15 Table Cards Grid -->
+            <div id="tableCardsGrid" class="table-cards-grid"></div>
+        </section>
+
+        <!-- ================= VIEW 2: 21 PS WARDS RESULTS ================= -->
+        <section id="view_ps_wards" style="display:none;">
+            <div class="card" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden;">
+                <div style="padding:16px 20px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <h2 style="margin:0; font-size:18px; color:#1e1b4b; font-weight:900;">
+                            <i class="fas fa-trophy" style="color:#f59e0b;"></i> पंचायत समिति सदस्य 21 वार्ड परिणाम तालिका (Official Tally)
+                        </h2>
+                        <p style="margin:2px 0 0 0; font-size:12px; color:#64748b;">
+                            प्रारूप-5 अधिकृत प्रत्याशियों के नाम, EVM डाले गए मत एवं मतगणना ताज़ा स्थिति
+                        </p>
+                    </div>
+                    <button class="btn-xs btn-outline" onclick="exportExcel()">
+                        <i class="fas fa-download"></i> Excel तालिका डाउनलोड
+                    </button>
+                </div>
+
+                <div style="overflow-x:auto;">
+                    <table class="data-table" style="width:100%; min-width:980px; font-size:13px;">
+                        <thead>
+                            <tr style="background:#f8fafc;">
+                                <th style="text-align:center; width:80px;">वार्ड</th>
+                                <th style="text-align:center; width:110px;">बूथ प्रगति</th>
+                                <th style="text-align:right; width:95px;">कुल मतदाता</th>
+                                <th style="text-align:right; width:100px; color:#0369a1;">EVM मत</th>
+                                <th style="text-align:right; width:100px; color:#0f172a;">गिने गए मत</th>
+                                <th style="text-align:right; width:95px; color:#ea580c;">भाजपा</th>
+                                <th style="text-align:right; width:95px; color:#0284c7;">कांग्रेस</th>
+                                <th style="text-align:right; width:95px; color:#9333ea;">निर्दलीय</th>
+                                <th style="text-align:right; width:75px; color:#64748b;">नोटा</th>
+                                <th style="width:180px;">अग्रणी / विजयी प्रत्याशी</th>
+                                <th style="text-align:center; width:110px;">बढ़त (Margin)</th>
+                                <th style="text-align:center; width:115px;">परिणाम स्थिति</th>
+                                <th style="text-align:center; width:75px;">विवरण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="psWardsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 3: 4 ZP WARDS RESULTS ================= -->
+        <section id="view_zp_wards" style="display:none;">
+            <div style="margin-bottom:16px;">
+                <h2 style="margin:0; font-size:18px; color:#1e1b4b; font-weight:900;">
+                    <i class="fas fa-shield-halved" style="color:#0284c7;"></i> जिला परिषद सदस्य मतगणना परिणाम (सुमेरपुर क्षेत्र - 4 वार्ड)
+                </h2>
+                <p style="margin:2px 0 0 0; font-size:12.5px; color:#64748b;">
+                    वार्ड संख्या 7 (20,237 मत), वार्ड संख्या 8 (17,144 मत), वार्ड संख्या 9 (16,061 मत), वार्ड संख्या 10 (18,501 मत)
+                </p>
+            </div>
+
+            <div id="zpWardsCardsContainer"></div>
+        </section>
+
+        <!-- ================= VIEW 4: MASTER 15x14 MATRIX ================= -->
+        <section id="view_master_matrix" style="display:none;">
+            <div class="card" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <h2 style="margin:0; font-size:17px; color:#1e1b4b; font-weight:900;">
+                            <i class="fas fa-table-cells" style="color:#6366f1;"></i> 15 टेबल x 14 राउंड मतगणना हॉल मास्टर मैट्रिक्स
+                        </h2>
+                        <p style="margin:2px 0 0 0; font-size:12px; color:#64748b;">
+                            समस्त 152 बूथों की टेबल-वार व राउंड-वार स्थिति। किसी भी सेल पर क्लिक करके मत विवरण संपादित करें।
+                        </p>
+                    </div>
+                    <div style="display:flex; gap:14px; font-size:12px; font-weight:700;">
+                        <span><span style="display:inline-block; width:10px; height:10px; background:#86efac; border-radius:2px; margin-right:4px;"></span> पूर्ण (EVM सत्यापित)</span>
+                        <span><span style="display:inline-block; width:10px; height:10px; background:#fde047; border-radius:2px; margin-right:4px;"></span> जारी</span>
+                        <span><span style="display:inline-block; width:10px; height:10px; background:#ffffff; border:1px solid #cbd5e1; border-radius:2px; margin-right:4px;"></span> प्रतीक्षारत</span>
+                    </div>
+                </div>
+
+                <div class="counting-matrix-scroll-wrap">
+                    <table class="counting-matrix-table">
+                        <thead id="matrixThead"></thead>
+                        <tbody id="matrixTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 5: MANUAL ENTRY FORM ================= -->
+        <!-- ================= VIEW 5: TABLE-BASED ENTRY ================= -->
+        <section id="view_manual_entry" style="display:none;">
+            <div class="counting-entry-shell">
+                <div class="entry-table-header-card">
+                    <div class="entry-table-controls-top">
+                        <div class="entry-round-filter-wrap">
+                            <span class="filter-lbl"><i class="fas fa-layer-group"></i> राउंड चुनें:</span>
+                            <div class="entry-round-pills-bar" id="entryRoundPills"></div>
+                        </div>
+                        <div class="entry-table-search-wrap">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="entryTableSearch" placeholder="मेज, बूथ क्र., CU नं., वार्ड या भवन खोजें..." oninput="filterEntryTable()">
+                        </div>
+                    </div>
+
+                    <div class="entry-table-summary-strip">
+                        <div class="sum-item"><i class="fas fa-table"></i> कुल मेज: <b id="entrySumTables">15</b></div>
+                        <div class="sum-item text-green"><i class="fas fa-circle-check"></i> पूर्ण प्रविष्टि: <b id="entrySumCompleted">0</b></div>
+                        <div class="sum-item text-amber"><i class="fas fa-hourglass-half"></i> प्रतीक्षारत: <b id="entrySumPending">15</b></div>
+                        <div class="sum-item text-blue"><i class="fas fa-check-to-slot"></i> EVM मत (17C): <b id="entrySumPolled">0</b></div>
+                        <div class="sum-item text-purple"><i class="fas fa-vote-yea"></i> दर्ज मत: <b id="entrySumCounted">0</b></div>
+                    </div>
+                </div>
+
+                <div class="entry-table-container">
+                    <table class="counting-data-table">
+                        <thead>
+                            <tr>
+                                <th style="width:75px; text-align:center;">मेज</th>
+                                <th style="width:85px; text-align:center;">बूथ क्र.</th>
+                                <th style="width:145px; text-align:center;">सी.यू. क्रमांक (CU ID)</th>
+                                <th>मतदान केंद्र व भवन</th>
+                                <th style="width:100px; text-align:center;">पं.स. वार्ड</th>
+                                <th style="width:100px; text-align:center;">जि.प. वार्ड</th>
+                                <th style="width:105px; text-align:right;">EVM मत (17C)</th>
+                                <th style="width:130px; text-align:center;">पं.स. मत (दर्ज)</th>
+                                <th style="width:130px; text-align:center;">जि.प. मत (दर्ज)</th>
+                                <th style="width:105px; text-align:center;">स्थिति</th>
+                                <th style="width:135px; text-align:center;">कार्यवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="entryTableTbody">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 6: WHATSAPP BULLETIN ================= -->
+        <section id="view_bulletin" style="display:none;">
+            <div class="card" style="max-width:850px; margin:0 auto; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                    <h2 style="margin:0; font-size:18px; color:#166534; font-weight:900;">
+                        <i class="fab fa-whatsapp"></i> आधिकारिक मतगणना WhatsApp बुलेटिन
+                    </h2>
+                    <div style="display:flex; gap:8px;">
+                        <select id="bulletinRoundSelect" onchange="generateBulletin(this.value)" style="padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; font-weight:700;">
+                            <option value="1">राउंड 1 बुलेटिन</option>
+                            <option value="2">राउंड 2 बुलेटिन</option>
+                            <option value="3">राउंड 3 बुलेटिन</option>
+                            <option value="4">राउंड 4 बुलेटिन</option>
+                            <option value="5">राउंड 5 बुलेटिन</option>
+                            <option value="6">राउंड 6 बुलेटिन</option>
+                            <option value="7">राउंड 7 बुलेटिन</option>
+                            <option value="8">राउंड 8 बुलेटिन</option>
+                            <option value="9">राउंड 9 बुलेटिन</option>
+                            <option value="10">राउंड 10 बुलेटिन</option>
+                            <option value="11">राउंड 11 बुलेटिन</option>
+                            <option value="12">राउंड 12 बुलेटिन</option>
+                            <option value="13">राउंड 13 बुलेटिन</option>
+                            <option value="14">राउंड 14 बुलेटिन</option>
+                        </select>
+                    </div>
+                </div>
+                <p style="font-size:12.5px; color:#64748b; margin-top:0;">
+                    उच्चाधिकारियों (DEO, SP, RO) एवं मीडिया सेंटर हेतु 1-क्लिक कॉपी संदेश:
+                </p>
+                <textarea id="bulletinTextBox" readonly style="width:100%; height:320px; padding:14px; border:1.5px solid #cbd5e1; border-radius:10px; font-family:monospace; font-size:13px; line-height:1.5; background:#f8fafc; color:#0f172a; resize:none;"></textarea>
+                <div style="display:flex; justify-content:flex-end; margin-top:14px;">
+                    <button class="btn-primary" onclick="copyBulletin()" style="background:#16a34a; border-color:#16a34a; padding:10px 22px; font-size:14px; font-weight:800;">
+                        <i class="fas fa-copy"></i> क्लिपबोर्ड पर कॉपी करें
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+        <!-- MODAL 0: MOCK TEST CONTROL MODAL -->
+    <div id="mockTestModal" class="modal-overlay" style="display:none; z-index:99999;">
+        <div class="modal-box" style="max-width:580px; text-align:left;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:14px;">
+                <h3 style="margin:0; font-size:18px; color:#5b21b6; font-weight:800;">
+                    <i class="fas fa-flask" style="color:#7c3aed;"></i> मतगणना मॉक टेस्ट एवं सिमुलेशन कंट्रोल
+                </h3>
+                <button class="modal-close-btn" onclick="closeMockTestModal()">&times;</button>
+            </div>
+            <p style="font-size:13px; color:#475569; margin-top:0;">
+                यह टूल वास्तविक मतगणना से पूर्व सभी 14 राउंड, 15 टेबल, CU नंबर मैपिंग, EVM मत मिलान तथा PS & ZP परिणाम गणना की जांच हेतु बनाया गया है।
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">
+                <button onclick="executeMockTest('load_round_1')" style="background:#eff6ff; border:1.5px solid #3b82f6; border-radius:10px; padding:12px 16px; text-align:left; cursor:pointer; transition:all 0.15s;">
+                    <div style="font-weight:800; font-size:14px; color:#1e40af;"><i class="fas fa-play" style="color:#2563eb;"></i> 1. राउंड 1 मॉक टेस्ट भरें (15 टेबल)</div>
+                    <small style="color:#64748b; font-size:11.5px;">राउंड 1 की सभी 15 टेबलों के बूथों (4, 17, 33...) में EVM 17C मतों के अनुसार PS व ZP वोट भरे जाएंगे।</small>
+                </button>
+
+                <button onclick="executeMockTest('load_rounds_1_to_3')" style="background:#faf5ff; border:1.5px solid #8b5cf6; border-radius:10px; padding:12px 16px; text-align:left; cursor:pointer; transition:all 0.15s;">
+                    <div style="font-weight:800; font-size:14px; color:#6b21a8;"><i class="fas fa-forward-step" style="color:#7c3aed;"></i> 2. राउंड 1 से 3 मॉक टेस्ट भरें (45 बूथ)</div>
+                    <small style="color:#64748b; font-size:11.5px;">3 राउंड की गणना पूर्ण होगी जिससे 21 पं.स. वार्डों व 4 जि.प. वार्डों में लाइव लीड/ट्रेंड दिखेगा।</small>
+                </button>
+
+                <button onclick="executeMockTest('load_full')" style="background:#f0fdf4; border:1.5px solid #22c55e; border-radius:10px; padding:12px 16px; text-align:left; cursor:pointer; transition:all 0.15s;">
+                    <div style="font-weight:800; font-size:14px; color:#15803d;"><i class="fas fa-trophy" style="color:#16a34a;"></i> 3. पूर्ण चुनाव सिमुलेशन (सभी 152 बूथ)</div>
+                    <small style="color:#64748b; font-size:11.5px;">सभी 152 बूथों के 71,943 मतों की शत-प्रतिशत गणना पूर्ण कर अंतिम परिणाम तैयार करेगा।</small>
+                </button>
+
+                <button onclick="executeMockTest('reset_all')" style="background:#fef2f2; border:1.5px solid #ef4444; border-radius:10px; padding:12px 16px; text-align:left; cursor:pointer; transition:all 0.15s;">
+                    <div style="font-weight:800; font-size:14px; color:#b91c1c;"><i class="fas fa-rotate-left" style="color:#dc2626;"></i> 4. पूरा डेटा रीसेट करें (Zero Clean Reset)</div>
+                    <small style="color:#64748b; font-size:11.5px;">समस्त 152 बूथों का मतगणना डेटा शून्य (0) कर वास्तविक चुनाव हेतु फ्रेश कर देगा।</small>
+                </button>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; border-top:1px solid #e2e8f0; padding-top:12px;">
+                <button class="btn-secondary" onclick="closeMockTestModal()">बंद करें</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: GOOGLE SHEET SETTINGS -->
+    <div id="sheetSettingsModal" class="modal-overlay" style="display:none; z-index:99999;">
+        <div class="modal-box" style="max-width:560px; text-align:left;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:14px;">
+                <h3 style="margin:0; font-size:17px; color:#1e1b4b; font-weight:800;">
+                    <i class="fas fa-file-excel" style="color:#16a34a;"></i> मतगणना Google Sheet ऑटो-सिंक सेटअप
+                </h3>
+                <button class="modal-close-btn" onclick="closeSheetSettingsModal()">&times;</button>
+            </div>
+            <div style="font-size:13px; color:#334155;">
+                <p style="margin-top:0;"><b>Google Sheet ID या पूरा लिंक दर्ज करें:</b></p>
+                <input type="text" id="settingSheetId" placeholder="Google Sheet ID दर्ज करें (उदा. 1akpSIbiSWMT5Xah...)" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:8px; font-family:monospace; font-size:12px; margin-bottom:12px;">
+
+                <p style="margin-bottom:4px;"><b>GID / शीट टैब संख्या (उदा. 0):</b></p>
+                <input type="text" id="settingGid" placeholder="0" style="width:120px; padding:8px 10px; border:1px solid #cbd5e1; border-radius:8px; font-family:monospace; font-size:12px; margin-bottom:14px;">
+
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:12px; margin-bottom:14px;">
+                    <h4 style="margin:0 0 6px; color:#1e40af; font-size:13px;"><i class="fas fa-circle-info"></i> Google Sheet में अपेक्षित कॉलम हेडर:</h4>
+                    <div style="font-family:monospace; font-size:11px; background:#ffffff; padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; word-break:break-all;">
+                        Round, Table, Booth_No, PS_Ward, Candidate_1, Candidate_2, Candidate_3, NOTA, Total
+                    </div>
+                </div>
+
+                <button class="btn-secondary" onclick="downloadTemplateCSV()" style="font-size:12px;">
+                    <i class="fas fa-download" style="color:#10b981;"></i> 14 राउंड x 15 टेबल टेम्पलेट CSV डाउनलोड करें
+                </button>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #e2e8f0; padding-top:12px; margin-top:14px;">
+                <button class="btn-secondary" onclick="closeSheetSettingsModal()">रद्द करें</button>
+                <button class="btn-primary" onclick="saveSheetSettings()"><i class="fas fa-check"></i> सुरक्षित करें</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: EDIT SLOT MODAL -->
+    <!-- MODAL 2: UNIFIED PS & ZP EDIT SLOT MODAL (DISPLAY COMPATIBLE) -->
+    <div id="editSlotModal" class="modal-overlay" style="display:none; z-index:99999;">
+        <div class="modal-box modal-box-wide">
+            <div class="counting-modal-header">
+                <div class="cmh-left">
+                    <div class="cmh-badges-row">
+                        <span class="cmh-badge round" id="emBadgeRound">राउंड 1</span>
+                        <span class="cmh-badge table" id="emBadgeTable">मेज 1</span>
+                        <span class="cmh-badge booth" id="emBadgeBooth">बूथ 4</span>
+                        <span class="cmh-badge ps-ward" id="emBadgePSWard">पं.स. वार्ड W-17</span>
+                        <span class="cmh-badge zp-ward" id="emBadgeZPWard">जि.प. वार्ड Z-7</span>
+                    </div>
+                    <h3 class="cmh-title" id="emModalTitle">बाबागांव — राजकीय उच्च माध्यमिक विद्यालय</h3>
+                    <div class="cmh-subtitle" id="emModalSubtitle">कमरा नं- 4 | कुल मतदाता: 1,006</div>
+                </div>
+                <div class="cmh-right">
+                    <div class="cmh-cu-card">
+                        <div class="cu-card-lbl"><i class="fas fa-microchip"></i> कंट्रोल यूनिट क्रमांक (CU ID)</div>
+                        <div class="cu-card-val" id="emModalCUID">RJSCU009635</div>
+                    </div>
+                    <div class="cmh-polled-card">
+                        <div class="polled-lbl"><i class="fas fa-check-to-slot"></i> EVM मत (17C)</div>
+                        <div class="polled-val" id="emModalPolled">437</div>
+                    </div>
+                    <button class="modal-close-btn" onclick="closeEditSlotModal()" title="बंद करें" style="color:#ffffff; font-size:24px; background:transparent; border:none; cursor:pointer;">&times;</button>
+                </div>
+            </div>
+
+            <div class="counting-modal-body">
+                <div class="modal-entry-grid">
+                    <div class="modal-entry-col ps-col">
+                        <div class="col-header ps">
+                            <div class="col-title"><i class="fas fa-landmark"></i> 1. पंचायत समिति सदस्य मत प्रविष्टि</div>
+                            <div class="col-ward-tag" id="emPSWardHeader">वार्ड W-17</div>
+                        </div>
+                        <div class="col-cand-list" id="emPSFields"></div>
+                        <div class="col-summary-box">
+                            <div class="subtot-row">
+                                <span>पं.स. कुल दर्ज मत:</span>
+                                <b class="subtot-val" id="emPSTotalDisplay">0</b>
+                            </div>
+                            <div class="verif-tag" id="emPSVerifNotice"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-entry-col zp-col">
+                        <div class="col-header zp">
+                            <div class="col-title"><i class="fas fa-building-columns"></i> 2. जिला परिषद सदस्य मत प्रविष्टि</div>
+                            <div class="col-ward-tag" id="emZPWardHeader">वार्ड Z-7</div>
+                        </div>
+                        <div class="col-cand-list" id="emZPFields"></div>
+                        <div class="col-summary-box">
+                            <div class="subtot-row">
+                                <span>जि.प. कुल दर्ज मत:</span>
+                                <b class="subtot-val" id="emZPTotalDisplay">0</b>
+                            </div>
+                            <div class="verif-tag" id="emZPVerifNotice"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-remark-row">
+                    <label><i class="fas fa-comment-dots"></i> मतगणना पर्यवेक्षक टिप्पणी (वैकल्पिक):</label>
+                    <input type="text" id="editModalRemark" placeholder="उदा. सील सत्यापित, शत-प्रतिशत मिलान पूर्ण, शांतिपूर्ण">
+                </div>
+            </div>
+
+            <div class="counting-modal-footer">
+                <div class="cmf-nav">
+                    <button class="btn-modal-nav" onclick="navEditSlot(-1)" id="btnPrevSlot"><i class="fas fa-chevron-left"></i> पिछली मेज</button>
+                    <button class="btn-modal-nav" onclick="navEditSlot(1)" id="btnNextSlot">अगली मेज <i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="cmf-actions">
+                    <button class="btn-secondary" onclick="closeEditSlotModal()" style="padding:9px 18px; border-radius:8px; border:1px solid #cbd5e1; font-weight:700; cursor:pointer;">रद्द करें</button>
+                    <button class="btn-primary-save" onclick="saveEditSlotModal()">
+                        <i class="fas fa-check-double"></i> दोनों परिणाम (पं.स. व जि.प.) सुरक्षित करें
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: WARD BREAKDOWN MODAL -->
+    <div id="wardBreakdownModal" class="modal-overlay" style="display:none; z-index:99999;">
+        <div class="modal-box" style="max-width:900px; text-align:left;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:14px;">
+                <div>
+                    <h3 id="wbModalTitle" style="margin:0; font-size:17px; font-weight:900; color:#1e1b4b;">वार्ड विवरण</h3>
+                    <div id="wbModalSubtitle" style="font-size:12px; color:#64748b; margin-top:2px;"></div>
+                </div>
+                <button class="modal-close-btn" onclick="closeWardBreakdownModal()">&times;</button>
+            </div>
+            <div style="max-height:420px; overflow-y:auto;">
+                <table class="data-table" style="width:100%; font-size:12.5px;">
+                    <thead id="wbModalThead"></thead>
+                    <tbody id="wbModalTbody"></tbody>
+                </table>
+            </div>
+            <div style="display:flex; justify-content:flex-end; border-top:1px solid #e2e8f0; padding-top:12px; margin-top:14px;">
+                <button class="btn-primary" onclick="closeWardBreakdownModal()">बंद करें</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: FULLSCREEN WAR ROOM TV -->
+    <div id="warRoomModal" class="warroom-overlay" style="display:none;">
+        <div class="tv-room-header">
+            <!-- 1. LEFT: Heading Title & View Selector Menu (1 to 4 Views) -->
+            <div class="tv-head-left">
+                <div class="tv-head-title-box">
+                    <div class="tv-emblem">🏛️</div>
+                    <div>
+                        <div class="tv-head-title">सुमेरपुर मतगणना वॉर-रूम</div>
+                        <div class="tv-head-sub">SDM सुमेरपुर • 14 राउंड • 15 टेबल • 152 बूथ</div>
+                    </div>
+                </div>
+
+                <!-- 1 से 4 व्यूज का ड्रॉपडाउन मेनू -->
+                <div class="tv-view-menu-container">
+                    <button id="btnTvViewSelector" class="tv-header-btn" onclick="toggleTvViewMenu(event)" title="मतगणना स्क्रीन व्यू चुनें">
+                        <span id="tvCurrentViewName"><i class="fas fa-layer-group" style="color:#60a5fa;"></i> 1. राउंड टेबल (1-15)</span>
+                        <i class="fas fa-chevron-down" style="font-size:10px; color:#94a3b8; margin-left:4px;"></i>
+                    </button>
+                    <div id="tvViewDropdown" class="tv-header-dropdown" style="display:none;">
+                        <div class="tv-dropdown-title">मतगणना स्क्रीन व्यू चुनें</div>
+                        <a href="javascript:void(0)" class="tv-dropdown-item active" id="tvOptRound" onclick="selectWarRoomView('round_tables')">
+                            <i class="fas fa-layer-group" style="color:#60a5fa;"></i>
+                            <div>
+                                <div class="item-title">1. राउंड-वार टेबल (1-15 टेबल ग्रिड)</div>
+                                <div class="item-desc">प्रत्येक राउंड की सभी 15 मेजों की स्थिति</div>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0)" class="tv-dropdown-item" id="tvOptPS" onclick="selectWarRoomView('ps_wards')">
+                            <i class="fas fa-landmark" style="color:#fde047;"></i>
+                            <div>
+                                <div class="item-title">2. पं.स. सांख्यिकी (21 वार्ड परिणाम)</div>
+                                <div class="item-desc">सभी 21 वार्डों के आगे/पीछे/विजेता कार्ड्स</div>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0)" class="tv-dropdown-item" id="tvOptZP" onclick="selectWarRoomView('zp_wards')">
+                            <i class="fas fa-building-columns" style="color:#c084fc;"></i>
+                            <div>
+                                <div class="item-title">3. जि.प. सांख्यिकी (4 वार्ड परिणाम)</div>
+                                <div class="item-desc">जिला परिषद वार्ड संख्या 7, 8, 9, 10</div>
+                            </div>
+                        </a>
+                        <div style="border-top:1px solid #334155; margin:4px 0;"></div>
+                        <a href="javascript:void(0)" class="tv-dropdown-item" id="tvOptAuto" onclick="toggleWarRoomAuto(); closeTvViewMenu();">
+                            <i class="fas fa-arrows-rotate" style="color:#34d399;"></i>
+                            <div>
+                                <div class="item-title" id="tvAutoDropdownLabel">4. ऑटो-रोटेशन (12s): चालू</div>
+                                <div class="item-desc">तीनों व्यूज का स्वचालित चक्र</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. CENTER: Large PS & ZP Scoreboard Tally -->
+            <div id="warRoomDualTally" class="tv-head-center"></div>
+
+            <!-- 3. RIGHT: Clock & TV Tools Menu (Sound, Fullscreen, Auto, Exit) -->
+            <div class="tv-head-right">
+                <div class="tv-clock-box">
+                    <div id="warRoomClock" class="tv-clock-time">00:00:00</div>
+                    <div id="warRoomAutoNotice" class="tv-clock-sub">ऑटो: चालू (12s)</div>
+                </div>
+
+                <!-- TV Tools Dropdown Menu -->
+                <div class="tv-tools-menu-container">
+                    <button id="btnTvToolsMenu" class="tv-header-btn" onclick="toggleTvToolsMenu(event)" title="वॉर-रूम टूल्स एवं सेटिंग्स">
+                        <i class="fas fa-ellipsis-vertical" style="font-size:15px; color:#fde047;"></i>
+                        <span>टूल्स</span>
+                    </button>
+                    <div id="tvToolsDropdown" class="tv-header-dropdown right-aligned" style="display:none;">
+                        <div class="tv-dropdown-title"><i class="fas fa-sliders" style="margin-right:4px;"></i> वॉर-रूम टूल्स व सेटिंग्स</div>
+                        
+                        <!-- Sound Alert Toggle -->
+                        <a href="javascript:void(0)" class="tv-dropdown-item" onclick="toggleWarRoomSound(); updateTvSoundMenuText();">
+                            <i class="fas fa-volume-high" id="tvMenuSoundIcon" style="color:#fde047;"></i>
+                            <div>
+                                <div class="item-title" id="tvMenuSoundLabel">साउंड बीप अलर्ट: चालू</div>
+                                <div class="item-desc">परिणाम घोषणा पर चाइम बीप ध्वनि</div>
+                            </div>
+                        </a>
+
+                        <!-- Fullscreen Toggle -->
+                        <a href="javascript:void(0)" class="tv-dropdown-item" onclick="toggleWarRoomFullscreen(); closeTvToolsMenu();">
+                            <i class="fas fa-expand" style="color:#60a5fa;"></i>
+                            <div>
+                                <div class="item-title">फुलस्क्रीन मोड (F11)</div>
+                                <div class="item-desc">बड़ी LED स्क्रीन / प्रोजेक्टर व्यू</div>
+                            </div>
+                        </a>
+
+                        <!-- Auto-rotation Toggle -->
+                        <a href="javascript:void(0)" class="tv-dropdown-item" onclick="toggleWarRoomAuto(); closeTvToolsMenu();">
+                            <i class="fas fa-arrows-rotate" style="color:#34d399;"></i>
+                            <div>
+                                <div class="item-title" id="tvMenuAutoLabel">ऑटो-रोटेशन (12s): चालू</div>
+                                <div class="item-desc">तीनों व्यूज का स्वचालित रोटेशन ऑन/ऑफ</div>
+                            </div>
+                        </a>
+
+                        <div style="border-top:1px solid #334155; margin:4px 0;"></div>
+
+                        <!-- Exit War Room -->
+                        <a href="javascript:void(0)" class="tv-dropdown-item text-danger" onclick="closeWarRoom()">
+                            <i class="fas fa-right-from-bracket" style="color:#f87171;"></i>
+                            <div>
+                                <div class="item-title" style="color:#f87171;">वॉर-रूम से बाहर निकलें</div>
+                                <div class="item-desc">सामान्य मतगणना पोर्टल पर वापस जाएं</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Close 'X' Button -->
+                <button onclick="closeWarRoom()" class="tv-quick-exit-btn" title="वॉर-रूम बंद करें">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Optional Sub-bar for Round Selection when in round_tables mode -->
+        <div id="warRoomRoundNav" class="tv-round-bar" style="display:flex;"></div>
+
+        <!-- The Main TV Content Grid - 100% Zero-Scroll Viewport Fit -->
+        <div id="warRoomTilesGrid" class="warroom-grid-tables"></div>
+
+        <!-- LIVE BOTTOM SCROLLING TICKER -->
+        <div id="warRoomTicker" class="warroom-ticker-bar">
+            <div class="ticker-label"><span class="ticker-dot"></span> लाइव मतगणना अपडेट</div>
+            <div class="ticker-track-wrap">
+                <div class="ticker-track" id="tickerTrack">लाइव मतगणना डेटा सिंक हो रहा है...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="toast-box"></div>
+
+    <script src="xlsx.full.min.js"></script>
+    <script src="js/counting_page.js"></script>
+</body>
+</html>

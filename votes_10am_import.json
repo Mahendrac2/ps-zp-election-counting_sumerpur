@@ -1,0 +1,1085 @@
+{
+  "date": "22-10-2026",
+  "summary": {
+    "total_v10": 17784,
+    "filled_count": 143,
+    "empty_count": 9,
+    "empty_booths": [
+      "94",
+      "95",
+      "96",
+      "21",
+      "22",
+      "23",
+      "132",
+      "133",
+      "134"
+    ]
+  },
+  "updates": [
+    {
+      "id": "41",
+      "started": true,
+      "mock_done": true,
+      "v10": 180,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "42",
+      "started": true,
+      "mock_done": true,
+      "v10": 100,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "43",
+      "started": true,
+      "mock_done": true,
+      "v10": 160,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "44",
+      "started": true,
+      "mock_done": true,
+      "v10": 122,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "45",
+      "started": true,
+      "mock_done": true,
+      "v10": 215,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "46",
+      "started": true,
+      "mock_done": true,
+      "v10": 180,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "46A",
+      "started": true,
+      "mock_done": true,
+      "v10": 120,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "1",
+      "started": true,
+      "mock_done": true,
+      "v10": 154,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "2",
+      "started": true,
+      "mock_done": true,
+      "v10": 152,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "3",
+      "started": true,
+      "mock_done": true,
+      "v10": 26,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "8",
+      "started": true,
+      "mock_done": true,
+      "v10": 104,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "9",
+      "started": true,
+      "mock_done": true,
+      "v10": 138,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "10",
+      "started": true,
+      "mock_done": true,
+      "v10": 18,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "11",
+      "started": true,
+      "mock_done": true,
+      "v10": 22,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "104",
+      "started": true,
+      "mock_done": true,
+      "v10": 132,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "105",
+      "started": true,
+      "mock_done": true,
+      "v10": 92,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "106",
+      "started": true,
+      "mock_done": true,
+      "v10": 95,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "107",
+      "started": true,
+      "mock_done": true,
+      "v10": 168,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "50",
+      "started": true,
+      "mock_done": true,
+      "v10": 135,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "51",
+      "started": true,
+      "mock_done": true,
+      "v10": 165,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "52",
+      "started": true,
+      "mock_done": true,
+      "v10": 190,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "53",
+      "started": true,
+      "mock_done": true,
+      "v10": 96,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "54",
+      "started": true,
+      "mock_done": true,
+      "v10": 128,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "55",
+      "started": true,
+      "mock_done": true,
+      "v10": 139,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "56",
+      "started": true,
+      "mock_done": true,
+      "v10": 117,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "37",
+      "started": true,
+      "mock_done": true,
+      "v10": 133,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "38",
+      "started": true,
+      "mock_done": true,
+      "v10": 202,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "39",
+      "started": true,
+      "mock_done": true,
+      "v10": 134,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "40",
+      "started": true,
+      "mock_done": true,
+      "v10": 176,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "97",
+      "started": true,
+      "mock_done": true,
+      "v10": 250,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "98",
+      "started": true,
+      "mock_done": true,
+      "v10": 152,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "99",
+      "started": true,
+      "mock_done": true,
+      "v10": 177,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "100",
+      "started": true,
+      "mock_done": true,
+      "v10": 182,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "101",
+      "started": true,
+      "mock_done": true,
+      "v10": 168,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "102",
+      "started": true,
+      "mock_done": true,
+      "v10": 155,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "103",
+      "started": true,
+      "mock_done": true,
+      "v10": 210,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "4",
+      "started": true,
+      "mock_done": true,
+      "v10": 154,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "5",
+      "started": true,
+      "mock_done": true,
+      "v10": 173,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "6",
+      "started": true,
+      "mock_done": true,
+      "v10": 72,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "7",
+      "started": true,
+      "mock_done": true,
+      "v10": 136,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "82",
+      "started": true,
+      "mock_done": true,
+      "v10": 131,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "83",
+      "started": true,
+      "mock_done": true,
+      "v10": 85,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "84",
+      "started": true,
+      "mock_done": true,
+      "v10": 68,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "85",
+      "started": true,
+      "mock_done": true,
+      "v10": 170,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "121",
+      "started": true,
+      "mock_done": true,
+      "v10": 147,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "122",
+      "started": true,
+      "mock_done": true,
+      "v10": 193,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "123",
+      "started": true,
+      "mock_done": true,
+      "v10": 116,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "124",
+      "started": true,
+      "mock_done": true,
+      "v10": 156,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "125",
+      "started": true,
+      "mock_done": true,
+      "v10": 165,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "126",
+      "started": true,
+      "mock_done": true,
+      "v10": 176,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "127",
+      "started": true,
+      "mock_done": true,
+      "v10": 115,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "67",
+      "started": true,
+      "mock_done": true,
+      "v10": 165,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "68",
+      "started": true,
+      "mock_done": true,
+      "v10": 153,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "69",
+      "started": true,
+      "mock_done": true,
+      "v10": 33,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "70",
+      "started": true,
+      "mock_done": true,
+      "v10": 77,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "71",
+      "started": true,
+      "mock_done": true,
+      "v10": 80,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "72",
+      "started": true,
+      "mock_done": true,
+      "v10": 20,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "73",
+      "started": true,
+      "mock_done": true,
+      "v10": 24,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "73A",
+      "started": true,
+      "mock_done": true,
+      "v10": 12,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "29",
+      "started": true,
+      "mock_done": true,
+      "v10": 60,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "30",
+      "started": true,
+      "mock_done": true,
+      "v10": 50,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "31",
+      "started": true,
+      "mock_done": true,
+      "v10": 50,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "32",
+      "started": true,
+      "mock_done": true,
+      "v10": 133,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "139",
+      "started": true,
+      "mock_done": true,
+      "v10": 170,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "140",
+      "started": true,
+      "mock_done": true,
+      "v10": 182,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "141",
+      "started": true,
+      "mock_done": true,
+      "v10": 108,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "142",
+      "started": true,
+      "mock_done": true,
+      "v10": 74,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "143",
+      "started": true,
+      "mock_done": true,
+      "v10": 162,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "144",
+      "started": true,
+      "mock_done": true,
+      "v10": 183,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "145",
+      "started": true,
+      "mock_done": true,
+      "v10": 169,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "146",
+      "started": true,
+      "mock_done": true,
+      "v10": 118,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "57",
+      "started": true,
+      "mock_done": true,
+      "v10": 154,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "58",
+      "started": true,
+      "mock_done": true,
+      "v10": 200,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "59",
+      "started": true,
+      "mock_done": true,
+      "v10": 100,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "60",
+      "started": true,
+      "mock_done": true,
+      "v10": 119,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "61",
+      "started": true,
+      "mock_done": true,
+      "v10": 222,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "62",
+      "started": true,
+      "mock_done": true,
+      "v10": 86,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "12",
+      "started": true,
+      "mock_done": true,
+      "v10": 126,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "13",
+      "started": true,
+      "mock_done": true,
+      "v10": 153,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "14",
+      "started": true,
+      "mock_done": true,
+      "v10": 143,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "15",
+      "started": true,
+      "mock_done": true,
+      "v10": 168,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "16",
+      "started": true,
+      "mock_done": true,
+      "v10": 155,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "147",
+      "started": true,
+      "mock_done": true,
+      "v10": 61,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "148",
+      "started": true,
+      "mock_done": true,
+      "v10": 56,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "149",
+      "started": true,
+      "mock_done": true,
+      "v10": 34,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "150",
+      "started": true,
+      "mock_done": true,
+      "v10": 29,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "47",
+      "started": true,
+      "mock_done": true,
+      "v10": 178,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "48",
+      "started": true,
+      "mock_done": true,
+      "v10": 46,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "49",
+      "started": true,
+      "mock_done": true,
+      "v10": 17,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "108",
+      "started": true,
+      "mock_done": true,
+      "v10": 88,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "109",
+      "started": true,
+      "mock_done": true,
+      "v10": 62,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "110",
+      "started": true,
+      "mock_done": true,
+      "v10": 41,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "111",
+      "started": true,
+      "mock_done": true,
+      "v10": 23,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "112",
+      "started": true,
+      "mock_done": true,
+      "v10": 42,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "17",
+      "started": true,
+      "mock_done": true,
+      "v10": 72,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "18",
+      "started": true,
+      "mock_done": true,
+      "v10": 83,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "19",
+      "started": true,
+      "mock_done": true,
+      "v10": 81,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "20",
+      "started": true,
+      "mock_done": true,
+      "v10": 87,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "24",
+      "started": true,
+      "mock_done": true,
+      "v10": 116,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "25",
+      "started": true,
+      "mock_done": true,
+      "v10": 124,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "26",
+      "started": true,
+      "mock_done": true,
+      "v10": 83,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "27",
+      "started": true,
+      "mock_done": true,
+      "v10": 162,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "28",
+      "started": true,
+      "mock_done": true,
+      "v10": 126,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "86",
+      "started": true,
+      "mock_done": true,
+      "v10": 125,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "87",
+      "started": true,
+      "mock_done": true,
+      "v10": 93,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "88",
+      "started": true,
+      "mock_done": true,
+      "v10": 104,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "89",
+      "started": true,
+      "mock_done": true,
+      "v10": 95,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "90",
+      "started": true,
+      "mock_done": true,
+      "v10": 149,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "91",
+      "started": true,
+      "mock_done": true,
+      "v10": 245,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "92",
+      "started": true,
+      "mock_done": true,
+      "v10": 184,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "93",
+      "started": true,
+      "mock_done": true,
+      "v10": 210,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "74",
+      "started": true,
+      "mock_done": true,
+      "v10": 221,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "75",
+      "started": true,
+      "mock_done": true,
+      "v10": 235,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "76",
+      "started": true,
+      "mock_done": true,
+      "v10": 187,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "77",
+      "started": true,
+      "mock_done": true,
+      "v10": 97,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "78",
+      "started": true,
+      "mock_done": true,
+      "v10": 81,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "79",
+      "started": true,
+      "mock_done": true,
+      "v10": 78,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "80",
+      "started": true,
+      "mock_done": true,
+      "v10": 125,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "81",
+      "started": true,
+      "mock_done": true,
+      "v10": 77,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "63",
+      "started": true,
+      "mock_done": true,
+      "v10": 134,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "64",
+      "started": true,
+      "mock_done": true,
+      "v10": 60,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "65",
+      "started": true,
+      "mock_done": true,
+      "v10": 114,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "66",
+      "started": true,
+      "mock_done": true,
+      "v10": 205,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "117",
+      "started": true,
+      "mock_done": true,
+      "v10": 134,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "118",
+      "started": true,
+      "mock_done": true,
+      "v10": 140,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "119",
+      "started": true,
+      "mock_done": true,
+      "v10": 130,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "120",
+      "started": true,
+      "mock_done": true,
+      "v10": 115,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "135",
+      "started": true,
+      "mock_done": true,
+      "v10": 151,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "136",
+      "started": true,
+      "mock_done": true,
+      "v10": 180,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "137",
+      "started": true,
+      "mock_done": true,
+      "v10": 136,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "138",
+      "started": true,
+      "mock_done": true,
+      "v10": 175,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "94",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "95",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "96",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "21",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "22",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "23",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "113",
+      "started": true,
+      "mock_done": true,
+      "v10": 151,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "114",
+      "started": true,
+      "mock_done": true,
+      "v10": 81,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "115",
+      "started": true,
+      "mock_done": true,
+      "v10": 51,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "116",
+      "started": true,
+      "mock_done": true,
+      "v10": 117,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "33",
+      "started": true,
+      "mock_done": true,
+      "v10": 85,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "34",
+      "started": true,
+      "mock_done": true,
+      "v10": 150,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "35",
+      "started": true,
+      "mock_done": true,
+      "v10": 160,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "36",
+      "started": true,
+      "mock_done": true,
+      "v10": 158,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "128",
+      "started": true,
+      "mock_done": true,
+      "v10": 160,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "129",
+      "started": true,
+      "mock_done": true,
+      "v10": 74,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "130",
+      "started": true,
+      "mock_done": true,
+      "v10": 105,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "131",
+      "started": true,
+      "mock_done": true,
+      "v10": 108,
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "132",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "133",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    },
+    {
+      "id": "134",
+      "started": true,
+      "mock_done": true,
+      "v10": "",
+      "remark": "शांतिपूर्ण"
+    }
+  ]
+}

@@ -1,0 +1,492 @@
+{
+  "ps": {
+    "W-1": [
+      {
+        "key": "c1",
+        "name": "खेमराज खारवाल",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "हीरालाल",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "मुकेश कुमार",
+        "party": "IND",
+        "symbol": "सेब"
+      }
+    ],
+    "W-2": [
+      {
+        "key": "c1",
+        "name": "अनिता मीणा",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "चंदा कंवर",
+        "party": "BJP",
+        "symbol": "कमल"
+      }
+    ],
+    "W-3": [
+      {
+        "key": "c1",
+        "name": "रिंकू कुमारी",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "सोनी",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "मनीषा जोधा",
+        "party": "IND",
+        "symbol": "सेब"
+      },
+      {
+        "key": "c4",
+        "name": "सेवन्ती",
+        "party": "IND",
+        "symbol": "अलमारी"
+      }
+    ],
+    "W-4": [
+      {
+        "key": "c1",
+        "name": "चेलाराम",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c2",
+        "name": "जयन्तिलाल",
+        "party": "INC",
+        "symbol": "हाथ"
+      }
+    ],
+    "W-5": [
+      {
+        "key": "c1",
+        "name": "मादाराम",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c2",
+        "name": "शम्भूरराम मीना",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c3",
+        "name": "पिन्टा कुमारी",
+        "party": "IND",
+        "symbol": "अलमारी"
+      }
+    ],
+    "W-6": [
+      {
+        "key": "c1",
+        "name": "कंचन कुंवर",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "संतोष कंवर",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "पावनी देवी",
+        "party": "IND",
+        "symbol": "अलमारी"
+      }
+    ],
+    "W-7": [
+      {
+        "key": "c1",
+        "name": "कमला",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "धनकी देवी",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "संतोष देवी",
+        "party": "IND",
+        "symbol": "सेब"
+      }
+    ],
+    "W-8": [
+      {
+        "key": "c1",
+        "name": "विक्रम कुमार",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "शेर सिंह",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "पन्नालाल",
+        "party": "IND",
+        "symbol": "अलमारी"
+      },
+      {
+        "key": "c4",
+        "name": "महेन्द्र कुमार",
+        "party": "IND",
+        "symbol": "सेब"
+      },
+      {
+        "key": "c5",
+        "name": "समरथाराम",
+        "party": "IND",
+        "symbol": "कोट"
+      }
+    ],
+    "W-9": [
+      {
+        "key": "c1",
+        "name": "जीवी",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c2",
+        "name": "विमला कुमारी",
+        "party": "INC",
+        "symbol": "हाथ"
+      }
+    ],
+    "W-10": [
+      {
+        "key": "c1",
+        "name": "मंजू",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "रिंकू कंवर",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "गुणवन्त कुंवर",
+        "party": "IND",
+        "symbol": "सेब"
+      },
+      {
+        "key": "c4",
+        "name": "भागू",
+        "party": "IND",
+        "symbol": "अलमारी"
+      }
+    ],
+    "W-11": [
+      {
+        "key": "c1",
+        "name": "राजवीर परमार",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "लक्ष्मणराम",
+        "party": "BJP",
+        "symbol": "कमल"
+      }
+    ],
+    "W-12": [
+      {
+        "key": "c1",
+        "name": "राजेन्द्र सिंह राठौड़",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "शिवेन्द्रजीत सिंह",
+        "party": "BJP",
+        "symbol": "कमल"
+      }
+    ],
+    "W-13": [
+      {
+        "key": "c1",
+        "name": "पंकु देवी",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c2",
+        "name": "सरिता कुमारी",
+        "party": "INC",
+        "symbol": "हाथ"
+      }
+    ],
+    "W-14": [
+      {
+        "key": "c1",
+        "name": "नन्दिनी कंवर राणावत",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "फेंसी देवी",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "रवीना राजपुरोहित",
+        "party": "IND",
+        "symbol": "सेब"
+      }
+    ],
+    "W-15": [
+      {
+        "key": "c1",
+        "name": "प्रकाश कुमार",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "मालाराम",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "जितेन्द्र कुमार",
+        "party": "IND",
+        "symbol": "सेब"
+      }
+    ],
+    "W-16": [
+      {
+        "key": "c1",
+        "name": "बिहारीलाल",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c2",
+        "name": "विनोद सिंह",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c3",
+        "name": "पूनाराम",
+        "party": "IND",
+        "symbol": "सेब"
+      },
+      {
+        "key": "c4",
+        "name": "भीमसिंह",
+        "party": "IND",
+        "symbol": "अलमारी"
+      }
+    ],
+    "W-17": [
+      {
+        "key": "c1",
+        "name": "पेमाराम",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c2",
+        "name": "वरदाराम उर्फ वरदराम",
+        "party": "INC",
+        "symbol": "हाथ"
+      }
+    ],
+    "W-18": [
+      {
+        "key": "c1",
+        "name": "पूरण कंवर",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "संजू",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "राधा",
+        "party": "IND",
+        "symbol": "अलमारी"
+      }
+    ],
+    "W-19": [
+      {
+        "key": "c1",
+        "name": "जमना देवी",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c2",
+        "name": "पुष्पा",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c3",
+        "name": "सविता",
+        "party": "IND",
+        "symbol": "सेब"
+      }
+    ],
+    "W-20": [
+      {
+        "key": "c1",
+        "name": "प्रितम कुमार व्यास",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "ललिता देवी",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "हरिसिंह",
+        "party": "IND",
+        "symbol": "सेब"
+      }
+    ],
+    "W-21": [
+      {
+        "key": "c1",
+        "name": "सुरेन्द्र सिंह",
+        "party": "INC",
+        "symbol": "हाथ"
+      },
+      {
+        "key": "c2",
+        "name": "त्रिपाल सिंह राणावत",
+        "party": "BJP",
+        "symbol": "कमल"
+      },
+      {
+        "key": "c3",
+        "name": "सोना राम",
+        "party": "IND",
+        "symbol": "सेब"
+      }
+    ]
+  },
+  "zp": {
+    "Z-7": {
+      "wardNo": 7,
+      "polled": 20237,
+      "candidates": [
+        {
+          "key": "c1",
+          "name": "करण सिंह",
+          "party": "INC",
+          "symbol": "हाथ"
+        },
+        {
+          "key": "c2",
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "symbol": "कमल"
+        }
+      ]
+    },
+    "Z-8": {
+      "wardNo": 8,
+      "polled": 17144,
+      "candidates": [
+        {
+          "key": "c1",
+          "name": "गुडिया",
+          "party": "INC",
+          "symbol": "हाथ"
+        },
+        {
+          "key": "c2",
+          "name": "सुगना",
+          "party": "BJP",
+          "symbol": "कमल"
+        }
+      ]
+    },
+    "Z-9": {
+      "wardNo": 9,
+      "polled": 16061,
+      "candidates": [
+        {
+          "key": "c1",
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "symbol": "कमल"
+        },
+        {
+          "key": "c2",
+          "name": "रवि हरिशंकर मेवाड़ा",
+          "party": "INC",
+          "symbol": "हाथ"
+        },
+        {
+          "key": "c3",
+          "name": "हेमाराम",
+          "party": "IND",
+          "symbol": "निर्दलीय"
+        }
+      ]
+    },
+    "Z-10": {
+      "wardNo": 10,
+      "polled": 18501,
+      "candidates": [
+        {
+          "key": "c1",
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "symbol": "कमल"
+        },
+        {
+          "key": "c2",
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "symbol": "हाथ"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1522 @@
+[
+  {
+    "s_no": 1,
+    "booth_no": "4",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 1,
+    "table": 1,
+    "cu_id": "RJSCU009635",
+    "remarks": ""
+  },
+  {
+    "s_no": 2,
+    "booth_no": "17",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 1,
+    "table": 2,
+    "cu_id": "RJSCU010038",
+    "remarks": ""
+  },
+  {
+    "s_no": 3,
+    "booth_no": "33",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 1,
+    "table": 3,
+    "cu_id": "RJSCU009768",
+    "remarks": ""
+  },
+  {
+    "s_no": 4,
+    "booth_no": "53",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 1,
+    "table": 4,
+    "cu_id": "RJSCU011635",
+    "remarks": ""
+  },
+  {
+    "s_no": 5,
+    "booth_no": "64",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 1,
+    "table": 5,
+    "cu_id": "RJSCU012677",
+    "remarks": ""
+  },
+  {
+    "s_no": 6,
+    "booth_no": "139",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 1,
+    "table": 6,
+    "cu_id": "RJSCU005292",
+    "remarks": ""
+  },
+  {
+    "s_no": 7,
+    "booth_no": "1",
+    "ps_ward": "W-2",
+    "zp_ward": "Z-7",
+    "round": 1,
+    "table": 7,
+    "cu_id": "RJSCU007063",
+    "remarks": ""
+  },
+  {
+    "s_no": 8,
+    "booth_no": "21",
+    "ps_ward": "W-9",
+    "zp_ward": "Z-9",
+    "round": 1,
+    "table": 8,
+    "cu_id": "RJSCU006629",
+    "remarks": ""
+  },
+  {
+    "s_no": 9,
+    "booth_no": "37",
+    "ps_ward": "W-15",
+    "zp_ward": "Z-10",
+    "round": 1,
+    "table": 9,
+    "cu_id": "RJSCU012229",
+    "remarks": ""
+  },
+  {
+    "s_no": 10,
+    "booth_no": "12",
+    "ps_ward": "W-5",
+    "zp_ward": "Z-8",
+    "round": 1,
+    "table": 10,
+    "cu_id": "RJSCU007628",
+    "remarks": ""
+  },
+  {
+    "s_no": 11,
+    "booth_no": "41",
+    "ps_ward": "W-1",
+    "zp_ward": "Z-7",
+    "round": 1,
+    "table": 11,
+    "cu_id": "RJSCU010074",
+    "remarks": ""
+  },
+  {
+    "s_no": 12,
+    "booth_no": "57",
+    "ps_ward": "W-20",
+    "zp_ward": "Z-9",
+    "round": 1,
+    "table": 12,
+    "cu_id": "RJSCU011183",
+    "remarks": ""
+  },
+  {
+    "s_no": 13,
+    "booth_no": "86",
+    "ps_ward": "W-19",
+    "zp_ward": "Z-9",
+    "round": 1,
+    "table": 13,
+    "cu_id": "RJSCU010545",
+    "remarks": ""
+  },
+  {
+    "s_no": 14,
+    "booth_no": "94",
+    "ps_ward": "W-8",
+    "zp_ward": "Z-9",
+    "round": 1,
+    "table": 14,
+    "cu_id": "RJSCU011691",
+    "remarks": ""
+  },
+  {
+    "s_no": 15,
+    "booth_no": "97",
+    "ps_ward": "W-18",
+    "zp_ward": "Z-7",
+    "round": 1,
+    "table": 15,
+    "cu_id": "RJSCU013682",
+    "remarks": ""
+  },
+  {
+    "s_no": 16,
+    "booth_no": "5",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 2,
+    "table": 1,
+    "cu_id": "RJSCU007926",
+    "remarks": ""
+  },
+  {
+    "s_no": 17,
+    "booth_no": "19",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 2,
+    "table": 2,
+    "cu_id": "RJSCU010163",
+    "remarks": ""
+  },
+  {
+    "s_no": 18,
+    "booth_no": "34",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 2,
+    "table": 3,
+    "cu_id": "RJSCU008075",
+    "remarks": ""
+  },
+  {
+    "s_no": 19,
+    "booth_no": "54",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 2,
+    "table": 4,
+    "cu_id": "RJSCU006921",
+    "remarks": ""
+  },
+  {
+    "s_no": 20,
+    "booth_no": "65",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 2,
+    "table": 5,
+    "cu_id": "RJSCU011504",
+    "remarks": ""
+  },
+  {
+    "s_no": 21,
+    "booth_no": "140",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 2,
+    "table": 6,
+    "cu_id": "RJSCU007788",
+    "remarks": ""
+  },
+  {
+    "s_no": 22,
+    "booth_no": "2",
+    "ps_ward": "W-2",
+    "zp_ward": "Z-7",
+    "round": 2,
+    "table": 7,
+    "cu_id": "RJSCU006654",
+    "remarks": ""
+  },
+  {
+    "s_no": 23,
+    "booth_no": "22",
+    "ps_ward": "W-9",
+    "zp_ward": "Z-9",
+    "round": 2,
+    "table": 8,
+    "cu_id": "RJSCU006344",
+    "remarks": ""
+  },
+  {
+    "s_no": 24,
+    "booth_no": "38",
+    "ps_ward": "W-15",
+    "zp_ward": "Z-10",
+    "round": 2,
+    "table": 9,
+    "cu_id": "RJSCU010356",
+    "remarks": ""
+  },
+  {
+    "s_no": 25,
+    "booth_no": "13",
+    "ps_ward": "W-5",
+    "zp_ward": "Z-8",
+    "round": 2,
+    "table": 10,
+    "cu_id": "RJSCU013913",
+    "remarks": ""
+  },
+  {
+    "s_no": 26,
+    "booth_no": "42",
+    "ps_ward": "W-1",
+    "zp_ward": "Z-7",
+    "round": 2,
+    "table": 11,
+    "cu_id": "RJSCU011398",
+    "remarks": ""
+  },
+  {
+    "s_no": 27,
+    "booth_no": "58",
+    "ps_ward": "W-20",
+    "zp_ward": "Z-9",
+    "round": 2,
+    "table": 12,
+    "cu_id": "RJSCU011098",
+    "remarks": ""
+  },
+  {
+    "s_no": 28,
+    "booth_no": "87",
+    "ps_ward": "W-19",
+    "zp_ward": "Z-9",
+    "round": 2,
+    "table": 13,
+    "cu_id": "RJSCU007205",
+    "remarks": ""
+  },
+  {
+    "s_no": 29,
+    "booth_no": "95",
+    "ps_ward": "W-8",
+    "zp_ward": "Z-9",
+    "round": 2,
+    "table": 14,
+    "cu_id": "RJSCU011638",
+    "remarks": ""
+  },
+  {
+    "s_no": 30,
+    "booth_no": "98",
+    "ps_ward": "W-18",
+    "zp_ward": "Z-7",
+    "round": 2,
+    "table": 15,
+    "cu_id": "RJSCU006047",
+    "remarks": ""
+  },
+  {
+    "s_no": 31,
+    "booth_no": "6",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 3,
+    "table": 1,
+    "cu_id": "RJSCU010883",
+    "remarks": ""
+  },
+  {
+    "s_no": 32,
+    "booth_no": "20",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 3,
+    "table": 2,
+    "cu_id": "RJSCU005607",
+    "remarks": ""
+  },
+  {
+    "s_no": 33,
+    "booth_no": "35",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 3,
+    "table": 3,
+    "cu_id": "RJSCU010259",
+    "remarks": ""
+  },
+  {
+    "s_no": 34,
+    "booth_no": "55",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 3,
+    "table": 4,
+    "cu_id": "RJSCU010704",
+    "remarks": ""
+  },
+  {
+    "s_no": 35,
+    "booth_no": "66",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 3,
+    "table": 5,
+    "cu_id": "RJSCU009836",
+    "remarks": ""
+  },
+  {
+    "s_no": 36,
+    "booth_no": "141",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 3,
+    "table": 6,
+    "cu_id": "RJSCU006499",
+    "remarks": ""
+  },
+  {
+    "s_no": 37,
+    "booth_no": "3",
+    "ps_ward": "W-2",
+    "zp_ward": "Z-7",
+    "round": 3,
+    "table": 7,
+    "cu_id": "RJSCU006112",
+    "remarks": ""
+  },
+  {
+    "s_no": 38,
+    "booth_no": "23",
+    "ps_ward": "W-9",
+    "zp_ward": "Z-9",
+    "round": 3,
+    "table": 8,
+    "cu_id": "RJSCU012977",
+    "remarks": ""
+  },
+  {
+    "s_no": 39,
+    "booth_no": "39",
+    "ps_ward": "W-15",
+    "zp_ward": "Z-10",
+    "round": 3,
+    "table": 9,
+    "cu_id": "RJSCU010392",
+    "remarks": ""
+  },
+  {
+    "s_no": 40,
+    "booth_no": "14",
+    "ps_ward": "W-5",
+    "zp_ward": "Z-8",
+    "round": 3,
+    "table": 10,
+    "cu_id": "RJSCU011321",
+    "remarks": ""
+  },
+  {
+    "s_no": 41,
+    "booth_no": "43",
+    "ps_ward": "W-1",
+    "zp_ward": "Z-7",
+    "round": 3,
+    "table": 11,
+    "cu_id": "RJSCU010659",
+    "remarks": ""
+  },
+  {
+    "s_no": 42,
+    "booth_no": "59",
+    "ps_ward": "W-20",
+    "zp_ward": "Z-9",
+    "round": 3,
+    "table": 12,
+    "cu_id": "RJSCU015448",
+    "remarks": ""
+  },
+  {
+    "s_no": 43,
+    "booth_no": "88",
+    "ps_ward": "W-19",
+    "zp_ward": "Z-9",
+    "round": 3,
+    "table": 13,
+    "cu_id": "RJSCU009924",
+    "remarks": ""
+  },
+  {
+    "s_no": 44,
+    "booth_no": "96",
+    "ps_ward": "W-8",
+    "zp_ward": "Z-9",
+    "round": 3,
+    "table": 14,
+    "cu_id": "RJSCU009395",
+    "remarks": ""
+  },
+  {
+    "s_no": 45,
+    "booth_no": "99",
+    "ps_ward": "W-18",
+    "zp_ward": "Z-7",
+    "round": 3,
+    "table": 15,
+    "cu_id": "RJSCU008774",
+    "remarks": ""
+  },
+  {
+    "s_no": 46,
+    "booth_no": "7",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 4,
+    "table": 1,
+    "cu_id": "RJSCU012000",
+    "remarks": ""
+  },
+  {
+    "s_no": 47,
+    "booth_no": "24",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 4,
+    "table": 2,
+    "cu_id": "RJSCU007283",
+    "remarks": ""
+  },
+  {
+    "s_no": 48,
+    "booth_no": "36",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 4,
+    "table": 3,
+    "cu_id": "RJSCU005989",
+    "remarks": ""
+  },
+  {
+    "s_no": 49,
+    "booth_no": "56",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 4,
+    "table": 4,
+    "cu_id": "RJSCU013263",
+    "remarks": ""
+  },
+  {
+    "s_no": 50,
+    "booth_no": "77",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 4,
+    "table": 5,
+    "cu_id": "RJSCU009163",
+    "remarks": ""
+  },
+  {
+    "s_no": 51,
+    "booth_no": "142",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 4,
+    "table": 6,
+    "cu_id": "RJSCU010388",
+    "remarks": ""
+  },
+  {
+    "s_no": 52,
+    "booth_no": "8",
+    "ps_ward": "W-2",
+    "zp_ward": "Z-7",
+    "round": 4,
+    "table": 7,
+    "cu_id": "RJSCU009278",
+    "remarks": ""
+  },
+  {
+    "s_no": 53,
+    "booth_no": "117",
+    "ps_ward": "W-9",
+    "zp_ward": "Z-9",
+    "round": 4,
+    "table": 8,
+    "cu_id": "RJSCU011815",
+    "remarks": ""
+  },
+  {
+    "s_no": 54,
+    "booth_no": "40",
+    "ps_ward": "W-15",
+    "zp_ward": "Z-10",
+    "round": 4,
+    "table": 9,
+    "cu_id": "RJSCU013002",
+    "remarks": ""
+  },
+  {
+    "s_no": 55,
+    "booth_no": "15",
+    "ps_ward": "W-5",
+    "zp_ward": "Z-8",
+    "round": 4,
+    "table": 10,
+    "cu_id": "RJSCU008193",
+    "remarks": ""
+  },
+  {
+    "s_no": 56,
+    "booth_no": "44",
+    "ps_ward": "W-1",
+    "zp_ward": "Z-7",
+    "round": 4,
+    "table": 11,
+    "cu_id": "RJSCU010440",
+    "remarks": ""
+  },
+  {
+    "s_no": 57,
+    "booth_no": "60",
+    "ps_ward": "W-20",
+    "zp_ward": "Z-9",
+    "round": 4,
+    "table": 12,
+    "cu_id": "RJSCU008867",
+    "remarks": ""
+  },
+  {
+    "s_no": 58,
+    "booth_no": "89",
+    "ps_ward": "W-19",
+    "zp_ward": "Z-9",
+    "round": 4,
+    "table": 13,
+    "cu_id": "RJSCU011981",
+    "remarks": ""
+  },
+  {
+    "s_no": 59,
+    "booth_no": "135",
+    "ps_ward": "W-8",
+    "zp_ward": "Z-9",
+    "round": 4,
+    "table": 14,
+    "cu_id": "RJSCU009429",
+    "remarks": ""
+  },
+  {
+    "s_no": 60,
+    "booth_no": "100",
+    "ps_ward": "W-18",
+    "zp_ward": "Z-7",
+    "round": 4,
+    "table": 15,
+    "cu_id": "RJSCU010361",
+    "remarks": ""
+  },
+  {
+    "s_no": 61,
+    "booth_no": "29",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 5,
+    "table": 1,
+    "cu_id": "RJSCU012071",
+    "remarks": ""
+  },
+  {
+    "s_no": 62,
+    "booth_no": "25",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 5,
+    "table": 2,
+    "cu_id": "RJSCU012684",
+    "remarks": ""
+  },
+  {
+    "s_no": 63,
+    "booth_no": "113",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 5,
+    "table": 3,
+    "cu_id": "RJSCU011571",
+    "remarks": ""
+  },
+  {
+    "s_no": 64,
+    "booth_no": "104",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 5,
+    "table": 4,
+    "cu_id": "RJSCU009695",
+    "remarks": ""
+  },
+  {
+    "s_no": 65,
+    "booth_no": "78",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 5,
+    "table": 5,
+    "cu_id": "RJSCU014908",
+    "remarks": ""
+  },
+  {
+    "s_no": 66,
+    "booth_no": "143",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 5,
+    "table": 6,
+    "cu_id": "RJSCU010105",
+    "remarks": ""
+  },
+  {
+    "s_no": 67,
+    "booth_no": "9",
+    "ps_ward": "W-2",
+    "zp_ward": "Z-7",
+    "round": 5,
+    "table": 7,
+    "cu_id": "RJSCU012923",
+    "remarks": ""
+  },
+  {
+    "s_no": 68,
+    "booth_no": "118",
+    "ps_ward": "W-9",
+    "zp_ward": "Z-9",
+    "round": 5,
+    "table": 8,
+    "cu_id": "RJSCU010529",
+    "remarks": ""
+  },
+  {
+    "s_no": 69,
+    "booth_no": "47",
+    "ps_ward": "W-15",
+    "zp_ward": "Z-10",
+    "round": 5,
+    "table": 9,
+    "cu_id": "RJSCU005049",
+    "remarks": ""
+  },
+  {
+    "s_no": 70,
+    "booth_no": "16",
+    "ps_ward": "W-5",
+    "zp_ward": "Z-8",
+    "round": 5,
+    "table": 10,
+    "cu_id": "RJSCU009169",
+    "remarks": ""
+  },
+  {
+    "s_no": 71,
+    "booth_no": "45",
+    "ps_ward": "W-1",
+    "zp_ward": "Z-7",
+    "round": 5,
+    "table": 11,
+    "cu_id": "RJSCU006856",
+    "remarks": ""
+  },
+  {
+    "s_no": 72,
+    "booth_no": "61",
+    "ps_ward": "W-20",
+    "zp_ward": "Z-9",
+    "round": 5,
+    "table": 12,
+    "cu_id": "RJSCU009769",
+    "remarks": ""
+  },
+  {
+    "s_no": 73,
+    "booth_no": "90",
+    "ps_ward": "W-19",
+    "zp_ward": "Z-9",
+    "round": 5,
+    "table": 13,
+    "cu_id": "RJSCU008754",
+    "remarks": ""
+  },
+  {
+    "s_no": 74,
+    "booth_no": "136",
+    "ps_ward": "W-8",
+    "zp_ward": "Z-9",
+    "round": 5,
+    "table": 14,
+    "cu_id": "RJSCU005707",
+    "remarks": ""
+  },
+  {
+    "s_no": 75,
+    "booth_no": "101",
+    "ps_ward": "W-18",
+    "zp_ward": "Z-7",
+    "round": 5,
+    "table": 15,
+    "cu_id": "RJSCU010839",
+    "remarks": ""
+  },
+  {
+    "s_no": 76,
+    "booth_no": "30",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 6,
+    "table": 1,
+    "cu_id": "RJSCU013432",
+    "remarks": ""
+  },
+  {
+    "s_no": 77,
+    "booth_no": "26",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 6,
+    "table": 2,
+    "cu_id": "RJSCU006745",
+    "remarks": ""
+  },
+  {
+    "s_no": 78,
+    "booth_no": "114",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 6,
+    "table": 3,
+    "cu_id": "RJSCU011661",
+    "remarks": ""
+  },
+  {
+    "s_no": 79,
+    "booth_no": "105",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 6,
+    "table": 4,
+    "cu_id": "RJSCU011733",
+    "remarks": ""
+  },
+  {
+    "s_no": 80,
+    "booth_no": "79",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 6,
+    "table": 5,
+    "cu_id": "RJSCU008849",
+    "remarks": ""
+  },
+  {
+    "s_no": 81,
+    "booth_no": "144",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 6,
+    "table": 6,
+    "cu_id": "RJSCU009457",
+    "remarks": ""
+  },
+  {
+    "s_no": 82,
+    "booth_no": "10",
+    "ps_ward": "W-2",
+    "zp_ward": "Z-7",
+    "round": 6,
+    "table": 7,
+    "cu_id": "RJSCU005887",
+    "remarks": ""
+  },
+  {
+    "s_no": 83,
+    "booth_no": "119",
+    "ps_ward": "W-9",
+    "zp_ward": "Z-9",
+    "round": 6,
+    "table": 8,
+    "cu_id": "RJSCU012632",
+    "remarks": ""
+  },
+  {
+    "s_no": 84,
+    "booth_no": "48",
+    "ps_ward": "W-15",
+    "zp_ward": "Z-10",
+    "round": 6,
+    "table": 9,
+    "cu_id": "RJSCU005609",
+    "remarks": ""
+  },
+  {
+    "s_no": 85,
+    "booth_no": "18",
+    "ps_ward": "W-5",
+    "zp_ward": "Z-8",
+    "round": 6,
+    "table": 10,
+    "cu_id": "RJSCU006025",
+    "remarks": ""
+  },
+  {
+    "s_no": 86,
+    "booth_no": "46",
+    "ps_ward": "W-1",
+    "zp_ward": "Z-7",
+    "round": 6,
+    "table": 11,
+    "cu_id": "RJSCU006823",
+    "remarks": ""
+  },
+  {
+    "s_no": 87,
+    "booth_no": "46A",
+    "ps_ward": "W-1",
+    "zp_ward": "Z-7",
+    "round": 6,
+    "table": 11,
+    "cu_id": "RJSCU011416",
+    "remarks": ""
+  },
+  {
+    "s_no": 88,
+    "booth_no": "62",
+    "ps_ward": "W-20",
+    "zp_ward": "Z-9",
+    "round": 6,
+    "table": 12,
+    "cu_id": "RJSCU009674",
+    "remarks": ""
+  },
+  {
+    "s_no": 89,
+    "booth_no": "110",
+    "ps_ward": "W-19",
+    "zp_ward": "Z-10",
+    "round": 6,
+    "table": 13,
+    "cu_id": "RJSCU005844",
+    "remarks": ""
+  },
+  {
+    "s_no": 90,
+    "booth_no": "137",
+    "ps_ward": "W-8",
+    "zp_ward": "Z-9",
+    "round": 6,
+    "table": 14,
+    "cu_id": "RJSCU006916",
+    "remarks": ""
+  },
+  {
+    "s_no": 91,
+    "booth_no": "102",
+    "ps_ward": "W-18",
+    "zp_ward": "Z-7",
+    "round": 6,
+    "table": 15,
+    "cu_id": "RJSCU007250",
+    "remarks": ""
+  },
+  {
+    "s_no": 92,
+    "booth_no": "31",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 7,
+    "table": 1,
+    "cu_id": "RJSCU011776",
+    "remarks": ""
+  },
+  {
+    "s_no": 93,
+    "booth_no": "27",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 7,
+    "table": 2,
+    "cu_id": "RJSCU005066",
+    "remarks": ""
+  },
+  {
+    "s_no": 94,
+    "booth_no": "115",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 7,
+    "table": 3,
+    "cu_id": "RJSCU005269",
+    "remarks": ""
+  },
+  {
+    "s_no": 95,
+    "booth_no": "106",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 7,
+    "table": 4,
+    "cu_id": "RJSCU006023",
+    "remarks": ""
+  },
+  {
+    "s_no": 96,
+    "booth_no": "80",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 7,
+    "table": 5,
+    "cu_id": "RJSCU005353",
+    "remarks": ""
+  },
+  {
+    "s_no": 97,
+    "booth_no": "145",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 7,
+    "table": 6,
+    "cu_id": "RJSCU011499",
+    "remarks": ""
+  },
+  {
+    "s_no": 98,
+    "booth_no": "11",
+    "ps_ward": "W-2",
+    "zp_ward": "Z-7",
+    "round": 7,
+    "table": 7,
+    "cu_id": "RJSCU007186",
+    "remarks": ""
+  },
+  {
+    "s_no": 99,
+    "booth_no": "120",
+    "ps_ward": "W-9",
+    "zp_ward": "Z-9",
+    "round": 7,
+    "table": 8,
+    "cu_id": "RJSCU010041",
+    "remarks": ""
+  },
+  {
+    "s_no": 100,
+    "booth_no": "49",
+    "ps_ward": "W-15",
+    "zp_ward": "Z-10",
+    "round": 7,
+    "table": 9,
+    "cu_id": "RJSCU008210",
+    "remarks": ""
+  },
+  {
+    "s_no": 101,
+    "booth_no": "50",
+    "ps_ward": "W-21",
+    "zp_ward": "Z-7",
+    "round": 7,
+    "table": 10,
+    "cu_id": "RJSCU006528",
+    "remarks": ""
+  },
+  {
+    "s_no": 102,
+    "booth_no": "63",
+    "ps_ward": "W-12",
+    "zp_ward": "Z-10",
+    "round": 7,
+    "table": 11,
+    "cu_id": "RJSCU005839",
+    "remarks": ""
+  },
+  {
+    "s_no": 103,
+    "booth_no": "67",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 7,
+    "table": 12,
+    "cu_id": "RJSCU010248",
+    "remarks": ""
+  },
+  {
+    "s_no": 104,
+    "booth_no": "111",
+    "ps_ward": "W-19",
+    "zp_ward": "Z-10",
+    "round": 7,
+    "table": 13,
+    "cu_id": "RJSCU011317",
+    "remarks": ""
+  },
+  {
+    "s_no": 105,
+    "booth_no": "138",
+    "ps_ward": "W-8",
+    "zp_ward": "Z-9",
+    "round": 7,
+    "table": 14,
+    "cu_id": "RJSCU006014",
+    "remarks": ""
+  },
+  {
+    "s_no": 106,
+    "booth_no": "103",
+    "ps_ward": "W-18",
+    "zp_ward": "Z-7",
+    "round": 7,
+    "table": 15,
+    "cu_id": "RJSCU007716",
+    "remarks": ""
+  },
+  {
+    "s_no": 107,
+    "booth_no": "32",
+    "ps_ward": "W-17",
+    "zp_ward": "Z-7",
+    "round": 8,
+    "table": 1,
+    "cu_id": "RJSCU006522",
+    "remarks": ""
+  },
+  {
+    "s_no": 108,
+    "booth_no": "28",
+    "ps_ward": "W-6",
+    "zp_ward": "Z-8",
+    "round": 8,
+    "table": 2,
+    "cu_id": "RJSCU012805",
+    "remarks": ""
+  },
+  {
+    "s_no": 109,
+    "booth_no": "116",
+    "ps_ward": "W-7",
+    "zp_ward": "Z-8",
+    "round": 8,
+    "table": 3,
+    "cu_id": "RJSCU010833",
+    "remarks": ""
+  },
+  {
+    "s_no": 110,
+    "booth_no": "107",
+    "ps_ward": "W-16",
+    "zp_ward": "Z-7",
+    "round": 8,
+    "table": 4,
+    "cu_id": "RJSCU010479",
+    "remarks": ""
+  },
+  {
+    "s_no": 111,
+    "booth_no": "81",
+    "ps_ward": "W-11",
+    "zp_ward": "Z-10",
+    "round": 8,
+    "table": 5,
+    "cu_id": "RJSCU006185",
+    "remarks": ""
+  },
+  {
+    "s_no": 112,
+    "booth_no": "146",
+    "ps_ward": "W-14",
+    "zp_ward": "Z-10",
+    "round": 8,
+    "table": 6,
+    "cu_id": "RJSCU006323",
+    "remarks": ""
+  },
+  {
+    "s_no": 113,
+    "booth_no": "108",
+    "ps_ward": "W-13",
+    "zp_ward": "Z-10",
+    "round": 8,
+    "table": 7,
+    "cu_id": "RJSCU005713",
+    "remarks": ""
+  },
+  {
+    "s_no": 114,
+    "booth_no": "121",
+    "ps_ward": "W-3",
+    "zp_ward": "Z-8",
+    "round": 8,
+    "table": 8,
+    "cu_id": "RJSCU015111",
+    "remarks": ""
+  },
+  {
+    "s_no": 115,
+    "booth_no": "128",
+    "ps_ward": "W-10",
+    "zp_ward": "Z-9",
+    "round": 8,
+    "table": 9,
+    "cu_id": "RJSCU007245",
+    "remarks": ""
+  },
+  {
+    "s_no": 116,
+    "booth_no": "51",
+    "ps_ward": "W-21",
+    "zp_ward": "Z-7",
+    "round": 8,
+    "table": 10,
+    "cu_id": "RJSCU009356",
+    "remarks": ""
+  },
+  {
+    "s_no": 117,
+    "booth_no": "74",
+    "ps_ward": "W-12",
+    "zp_ward": "Z-10",
+    "round": 8,
+    "table": 11,
+    "cu_id": "RJSCU009554",
+    "remarks": ""
+  },
+  {
+    "s_no": 118,
+    "booth_no": "68",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 8,
+    "table": 12,
+    "cu_id": "RJSCU007900",
+    "remarks": ""
+  },
+  {
+    "s_no": 119,
+    "booth_no": "109",
+    "ps_ward": "W-13",
+    "zp_ward": "Z-10",
+    "round": 9,
+    "table": 7,
+    "cu_id": "RJSCU013034",
+    "remarks": ""
+  },
+  {
+    "s_no": 120,
+    "booth_no": "122",
+    "ps_ward": "W-3",
+    "zp_ward": "Z-8",
+    "round": 9,
+    "table": 8,
+    "cu_id": "RJSCU014531",
+    "remarks": ""
+  },
+  {
+    "s_no": 121,
+    "booth_no": "129",
+    "ps_ward": "W-10",
+    "zp_ward": "Z-9",
+    "round": 9,
+    "table": 9,
+    "cu_id": "RJSCU005400",
+    "remarks": ""
+  },
+  {
+    "s_no": 122,
+    "booth_no": "52",
+    "ps_ward": "W-21",
+    "zp_ward": "Z-7",
+    "round": 9,
+    "table": 10,
+    "cu_id": "RJSCU009029",
+    "remarks": ""
+  },
+  {
+    "s_no": 123,
+    "booth_no": "75",
+    "ps_ward": "W-12",
+    "zp_ward": "Z-10",
+    "round": 9,
+    "table": 11,
+    "cu_id": "RJSCU015238",
+    "remarks": ""
+  },
+  {
+    "s_no": 124,
+    "booth_no": "69",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 9,
+    "table": 12,
+    "cu_id": "RJSCU011390",
+    "remarks": ""
+  },
+  {
+    "s_no": 125,
+    "booth_no": "112",
+    "ps_ward": "W-13",
+    "zp_ward": "Z-10",
+    "round": 10,
+    "table": 7,
+    "cu_id": "RJSCU011438",
+    "remarks": ""
+  },
+  {
+    "s_no": 126,
+    "booth_no": "123",
+    "ps_ward": "W-3",
+    "zp_ward": "Z-8",
+    "round": 10,
+    "table": 8,
+    "cu_id": "RJSCU012277",
+    "remarks": ""
+  },
+  {
+    "s_no": 127,
+    "booth_no": "130",
+    "ps_ward": "W-10",
+    "zp_ward": "Z-9",
+    "round": 10,
+    "table": 9,
+    "cu_id": "RJSCU009565",
+    "remarks": ""
+  },
+  {
+    "s_no": 128,
+    "booth_no": "82",
+    "ps_ward": "W-21",
+    "zp_ward": "Z-7",
+    "round": 10,
+    "table": 10,
+    "cu_id": "RJSCU011686",
+    "remarks": ""
+  },
+  {
+    "s_no": 129,
+    "booth_no": "76",
+    "ps_ward": "W-12",
+    "zp_ward": "Z-10",
+    "round": 10,
+    "table": 11,
+    "cu_id": "RJSCU009331",
+    "remarks": ""
+  },
+  {
+    "s_no": 130,
+    "booth_no": "70",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 10,
+    "table": 12,
+    "cu_id": "RJSCU011107",
+    "remarks": ""
+  },
+  {
+    "s_no": 131,
+    "booth_no": "147",
+    "ps_ward": "W-13",
+    "zp_ward": "Z-10",
+    "round": 11,
+    "table": 7,
+    "cu_id": "RJSCU010273",
+    "remarks": ""
+  },
+  {
+    "s_no": 132,
+    "booth_no": "124",
+    "ps_ward": "W-3",
+    "zp_ward": "Z-8",
+    "round": 11,
+    "table": 8,
+    "cu_id": "RJSCU009615",
+    "remarks": ""
+  },
+  {
+    "s_no": 133,
+    "booth_no": "131",
+    "ps_ward": "W-10",
+    "zp_ward": "Z-9",
+    "round": 11,
+    "table": 9,
+    "cu_id": "RJSCU009220",
+    "remarks": ""
+  },
+  {
+    "s_no": 134,
+    "booth_no": "83",
+    "ps_ward": "W-21",
+    "zp_ward": "Z-7",
+    "round": 11,
+    "table": 10,
+    "cu_id": "RJSCU015335",
+    "remarks": ""
+  },
+  {
+    "s_no": 135,
+    "booth_no": "91",
+    "ps_ward": "W-12",
+    "zp_ward": "Z-10",
+    "round": 11,
+    "table": 11,
+    "cu_id": "RJSCU013229",
+    "remarks": ""
+  },
+  {
+    "s_no": 136,
+    "booth_no": "71",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 11,
+    "table": 12,
+    "cu_id": "RJSCU012964",
+    "remarks": ""
+  },
+  {
+    "s_no": 137,
+    "booth_no": "148",
+    "ps_ward": "W-13",
+    "zp_ward": "Z-10",
+    "round": 12,
+    "table": 7,
+    "cu_id": "RJSCU014940",
+    "remarks": ""
+  },
+  {
+    "s_no": 138,
+    "booth_no": "125",
+    "ps_ward": "W-3",
+    "zp_ward": "Z-8",
+    "round": 12,
+    "table": 8,
+    "cu_id": "RJSCU005876",
+    "remarks": ""
+  },
+  {
+    "s_no": 139,
+    "booth_no": "132",
+    "ps_ward": "W-10",
+    "zp_ward": "Z-9",
+    "round": 12,
+    "table": 9,
+    "cu_id": "RJSCU011443",
+    "remarks": ""
+  },
+  {
+    "s_no": 140,
+    "booth_no": "84",
+    "ps_ward": "W-21",
+    "zp_ward": "Z-7",
+    "round": 12,
+    "table": 10,
+    "cu_id": "RJSCU005990",
+    "remarks": ""
+  },
+  {
+    "s_no": 141,
+    "booth_no": "92",
+    "ps_ward": "W-12",
+    "zp_ward": "Z-10",
+    "round": 12,
+    "table": 11,
+    "cu_id": "RJSCU010465",
+    "remarks": ""
+  },
+  {
+    "s_no": 142,
+    "booth_no": "72",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 12,
+    "table": 12,
+    "cu_id": "RJSCU006849",
+    "remarks": ""
+  },
+  {
+    "s_no": 143,
+    "booth_no": "149",
+    "ps_ward": "W-13",
+    "zp_ward": "Z-10",
+    "round": 13,
+    "table": 7,
+    "cu_id": "RJSCU015261",
+    "remarks": ""
+  },
+  {
+    "s_no": 144,
+    "booth_no": "126",
+    "ps_ward": "W-3",
+    "zp_ward": "Z-8",
+    "round": 13,
+    "table": 8,
+    "cu_id": "RJSCU011311",
+    "remarks": ""
+  },
+  {
+    "s_no": 145,
+    "booth_no": "133",
+    "ps_ward": "W-10",
+    "zp_ward": "Z-9",
+    "round": 13,
+    "table": 9,
+    "cu_id": "RJSCU011617",
+    "remarks": ""
+  },
+  {
+    "s_no": 146,
+    "booth_no": "85",
+    "ps_ward": "W-21",
+    "zp_ward": "Z-7",
+    "round": 13,
+    "table": 10,
+    "cu_id": "RJSCU007229",
+    "remarks": ""
+  },
+  {
+    "s_no": 147,
+    "booth_no": "93",
+    "ps_ward": "W-12",
+    "zp_ward": "Z-10",
+    "round": 13,
+    "table": 11,
+    "cu_id": "RJSCU012167",
+    "remarks": ""
+  },
+  {
+    "s_no": 148,
+    "booth_no": "73",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 13,
+    "table": 12,
+    "cu_id": "RJSCU009636",
+    "remarks": ""
+  },
+  {
+    "s_no": 149,
+    "booth_no": "150",
+    "ps_ward": "W-13",
+    "zp_ward": "Z-10",
+    "round": 14,
+    "table": 7,
+    "cu_id": "RJSCU005202",
+    "remarks": ""
+  },
+  {
+    "s_no": 150,
+    "booth_no": "127",
+    "ps_ward": "W-3",
+    "zp_ward": "Z-8",
+    "round": 14,
+    "table": 8,
+    "cu_id": "RJSCU009230",
+    "remarks": ""
+  },
+  {
+    "s_no": 151,
+    "booth_no": "134",
+    "ps_ward": "W-10",
+    "zp_ward": "Z-9",
+    "round": 14,
+    "table": 9,
+    "cu_id": "RJSCU010306",
+    "remarks": ""
+  },
+  {
+    "s_no": 152,
+    "booth_no": "73A",
+    "ps_ward": "W-4",
+    "zp_ward": "Z-8",
+    "round": 14,
+    "table": 12,
+    "cu_id": "RJSCU015768",
+    "remarks": ""
+  }
+]

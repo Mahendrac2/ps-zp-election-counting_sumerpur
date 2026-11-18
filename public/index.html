@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रिटर्निंग ऑफिसर (SDM) सुमेरपुर — पंचायती राज चुनाव 2026 | मतदान नियंत्रण</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Login removed: direct RO control room access enabled -->
+
+<!-- Toast Notification Container -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- Main Top Header -->
+<header>
+    <div class="header-left">
+        <div class="header-logo"><i class="fas fa-landmark-dome"></i></div>
+        <div class="header-title">
+            <h1 id="headerMainTitle">रिटर्निंग ऑफिसर (SDM) सुमेरपुर — पंचायती राज चुनाव 2026</h1>
+            <p id="headerSubTitle">मतदान नियंत्रण — मतदान दिवस लाइव मॉनिटरिंग एवं कंट्रोल रूम (152 बूथ | 10 ज़ोन | 34 ग्राम पंचायतें)</p>
+        </div>
+    </div>
+    <div class="header-right">
+        <!-- Date Switcher Pill -->
+        <div class="date-selector-pill">
+            <button id="btnDay22" class="date-pill-btn active" onclick="switchElectionDate('22-10-2026')">
+                <i class="fas fa-calendar-day"></i> 22-10-2026 (PS व ZP)
+            </button>
+            <button id="btnDay24" class="date-pill-btn" onclick="switchElectionDate('24-10-2026')">
+                <i class="fas fa-calendar-check"></i> 24-10-2026 (सरपंच)
+            </button>
+        </div>
+
+        <div class="sync-pill">
+            <span class="sync-dot"></span>
+            <span id="syncStatusText">लाइव सिंक सक्रिय</span>
+        </div>
+        <div class="clock-badge">
+            <i class="far fa-clock"></i> <span id="portalClock">00:00:00 AM</span>
+        </div>
+
+        <!-- GOOGLE SHEET AUTO-SYNC HEADER BUTTON -->
+        <button class="btn-sync-google" id="btnHeaderSyncGoogle" onclick="triggerGoogleSheetSync()" title="Google Sheet (22-OCT_BOOTH_ENTRY) से लाइव डेटा ऑटो-फ़िल करें">
+            <i class="fas fa-arrows-rotate"></i> <span>Google Sheet सिंक</span>
+        </button>
+
+        
+        <!-- COUNTING QUICK JUMP BUTTON -->
+        <a href="counting.html" class="btn-counting-nav" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); color: #fde047; border: 1.5px solid #6366f1; font-weight: 700; padding: 7px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25); text-decoration: none;" title="समर्पित मतगणना पोर्टल खोलें">
+            <i class="fas fa-calculator" style="color:#fde047;"></i> <span>मतगणना पोर्टल (14R / 15T) ↗</span>
+        </a>
+
+        <!-- BIG SCREEN STATS BUTTON -->
+        <button class="btn-bade-screen" onclick="openBigScreenModal()" title="बड़ी स्क्रीन / टीवी / प्रोजेक्टर पर लाइव स्टेट्स देखें">
+            <span class="tv-pulse-icon">📺</span> <span>बड़ी स्क्रीन पर स्टेट्स</span>
+        </button>
+
+        <div class="user-pill" style="background: rgba(245, 158, 11, 0.12); border: 1.5px solid #f59e0b;">
+            <i class="fas fa-shield-halved" style="color:#d97706;"></i> <span id="currentUserName" style="font-weight: 700; color: #92400e;">कंट्रोल रूम (SDM सुमेरपुर)</span>
+        </div>
+        <button class="btn-secondary" style="font-weight: 600; padding: 7px 12px;" onclick="fetchData()" title="डेटा ताज़ा करें">
+            <i class="fas fa-rotate"></i> ताज़ा करें
+        </button>
+    </div>
+</header>
+
+<!-- Multi-Page Sub-Navigation Bar -->
+<nav class="nav-bar">
+    <a class="nav-link active" data-tab="dashboard" id="navDashboardLink" onclick="navigateTo('dashboard')"><i class="fas fa-chart-pie"></i> RO मास्टर डैशबोर्ड</a>
+    <a class="nav-link" data-tab="booths" id="navBoothsLink" onclick="navigateTo('booths')"><i class="fas fa-list-check"></i> 152 बूथ मॉनिटर</a>
+    <a class="nav-link" data-tab="entry" id="navEntryLink" onclick="navigateTo('entry')"><i class="fas fa-edit"></i> 📝 मतदान प्रविष्टि (ज़ोन-वार)</a>
+    <a class="nav-link" data-tab="stats" id="navStatsLink" onclick="navigateTo('stats')"><i class="fas fa-chart-column"></i> 📊 मतदान स्टेट्स (ZP/PS वार्ड)</a>
+    <a class="nav-link" data-tab="zones" id="navZonesLink" onclick="navigateTo('zones')"><i class="fas fa-map-marked-alt"></i> 10 जोनल मजिस्ट्रेट</a>
+    <a class="nav-link" href="counting.html" id="navCountingLink" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); color: #fde047; font-weight: 700; border: 1.5px solid #6366f1; text-decoration: none;">
+        <i class="fas fa-calculator" style="color:#fde047;"></i> 🗳️ मतगणना पोर्टल (14 राउंड / 15 टेबल) ↗
+    </a>
+    <a class="nav-link" data-tab="reports" id="navReportsLink" onclick="navigateTo('reports')" style="background: #fff1f2; color: #be123c; font-weight: 700;">
+        <i class="fas fa-file-shield" style="color:#e11d48;"></i> ST. FORMAT-11 (आयोग रिपोर्ट)
+    </a>
+    <a class="nav-link" data-tab="livedisplay" id="navLiveDisplayLink" onclick="openBigScreenModal()" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #38bdf8; font-weight: 700; border: 1.5px solid #0284c7;">
+        <i class="fas fa-tv" style="color:#38bdf8;"></i> 📺 बड़ी स्क्रीन पर स्टेट्स (Live TV)
+    </a>
+    <a class="nav-link" data-tab="whatsapp" id="navWhatsappLink" onclick="navigateTo('whatsapp')" style="background: #f0fdf4; color: #166534; font-weight: 700;">
+        <i class="fab fa-whatsapp" style="color:#16a34a;"></i> WhatsApp बुलेटिन
+    </a>
+    <a class="nav-link" data-tab="admin" id="navAdminLink" onclick="navigateTo('admin')">
+        <i class="fas fa-shield-halved" style="color:#f59e0b;"></i> RO एडमिन टूल्स
+    </a>
+</nav>
+
+<!-- Main Container -->
+<main class="main-container">
+
+    <!-- ================= PAGE 1: RO MASTER DASHBOARD ================= -->
+    <div id="view_dashboard" class="page-view">
+        <!-- Highlights Strip -->
+        <div class="highlights-strip">
+            <div class="highlight-card high" style="cursor:pointer;" onclick="openRankingsModal('high')">
+                <div class="icon-box"><i class="fas fa-arrow-trend-up"></i></div>
+                <div class="info" style="flex:1;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h6>सर्वाधिक मतदान केंद्र (Highest)</h6>
+                        <span style="font-size:11px; color:#10b981; font-weight:bold;"><i class="fas fa-list-ol"></i> टॉप 5 देखें</span>
+                    </div>
+                    <div class="title" id="hiVotingBooth">-</div>
+                    <div class="sub" id="hiVotingPct">मतदान प्रतिशत: 0.00%</div>
+                </div>
+            </div>
+            <div class="highlight-card low" style="cursor:pointer;" onclick="openRankingsModal('low')">
+                <div class="icon-box"><i class="fas fa-arrow-trend-down"></i></div>
+                <div class="info" style="flex:1;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h6>न्यूनतम / धीमा मतदान केंद्र (Slowest)</h6>
+                        <span style="font-size:11px; color:#ef4444; font-weight:bold;"><i class="fas fa-list-ol"></i> धीमी सूची देखें</span>
+                    </div>
+                    <div class="title" id="loVotingBooth">-</div>
+                    <div class="sub" id="loVotingPct">मतदान प्रतिशत: 0.00%</div>
+                </div>
+            </div>
+            <div class="highlight-card nirv">
+                <div class="icon-box"><i class="fas fa-bullhorn"></i></div>
+                <div class="info">
+                    <h6 id="announcementTitle">सक्रिय निर्वाचन सूचना</h6>
+                    <div class="title" id="announcementSubtitle">22-10-2026: पं.स. एवं जिला परिषद सदस्य</div>
+                    <div class="sub">समस्त 152 मतदान केंद्रों पर मतदान गतिमान</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Key Metric Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card" style="border-top: 4px solid #3b82f6;">
+                <h5>कुल पंजीकृत मतदाता</h5>
+                <div class="number" id="kpiTotalElectors">1,44,905</div>
+                <small id="kpiScopeSub">152 बूथ | 34 ग्राम पंचायतें | 10 ज़ोन</small>
+            </div>
+            <div class="kpi-card" style="border-top: 4px solid #06b6d4;">
+                <h5>मॉक पोल पूर्ण (7 AM)</h5>
+                <div class="number" id="kpiMock">152 / 152</div>
+                <small>सत्यापित मतदान केंद्र</small>
+            </div>
+            <div class="kpi-card" style="border-top: 4px solid #10b981;">
+                <h5>7:15 AM मतदान शुरू</h5>
+                <div class="number" id="kpiStarted">152 / 152</div>
+                <small>शांतिपूर्ण प्रारंभ रिपोर्ट</small>
+            </div>
+            <div class="kpi-card" style="border-top: 4px solid #f59e0b;">
+                <h5>कुल डाले गए मत</h5>
+                <div class="number" id="kpiVotes">0</div>
+                <small>कतारबद्ध मत सहित</small>
+            </div>
+            <div class="kpi-card" style="border-top: 4px solid #8b5cf6;">
+                <h5>कुल मतदान प्रतिशत</h5>
+                <div class="number" id="kpiTurnout">0.00%</div>
+                <small>152 मतदान केंद्रों पर</small>
+            </div>
+        </div>
+
+        <!-- Hourly Slot Summary Strip -->
+        <div class="slot-summary-strip">
+            <div class="slot-stat-box">
+                <div class="title">10:00 AM कुल मत</div>
+                <div class="count" id="slotSum10">0</div>
+                <div class="subtext" id="slotPct10">0.00%</div>
+            </div>
+            <div class="slot-stat-box" style="background: #fef9c3; border-color: #fde047;">
+                <div class="title" style="color: #854d0e;">🟡 01:00 PM कुल मत (विशिष्ट)</div>
+                <div class="count" id="slotSum13">0</div>
+                <div class="subtext" id="slotPct13">0.00%</div>
+            </div>
+            <div class="slot-stat-box">
+                <div class="title">03:00 PM कुल मत</div>
+                <div class="count" id="slotSum15">0</div>
+                <div class="subtext" id="slotPct15">0.00%</div>
+            </div>
+            <div class="slot-stat-box">
+                <div class="title">06:00 PM कुल मत</div>
+                <div class="count" id="slotSum18">0</div>
+                <div class="subtext" id="slotPct18">0.00%</div>
+            </div>
+            <div class="slot-stat-box" style="background:#fffbeb; border-color:#fef3c7;">
+                <div class="title" style="color:#92400e;">6 PM कतारबद्ध (In Queue)</div>
+                <div class="count" style="color:#b45309;" id="slotSumQueue">0</div>
+                <div class="subtext" style="color:#b45309;">गेट बंद उपरांत</div>
+            </div>
+            <div class="slot-stat-box" style="background:#f0fdf4; border-color:#86efac;">
+                <div class="title" style="color:#15803d;">अंतिम क्लोजिंग मत (Final)</div>
+                <div class="count" style="color:#15803d;" id="slotSumFinal">0</div>
+                <div class="subtext" style="color:#15803d;" id="slotPctFinal">0.00%</div>
+            </div>
+        </div>
+
+        <!-- PENDING BOOTHS TRACKER (लंबित प्रविष्टि निगरानी) -->
+        <div class="card pending-tracker-card" id="pendingTrackerSection" style="border: 1px solid #fed7aa; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.08);">
+            <div class="card-header" style="flex-wrap:wrap; gap:10px; background:#fff7ed; border-bottom:1px solid #fed7aa;">
+                <div>
+                    <h3 style="color:#c2410c; display:flex; align-items:center; gap:8px; margin:0;">
+                        <i class="fas fa-clock-rotate-left"></i> समय स्लॉट अनुसार लंबित प्रविष्टि ट्रैकर (Missing Entries Monitor)
+                    </h3>
+                    <span style="font-size:12px; color:#9a3412;">चयनित स्लॉट पर जिन बूथों की एंट्री अभी तक प्राप्त नहीं हुई है उनकी रीयल-टाइम सूची</span>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <button class="btn-secondary" style="font-size:12px; padding:6px 12px; border-color:#86efac; color:#166534;" onclick="copyPendingBoothsList()">
+                        <i class="fab fa-whatsapp" style="color:#16a34a; font-size:14px;"></i> WhatsApp सूची कॉपी करें
+                    </button>
+                    <button class="btn-secondary" style="font-size:12px; padding:6px 12px;" onclick="exportPendingCsv()">
+                        <i class="fas fa-file-csv" style="color:#0284c7; font-size:14px;"></i> लंबित सूची CSV
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="padding:16px;">
+                <!-- Slot Selector Tabs & Zone Filter -->
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+                    <div class="pending-slot-tabs" id="pendingSlotTabs">
+                        <button class="slot-tab-btn active" data-slot="10" onclick="setPendingTrackerSlot('10')">
+                            10:00 AM <span class="slot-badge" id="slotBadge10">0</span>
+                        </button>
+                        <button class="slot-tab-btn" data-slot="13" onclick="setPendingTrackerSlot('13')">
+                            01:00 PM <span class="slot-badge" id="slotBadge13">0</span>
+                        </button>
+                        <button class="slot-tab-btn" data-slot="15" onclick="setPendingTrackerSlot('15')">
+                            03:00 PM <span class="slot-badge" id="slotBadge15">0</span>
+                        </button>
+                        <button class="slot-tab-btn" data-slot="18" onclick="setPendingTrackerSlot('18')">
+                            06:00 PM <span class="slot-badge" id="slotBadge18">0</span>
+                        </button>
+                        <button class="slot-tab-btn" data-slot="Final" onclick="setPendingTrackerSlot('Final')">
+                            अंतिम क्लोजिंग <span class="slot-badge" id="slotBadgeFinal">0</span>
+                        </button>
+                        <button class="slot-tab-btn" data-slot="mock" onclick="setPendingTrackerSlot('mock')">
+                            मॉक पोल <span class="slot-badge" id="slotBadgeMock">0</span>
+                        </button>
+                        <button class="slot-tab-btn" data-slot="started" onclick="setPendingTrackerSlot('started')">
+                            7:15 प्रारंभ <span class="slot-badge" id="slotBadgeStarted">0</span>
+                        </button>
+                    </div>
+
+                    <!-- Zone Filter -->
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <label style="font-size:12px; font-weight:bold; color:#475569;"><i class="fas fa-filter"></i> जोन फिल्टर:</label>
+                        <select id="pendingZoneFilter" class="form-control" style="width:auto; padding:6px 10px; font-size:12px;" onchange="renderPendingTracker()">
+                            <option value="ALL">समस्त 10 ज़ोन (All)</option>
+                            <option value="Zone-1">जोन 1 (चाणौद)</option>
+                            <option value="Zone-2">जोन 2 (लापोद)</option>
+                            <option value="Zone-3">जोन 3 (कोसेलाव)</option>
+                            <option value="Zone-4">जोन 4 (पावा)</option>
+                            <option value="Zone-5">जोन 5 (साण्डेराव)</option>
+                            <option value="Zone-6">जोन 6 (सिन्दरू)</option>
+                            <option value="Zone-7">जोन 7 (खिवान्दी)</option>
+                            <option value="Zone-8">जोन 8 (कोलीवाडा)</option>
+                            <option value="Zone-9">जोन 9 (पालडी)</option>
+                            <option value="Zone-10">जोन 10 (भारून्दा)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Progress Bar Strip -->
+                <div class="pending-summary-strip">
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:12.5px; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+                        <div>
+                            <span style="color:#16a34a; font-weight:700;"><i class="fas fa-circle-check"></i> प्राप्त प्रविष्टियाँ:</span>
+                            <span id="pendingReceivedCount" style="font-weight:700;">0</span> / 152 (<span id="pendingReceivedPct">0%</span>)
+                        </div>
+                        <div>
+                            <span style="color:#dc2626; font-weight:800;"><i class="fas fa-circle-exclamation"></i> 🔴 लंबित / शेष प्रविष्टियाँ:</span>
+                            <span id="pendingMissingCount" style="color:#dc2626; font-weight:800; font-size:14px;">152</span> / 152 (<span id="pendingMissingPct" style="color:#dc2626; font-weight:800;">100%</span>)
+                        </div>
+                    </div>
+                    <div class="pending-bar-track">
+                        <div class="pending-bar-fill-received" id="pendingBarReceived" style="width:0%;"></div>
+                        <div class="pending-bar-fill-missing" id="pendingBarMissing" style="width:100%;"></div>
+                    </div>
+                </div>
+
+                <!-- Pending Booths List Table -->
+                <div class="table-responsive" style="max-height: 380px; overflow-y: auto; margin-top: 14px; border: 1px solid var(--border); border-radius: 6px;">
+                    <table class="data-table" id="pendingBoothsTable">
+                        <thead>
+                            <tr style="position: sticky; top: 0; z-index: 2; background: #f8fafc;">
+                                <th style="width:65px;">बूथ</th>
+                                <th style="width:75px;">ज़ोन</th>
+                                <th style="width:140px;">ग्राम पंचायत</th>
+                                <th style="text-align:left;">मतदान केंद्र का नाम</th>
+                                <th>कुल वोटर</th>
+                                <th>ज़ोनल मजिस्ट्रेट</th>
+                                <th>बी.एल.ओ. नाम व मोबाइल</th>
+                                <th>सीधा संपर्क</th>
+                                <th>कार्रवाई</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingBoothsTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- RANKINGS DUAL LEADERBOARD -->
+        <div class="ranking-grid">
+            <div class="ranking-card high-card">
+                <div class="r-head">
+                    <h4><i class="fas fa-arrow-trend-up" style="color:var(--success);"></i> शीर्ष 5 सर्वाधिक मतदान केंद्र (Top High Turnout)</h4>
+                    <button class="btn-secondary" style="padding:4px 10px; font-size:11.5px;" onclick="openRankingsModal('high')">
+                        <i class="fas fa-expand"></i> सभी देखें
+                    </button>
+                </div>
+                <div class="ranking-list" id="topHighListContainer">
+                    <div style="padding:15px; text-align:center; color:var(--text-muted); font-size:12px;">डेटा लोड हो रहा है...</div>
+                </div>
+            </div>
+
+            <div class="ranking-card low-card">
+                <div class="r-head">
+                    <h4><i class="fas fa-triangle-exclamation" style="color:var(--danger);"></i> शीर्ष 5 धीमे / न्यूनतम मतदान केंद्र (Slow Turnout Alerts)</h4>
+                    <button class="btn-secondary" style="padding:4px 10px; font-size:11.5px;" onclick="openRankingsModal('low')">
+                        <i class="fas fa-expand"></i> सभी देखें
+                    </button>
+                </div>
+                <div class="ranking-list" id="topLowListContainer">
+                    <div style="padding:15px; text-align:center; color:var(--text-muted); font-size:12px;">डेटा लोड हो रहा है...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Turnout Growth Chart Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-chart-line" style="color:var(--accent);"></i> मतदान प्रतिशत प्रगति (Hourly Turnout Progression)</h3>
+                <span style="font-size:12px; color:var(--text-muted);">वास्तविक समय डेटाबेस सिंक</span>
+            </div>
+            <div class="card-body" style="height: 250px;">
+                <canvas id="turnoutChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Quick Summary Table -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-table-list"></i> लाइव बूथ प्रगति संक्षेप (152 बूथ)</h3>
+                <button class="btn-secondary" onclick="navigateTo('booths')"><i class="fas fa-up-right-from-square"></i> विस्तृत 152 बूथ व्यू खोलें</button>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>बूथ</th>
+                            <th>ज़ोन</th>
+                            <th>ग्राम पंचायत</th>
+                            <th style="text-align:left;">मतदान केंद्र स्थल</th>
+                            <th>कुल वोटर</th>
+                            <th>7:15 शुरू</th>
+                            <th>10 AM</th>
+                            <th>01 PM</th>
+                            <th>03 PM</th>
+                            <th>06 PM</th>
+                            <th>अंतिम मत</th>
+                            <th>%</th>
+                            <th>मजिस्ट्रेट / संपर्क</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashSummaryTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 2: 152 BOOTHS MONITORING ================= -->
+    <div id="view_booths" class="page-view" style="display: none;">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-list-check"></i> समस्त 152 मतदान केंद्रों का लाइव मॉनिटरिंग ग्रिड</h3>
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <button class="btn-secondary" style="background:#f0fdf4; border-color:#86efac; color:#166534; font-size:12px; padding:6px 12px;" onclick="exportAllBoothsToExcel()" title="समस्त 152 बूथों का संपूर्ण विवरण Excel (.xlsx) में डाउनलोड करें">
+                        <i class="fas fa-file-excel" style="color:#16a34a;"></i> 152 बूथ Excel (.xlsx)
+                    </button>
+                    <button class="btn-secondary" style="background:#fef2f2; border-color:#fca5a5; color:#991b1b; font-size:12px; padding:6px 12px;" onclick="exportAllBoothsToPdf()" title="समस्त 152 बूथों की रिपोर्ट PDF में डाउनलोड करें">
+                        <i class="fas fa-file-pdf" style="color:#dc2626;"></i> 152 बूथ PDF
+                    </button>
+                    <input type="text" id="searchBoothInput" placeholder="बूथ / पंचायत / नाम खोजें..." onkeyup="renderBoothsTable()" style="padding:7px 12px; border:1px solid var(--border); border-radius:6px; font-size:12.5px;">
+                    <select id="filterZoneSelect" onchange="renderBoothsTable()" style="padding:7px 10px; border:1px solid var(--border); border-radius:6px; font-size:12.5px;">
+                        <option value="ALL">समस्त 10 ज़ोन</option>
+                    </select>
+                    <select id="filterGpSelect" onchange="renderBoothsTable()" style="padding:7px 10px; border:1px solid var(--border); border-radius:6px; font-size:12.5px;">
+                        <option value="ALL">समस्त 34 ग्राम पंचायतें</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table" id="allBoothsTable">
+                    <thead>
+                        <tr>
+                            <th>बूथ</th>
+                            <th>ज़ोन</th>
+                            <th>ग्राम पंचायत</th>
+                            <th style="text-align:left;">मतदान केंद्र का नाम</th>
+                            <th>वार्ड</th>
+                            <th>कुल मतदाता</th>
+                            <th>7:15 प्रारंभ</th>
+                            <th>10 AM</th>
+                            <th>01 PM</th>
+                            <th>03 PM</th>
+                            <th>06 PM</th>
+                            <th>अंतिम मत</th>
+                            <th>मतदान %</th>
+                            <th>ज़ोनल मजिस्ट्रेट</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allBoothsTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 3: DATA ENTRY (ZONE-WISE) ================= -->
+    <div id="view_entry" class="page-view" style="display: none;">
+        <div class="card" style="overflow: visible;">
+            <div class="card-header" style="flex-wrap: wrap; gap: 10px; border-bottom: none; padding-bottom: 8px;">
+                <div>
+                    <h3 style="margin: 0;"><i class="fas fa-edit" style="color:var(--accent);"></i> मतदान डेटा प्रविष्टि (Voting Data Entry — ज़ोन वार)</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);" id="entryRoleNotice">नीचे ज़ोन चुनें अथवा समस्त 152 बूथों पर प्रविष्टि करें।</span>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="btn-secondary" onclick="markAllZoneStarted()"><i class="fas fa-check-double"></i> इस ज़ोन के सभी 7:15 AM शुरू करें</button>
+                    <button class="btn-primary" onclick="saveAllEntryRows()"><i class="fas fa-save"></i> समस्त प्रविष्टियाँ सुरक्षित करें</button>
+                </div>
+            </div>
+
+            <!-- Google Sheet Live Sync & Auto-Fill Toolbar -->
+            <div class="sync-toolbar">
+                <div class="sync-toolbar-left">
+                    <span class="sync-title-badge"><i class="fas fa-file-excel"></i> Google Sheet ऑटो-सिंक</span>
+                    <span class="sync-status-text" id="entrySyncStatusText">
+                        <i class="fas fa-circle-check" style="color:#16a34a;"></i> 10 AM डेटा सिंक (143/152 बूथ)
+                    </span>
+                    <span style="font-size:11.5px; color:#475569;" id="entrySyncTimeText">ऑटो-फ़िल: 10 AM, 1 PM, 3 PM, 6 PM, Final</span>
+                </div>
+                <div class="sync-toolbar-right">
+                    <button class="btn-sync-google" id="btnEntrySyncGoogle" onclick="triggerGoogleSheetSync()" title="Google Sheet से नया डेटा फ़ेच कर ऑटो-फ़िल करें">
+                        <i class="fas fa-arrows-rotate"></i> <span>Google Sheet से अभी सिंक करें</span>
+                    </button>
+                    <label class="auto-sync-toggle" title="प्रत्येक 30 सेकंड में स्वतः Google Sheet से नया डेटा लाएं">
+                        <input type="checkbox" id="entryAutoSyncToggle" onchange="toggleGoogleAutoSync(this.checked)">
+                        <span>⏱️ ऑटो-सिंक (30s)</span>
+                    </label>
+                    <input type="file" id="excelEntryFileInput" accept=".csv, .xlsx, .xls" style="display:none;" onchange="handleExcelFileUpload(event)">
+                    <button class="btn-sync-action" onclick="document.getElementById('excelEntryFileInput').click()" title="Excel / CSV फ़ाइल अपलोड कर सिंक करें">
+                        <i class="fas fa-cloud-arrow-up"></i> <span>फ़ाइल से सिंक</span>
+                    </button>
+                    <button class="btn-sync-action" style="background:#475569;" onclick="openGoogleSheetHelpModal()" title="Google Sheet परमिशन व लिंक गाइड">
+                        <i class="fas fa-circle-question"></i> <span>गाइड</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Zone Selector Ribbon for Quick Zone-Wise Entry -->
+            <div class="entry-zone-ribbon" id="entryZoneRibbon">
+                <button class="entry-zone-pill active" id="ezPill_ALL" onclick="selectEntryZone('ALL')">
+                    <i class="fas fa-globe"></i> <span>समस्त 10 ज़ोन</span> <span class="ez-count">152</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-1" onclick="selectEntryZone('Zone-1')">
+                    <span>ज़ोन 1 चाणौद</span> <span class="ez-count">14</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-2" onclick="selectEntryZone('Zone-2')">
+                    <span>ज़ोन 2 लापोद</span> <span class="ez-count">15</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-3" onclick="selectEntryZone('Zone-3')">
+                    <span>ज़ोन 3 कोसेलाव</span> <span class="ez-count">15</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-4" onclick="selectEntryZone('Zone-4')">
+                    <span>ज़ोन 4 पावा</span> <span class="ez-count">19</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-5" onclick="selectEntryZone('Zone-5')">
+                    <span>ज़ोन 5 साण्डेराव</span> <span class="ez-count">19</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-6" onclick="selectEntryZone('Zone-6')">
+                    <span>ज़ोन 6 सिन्दरू</span> <span class="ez-count">12</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-7" onclick="selectEntryZone('Zone-7')">
+                    <span>ज़ोन 7 खिवान्दी</span> <span class="ez-count">14</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-8" onclick="selectEntryZone('Zone-8')">
+                    <span>ज़ोन 8 कोलीवाडा</span> <span class="ez-count">15</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-9" onclick="selectEntryZone('Zone-9')">
+                    <span>ज़ोन 9 पालडी</span> <span class="ez-count">14</span>
+                </button>
+                <button class="entry-zone-pill" id="ezPill_Zone-10" onclick="selectEntryZone('Zone-10')">
+                    <span>ज़ोन 10 भारून्दा</span> <span class="ez-count">15</span>
+                </button>
+            </div>
+
+            <!-- Active Zone Details & Quick Navigation Banner -->
+            <div class="entry-zone-banner" id="entryZoneBanner">
+                <div class="ezb-info">
+                    <div class="ezb-title" id="ezbTitle">
+                        <i class="fas fa-location-dot"></i> <span>समस्त 10 ज़ोन (सुमेरपुर क्षेत्र)</span>
+                    </div>
+                    <div class="ezb-item" id="ezbMagistrate">
+                        <i class="fas fa-user-tie" style="color:#0284c7;"></i> <b>ज़ोनल मजिस्ट्रेट:</b> <span>समस्त मजिस्ट्रेट फील्ड में</span>
+                    </div>
+                    <div class="ezb-item" id="ezbMobile">
+                        <i class="fas fa-phone" style="color:#10b981;"></i> <b>कंट्रोल रूम:</b> <span>02933-258322</span>
+                    </div>
+                    <div class="ezb-item" id="ezbBoothsVoters">
+                        <i class="fas fa-users" style="color:#8b5cf6;"></i> <b>बूथ व मतदाता:</b> <span>152 केंद्र | 1,44,905 मतदाता</span>
+                    </div>
+                </div>
+                <div class="ezb-nav-btns">
+                    <button class="btn-secondary" style="padding: 5px 10px; font-size: 11.5px;" onclick="prevEntryZone()" title="पिछला ज़ोन">
+                        <i class="fas fa-arrow-left"></i> पिछला ज़ोन
+                    </button>
+                    <button class="btn-secondary" style="padding: 5px 10px; font-size: 11.5px;" onclick="nextEntryZone()" title="अगला ज़ोन">
+                        अगला ज़ोन <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Entry Search and Quick Filters -->
+            <div style="padding: 8px 14px 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--border);">
+                <input type="text" id="entrySearchInput" class="form-control" style="width: 280px; padding: 7px 12px; font-size: 12.5px;" placeholder="🔍 बूथ सं., केंद्र का नाम या ग्राम पंचायत खोजें..." oninput="renderEntryTable()">
+                <select id="entryGpSelect" class="form-control" style="width: 220px; padding: 7px 10px; font-size: 12.5px;" onchange="renderEntryTable()">
+                    <option value="ALL">समस्त ग्राम पंचायतें</option>
+                </select>
+                <div style="margin-left: auto; font-size: 12px; color: var(--text-muted);" id="entryFilteredCountText">
+                    प्रदर्शित: 152 / 152 केंद्र
+                </div>
+            </div>
+
+            <div class="table-responsive" style="max-height: 620px; overflow-y: auto;">
+                <table class="data-table" id="entryBoothsTable">
+                    <thead>
+                        <tr style="position: sticky; top: 0; z-index: 3; background: #f8fafc;">
+                            <th style="width: 60px;">बूथ</th>
+                            <th style="width: 140px;">ग्राम पंचायत</th>
+                            <th style="text-align:left; min-width: 260px;">मतदान केंद्र का नाम (पूर्ण स्थल)</th>
+                            <th style="width: 75px;">मतदाता</th>
+                            <th style="width: 80px;">7:15 प्रारंभ</th>
+                            <th>10:00 AM मत</th>
+                            <th style="background:#fef9c3; color:#854d0e;">01:00 PM मत</th>
+                            <th>03:00 PM मत</th>
+                            <th>06:00 PM मत</th>
+                            <th>6 PM कतार</th>
+                            <th>अंतिम मत</th>
+                            <th>%</th>
+                            <th>टिप्पणी</th>
+                            <th>कार्रवाई</th>
+                        </tr>
+                    </thead>
+                    <tbody id="entryBoothsTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 3.5: DEDICATED STATS (ZP & PS WARD WISE) ================= -->
+    <div id="view_stats" class="page-view" style="display: none;">
+        <div class="card">
+            <div class="card-header" style="flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h3 style="margin: 0;"><i class="fas fa-chart-column" style="color:var(--accent);"></i> मतदान सांख्यिकी (Voting Statistics) — ZP एवं PS वार्ड वार</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);">सुमेरपुर पंचायत समिति एवं जिला परिषद निर्वाचन 2026 | वार्ड-वार एवं ज़ोन-वार लाइव विश्लेषण</span>
+                </div>
+                <!-- Stats Category Switcher Tabs -->
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;" id="statsCategorySwitcher">
+                    <button class="btn-primary" id="btnStatsZp" onclick="switchStatsCategory('zp')">
+                        <i class="fas fa-landmark"></i> 4 जि.प. (ZP) वार्ड
+                    </button>
+                    <button class="btn-secondary" id="btnStatsPs" onclick="switchStatsCategory('ps')">
+                        <i class="fas fa-building-columns"></i> 21 पं.स. (PS) वार्ड
+                    </button>
+                    <button class="btn-secondary" id="btnStatsZones" onclick="switchStatsCategory('zones')">
+                        <i class="fas fa-map-location-dot"></i> 10 प्रशासनिक ज़ोन
+                    </button>
+                    <button class="btn-secondary" id="btnStatsGps" onclick="switchStatsCategory('gps')">
+                        <i class="fas fa-list-check"></i> 34 ग्राम पंचायतें
+                    </button>
+                </div>
+                <!-- Stats Export Toolbar -->
+                <div style="display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap;" class="no-print">
+                    <button class="btn-secondary" style="background:#f0fdf4; border-color:#86efac; color:#166534; font-size:12px; padding:6px 12px;" onclick="exportStatsToExcel()" title="वर्तमान सांख्यिकी को Excel (.xlsx) में डाउनलोड करें">
+                        <i class="fas fa-file-excel" style="color:#16a34a;"></i> सांख्यिकी Excel
+                    </button>
+                    <button class="btn-secondary" style="background:#fef2f2; border-color:#fca5a5; color:#991b1b; font-size:12px; padding:6px 12px;" onclick="exportStatsToPdf()" title="वर्तमान सांख्यिकी रिपोर्ट को PDF में डाउनलोड करें">
+                        <i class="fas fa-file-pdf" style="color:#dc2626;"></i> सांख्यिकी PDF
+                    </button>
+                    <button class="btn-secondary" style="font-size:12px; padding:6px 12px;" onclick="printStatsReport()" title="A4 फॉर्मेट में प्रिंट करें">
+                        <i class="fas fa-print"></i> प्रिंट
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body" style="padding: 16px;">
+                <!-- 1. ZP Wards View Container -->
+                <div id="statsZpContainer">
+                    <div style="background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 10px; padding: 12px 18px; margin-bottom: 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <h4 style="margin:0; color:#6b21a8; font-size:15px;"><i class="fas fa-landmark"></i> जिला परिषद (ZP) वार्ड सांख्यिकी (4 वार्ड — Z-7, Z-8, Z-9, Z-10)</h4>
+                            <p style="margin:2px 0 0; font-size:12px; color:#7e22ce;">सुमेरपुर क्षेत्र के समस्त 152 मतदान केंद्र 4 जिला परिषद वार्डों में विभक्त हैं।</p>
+                        </div>
+                        <div style="font-weight:700; color:#581c87; font-size:13px;">कुल मतदाता: 1,44,905</div>
+                    </div>
+                    <div class="ward-stats-grid" id="zpWardsGridContainer">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 2. PS Wards View Container -->
+                <div id="statsPsContainer" style="display: none;">
+                    <div style="background: #f0f9ff; border: 1.5px solid #bae6fd; border-radius: 10px; padding: 12px 18px; margin-bottom: 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <h4 style="margin:0; color:#0369a1; font-size:15px;"><i class="fas fa-building-columns"></i> पंचायत समिति (PS) वार्ड सांख्यिकी (21 वार्ड — W-1 से W-21)</h4>
+                            <p style="margin:2px 0 0; font-size:12px; color:#0284c7;">पंचायत समिति सुमेरपुर के समस्त 21 वार्डों की मतदान प्रगति एवं विवरण</p>
+                        </div>
+                        <div style="font-weight:700; color:#075985; font-size:13px;">कुल वार्ड: 21 | कुल केंद्र: 152</div>
+                    </div>
+                    <div class="ward-stats-grid" id="psWardsGridContainer">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 3. Zones View Container -->
+                <div id="statsZonesContainer" style="display: none;">
+                    <div class="ward-stats-grid" id="statsZonesGridContainer">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 4. GPs View Container -->
+                <div id="statsGpsContainer" style="display: none;">
+                    <div style="margin-bottom: 12px; display:flex; gap:10px; align-items:center;">
+                        <input type="text" id="statsGpSearch" class="form-control" placeholder="🔍 ग्राम पंचायत खोजें..." style="max-width:300px;" oninput="renderStatsGpsTable()">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>क्र.सं.</th>
+                                    <th>ग्राम पंचायत</th>
+                                    <th>ज़ोन</th>
+                                    <th>जि.प. वार्ड</th>
+                                    <th>पं.स. वार्ड</th>
+                                    <th>बूथ संख्या</th>
+                                    <th>कुल मतदाता</th>
+                                    <th>डाले गए मत</th>
+                                    <th>मतदान %</th>
+                                    <th>प्रगति</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statsGpsTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 4: 10 ZONES ================= -->
+    <div id="view_zones" class="page-view" style="display: none;">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-map-marked-alt"></i> समस्त 10 ज़ोनल मजिस्ट्रेट एवं ज़ोन-वार मॉनिटरिंग</h3>
+            </div>
+            <div class="card-body" style="padding: 16px;">
+                <div id="zonesCardsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 5: OFFICIAL ST. FORMAT-11 ================= -->
+    <div id="view_reports" class="page-view" style="display: none;">
+        <div class="card">
+            <div class="card-header no-print" style="flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; gap: 8px;" id="reportsSubtabs">
+                    <!-- Populated via JS based on selected date -->
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="btn-secondary" style="background:#f0fdf4; border-color:#86efac; color:#166534; font-size:12.5px; padding:6px 14px;" onclick="exportFormat11ToExcel()">
+                        <i class="fas fa-file-excel" style="color:#16a34a;"></i> Excel (.xlsx) डाउनलोड
+                    </button>
+                    <button class="btn-secondary" style="background:#fef2f2; border-color:#fca5a5; color:#991b1b; font-size:12.5px; padding:6px 14px;" onclick="exportFormat11ToPdf()">
+                        <i class="fas fa-file-pdf" style="color:#dc2626;"></i> PDF डाउनलोड
+                    </button>
+                    <button class="btn-primary" style="font-size:12.5px; padding:6px 14px;" onclick="printOfficialReport()">
+                        <i class="fas fa-print"></i> A4 लैंडस्केप प्रिंट
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable ST. FORMAT-11 Container -->
+            <div class="gov-table-wrapper" id="printableFormatArea">
+                <div class="gov-format-id">ST. FORMAT-11</div>
+                <div class="gov-format-title" id="reportGovTitle">PANCHAYAT GENERAL ELECTION, 2026</div>
+                <div class="gov-format-subtitle" id="reportGovSubtitle">POLLING PERCENTAGE FOR ZP MEMBER</div>
+
+                <div id="reportFormatTableContainer">
+                    <!-- Dynamic Official Table -->
+                </div>
+
+                <!-- Signature Block for Print -->
+                <div class="gov-signature-block">
+                    <div class="gov-signature-box">
+                        <div class="gov-signature-line"></div>
+                        नियंत्रण कक्ष प्रभारी<br>
+                        पंचायती राज चुनाव नियंत्रण कक्ष, सुमेरपुर
+                    </div>
+                    <div class="gov-signature-box">
+                        <div class="gov-signature-line"></div>
+                        निर्वाचक रजिस्ट्रीकरण अधिकारी (एसडीएम)<br>
+                        पंचायत समिति सुमेरपुर, जिला - पाली
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 6: LIVE DISPLAY (TV MODE) ================= -->
+    <div id="view_livedisplay" class="page-view" style="display: none;">
+        <div style="background: #0f172a; color: white; padding: 24px; border-radius: 12px; box-shadow: var(--shadow-lg);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #334155; padding-bottom: 16px; margin-bottom: 20px;">
+                <div>
+                    <h2 style="margin: 0; font-size: 24px; color: #38bdf8;">📺 नियंत्रण कक्ष लाइव डिस्प्ले (Control Room Projector / TV)</h2>
+                    <p style="margin: 4px 0 0; color: #94a3b8; font-size: 14px;" id="liveDisplaySubtitle">सुमेरपुर पंचायती राज चुनाव 2026 | रीयल-टाइम अपडेट</p>
+                </div>
+                <div style="display: flex; gap: 16px; align-items: center;">
+                    <div style="font-size: 20px; font-weight: bold; color: #10b981;" id="tvClock">00:00:00</div>
+                    <button class="btn-secondary" onclick="toggleFullScreen()" style="font-size: 13px;"><i class="fas fa-expand"></i> फुलस्क्रीन</button>
+                </div>
+            </div>
+
+            <!-- TV Big KPIs -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                <div style="background: #1e293b; padding: 20px; border-radius: 10px; border-left: 5px solid #38bdf8; text-align: center;">
+                    <div style="font-size: 14px; color: #94a3b8; text-transform: uppercase;">कुल मतदाता</div>
+                    <div style="font-size: 32px; font-weight: 800; color: white; margin-top: 4px;" id="tvElectors">1,44,905</div>
+                </div>
+                <div style="background: #1e293b; padding: 20px; border-radius: 10px; border-left: 5px solid #10b981; text-align: center;">
+                    <div style="font-size: 14px; color: #94a3b8; text-transform: uppercase;">कुल पड़े मत</div>
+                    <div style="font-size: 32px; font-weight: 800; color: #10b981; margin-top: 4px;" id="tvVotes">0</div>
+                </div>
+                <div style="background: #1e293b; padding: 20px; border-radius: 10px; border-left: 5px solid #f59e0b; text-align: center;">
+                    <div style="font-size: 14px; color: #94a3b8; text-transform: uppercase;">मतदान प्रतिशत</div>
+                    <div style="font-size: 32px; font-weight: 800; color: #f59e0b; margin-top: 4px;" id="tvTurnout">0.00%</div>
+                </div>
+                <div style="background: #1e293b; padding: 20px; border-radius: 10px; border-left: 5px solid #8b5cf6; text-align: center;">
+                    <div style="font-size: 14px; color: #94a3b8; text-transform: uppercase;">सक्रिय मतदान केंद्र</div>
+                    <div style="font-size: 32px; font-weight: 800; color: #8b5cf6; margin-top: 4px;">152 / 152</div>
+                </div>
+            </div>
+
+            <!-- TV Zone Progress Bars -->
+            <h3 style="color: #cbd5e1; font-size: 16px; margin-bottom: 12px;"><i class="fas fa-layer-group"></i> 10 ज़ोन वार मतदान प्रतिशत स्थिति</h3>
+            <div id="tvZonesGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;"></div>
+        </div>
+    </div>
+
+    
+    <!-- ================= PAGE: COUNTING (14 ROUNDS x 15 TABLES) ================= -->
+    <div id="view_counting" class="page-view" style="display: none;">
+        <!-- Top Banner Toolbar -->
+        <div class="card" style="margin-bottom: 20px; border-top: 4px solid #6366f1;">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
+                <div>
+                    <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: #1e1b4b; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-calculator" style="color: #6366f1;"></i>
+                        <span>सुमेरपुर पंचायत समिति मतगणना 2026</span>
+                        <span style="font-size: 11.5px; background: #e0e7ff; color: #3730a3; padding: 3px 8px; border-radius: 6px; font-weight: 700; border: 1px solid #c7d2fe;">
+                            14 राउंड • 15 टेबल • 21 वार्ड • 152 बूथ
+                        </span>
+                    </h2>
+                    <p style="margin: 4px 0 0 0; font-size: 12.5px; color: #64748b;">
+                        कंट्रोल रूम लाइव मतगणना ट्रैकर, 15 टेबल राउंड-वार प्रगति, 21 पं.स. वार्ड परिणाम एवं Google Sheet ऑटो-सिंक
+                    </p>
+                </div>
+
+                <!-- Action Buttons Strip -->
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <!-- GOOGLE SHEET SYNC BUTTON -->
+                    <button class="btn-sync-google" id="btnCountingSyncGoogle" onclick="triggerCountingGoogleSheetSync()" title="Google Sheet से मतगणना डेटा स्वतः खींचें" style="background: linear-gradient(135deg, #15803d 0%, #166534 100%); border-color: #22c55e;">
+                        <i class="fas fa-arrows-rotate"></i> <span>Google Sheet सिंक</span>
+                    </button>
+
+                    <!-- Auto-Sync Toggle -->
+                    <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #334155; background: #ffffff; padding: 6px 10px; border-radius: 8px; border: 1px solid #cbd5e1; cursor: pointer;" title="प्रत्येक 30 सेकंड में ऑटो-रिफ्रेश करें">
+                        <input type="checkbox" id="countingAutoSyncToggle" onchange="toggleCountingAutoSync(this.checked)" style="cursor: pointer;">
+                        <span>ऑटो-सिंक (30s)</span>
+                    </label>
+
+                    <!-- Google Sheet Settings Button -->
+                    <button class="btn-secondary" onclick="openCountingSheetModal()" title="Google Sheet ID व सेटिंग्स बदलें" style="padding: 7px 12px; font-size: 12px;">
+                        <i class="fas fa-gear"></i> शीट सेटिंग्स
+                    </button>
+
+                    <!-- TV War Room Button -->
+                    <a href="counting.html?warroom=1" target="_blank" class="btn-bade-screen" title="समर्पित वॉर-रूम टीवी बड़ी स्क्रीन खोलें" style="background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%); border-color: #6366f1; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                        <span class="tv-pulse-icon">📺</span> <span>मतगणना वॉर-रूम टीवी ↗</span>
+                    </a>
+
+                    <!-- WhatsApp Bulletin Button -->
+                    <button class="btn-secondary" onclick="openCountingWhatsAppModal()" style="background: #f0fdf4; color: #166534; border-color: #bbf7d0; font-weight: 700; padding: 7px 12px; font-size: 12px;" title="WhatsApp बुलेटिन तैयार करें">
+                        <i class="fab fa-whatsapp" style="color: #16a34a;"></i> बुलेटिन
+                    </button>
+
+                    <!-- Excel Download Button -->
+                    <button class="btn-secondary" onclick="exportCountingExcel()" style="padding: 7px 12px; font-size: 12px;" title="Excel (.csv) डाउनलोड">
+                        <i class="fas fa-file-excel" style="color: #16a34a;"></i> Excel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sync Status Notice -->
+            <div style="background: #f8fafc; border-top: 1px solid #f1f5f9; padding: 8px 18px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #64748b;">
+                <div id="countingSyncStatusText">
+                    <i class="fas fa-circle-check" style="color: #10b981;"></i> Google Sheet सिंक तैयार (14 राउंड x 15 टेबल)
+                </div>
+                <div style="display: flex; gap: 14px;">
+                    <a href="javascript:void(0)" onclick="downloadCountingTemplate()" style="color: #6366f1; font-weight: 700; text-decoration: none;">
+                        <i class="fas fa-download"></i> Google Sheet टेम्पलेट CSV डाउनलोड करें
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Cards Strip -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px;">
+            <div class="kpi-card" style="background: #ffffff; border-left: 4px solid #6366f1;">
+                <div class="kpi-title" style="color: #64748b; font-size: 11.5px; font-weight: 700;">सक्रिय राउंड / कुल</div>
+                <div class="kpi-value" id="countingKpiActiveRound" style="color: #1e1b4b; font-size: 22px; font-weight: 800; margin-top: 4px;">राउंड 1 / 14</div>
+                <div style="font-size: 11px; color: #6366f1; margin-top: 2px; font-weight: 600;">15 टेबल प्रति राउंड</div>
+            </div>
+
+            <div class="kpi-card" style="background: #ffffff; border-left: 4px solid #10b981;">
+                <div class="kpi-title" style="color: #64748b; font-size: 11.5px; font-weight: 700;">गिनी गई EVMs / बूथ</div>
+                <div class="kpi-value" id="countingKpiCountedBooths" style="color: #15803d; font-size: 22px; font-weight: 800; margin-top: 4px;">0 / 152 (0.0%)</div>
+                <div style="width: 100%; height: 5px; background: #e2e8f0; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                    <div id="countingProgressBar" style="width: 0%; height: 100%; background: #10b981;"></div>
+                </div>
+            </div>
+
+            <div class="kpi-card" style="background: #ffffff; border-left: 4px solid #0284c7;">
+                <div class="kpi-title" style="color: #64748b; font-size: 11.5px; font-weight: 700;">कुल गिने गए मत</div>
+                <div class="kpi-value" id="countingKpiTotalVotes" style="color: #0369a1; font-size: 22px; font-weight: 800; margin-top: 4px;">0</div>
+                <div style="font-size: 11px; color: #64748b; margin-top: 2px;">वैध + नोटा मत</div>
+            </div>
+
+            <div class="kpi-card" style="background: #ffffff; border-left: 4px solid #f59e0b;">
+                <div class="kpi-title" style="color: #64748b; font-size: 11.5px; font-weight: 700;">घोषित वार्ड परिणाम</div>
+                <div class="kpi-value" id="countingKpiDeclaredWards" style="color: #b45309; font-size: 22px; font-weight: 800; margin-top: 4px;">0 / 21</div>
+                <div style="font-size: 11px; color: #64748b; margin-top: 2px;">वार्ड 1 से 21</div>
+            </div>
+
+            <div class="kpi-card" style="background: #ffffff; border-left: 4px solid #8b5cf6;">
+                <div class="kpi-title" style="color: #64748b; font-size: 11.5px; font-weight: 700;">पार्टी रुझान (भाजपा / कांग्रेस / अन्य)</div>
+                <div style="display: flex; gap: 10px; margin-top: 6px; font-size: 13px;">
+                    <div style="color: #ea580c;" title="भाजपा">
+                        <i class="fas fa-sun"></i> <span id="countingTallyBjp"><b>0</b></span>
+                    </div>
+                    <div style="color: #0284c7;" title="कांग्रेस">
+                        <i class="fas fa-hand"></i> <span id="countingTallyInc"><b>0</b></span>
+                    </div>
+                    <div style="color: #9333ea;" title="निर्दलीय / अन्य">
+                        <i class="fas fa-user"></i> <span id="countingTallyInd"><b>0</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Counting Subtabs Navigation -->
+        <div class="counting-subtabs-nav">
+            <button class="counting-subtab-btn active" data-subtab="round_cards" onclick="switchCountingSubtab('round_cards')">
+                <i class="fas fa-grip"></i> 1. राउंड-वार टेबल लाइव कार्ड्स (15 टेबल)
+            </button>
+            <button class="counting-subtab-btn" data-subtab="ward_results" onclick="switchCountingSubtab('ward_results')">
+                <i class="fas fa-trophy"></i> 2. 21 पं.स. वार्ड समरी एवं परिणाम
+            </button>
+            <button class="counting-subtab-btn" data-subtab="master_matrix" onclick="switchCountingSubtab('master_matrix')">
+                <i class="fas fa-table-cells"></i> 3. 15 टेबल x 14 राउंड मास्टर मैट्रिक्स
+            </button>
+            <button class="counting-subtab-btn" data-subtab="manual_entry" onclick="switchCountingSubtab('manual_entry')">
+                <i class="fas fa-pen-to-square"></i> 4. त्वरित डेटा प्रविष्टि (टेबल ऑपरेटर)
+            </button>
+        </div>
+
+        <!-- SUBTAB 1: ROUND CARDS VIEW -->
+        <div id="countingView_round_cards">
+            <!-- 14 Round Selector Pills -->
+            <div style="margin-bottom: 12px; font-size: 12px; font-weight: 700; color: #475569;">
+                <i class="fas fa-hand-pointer"></i> राउंड चुनें (राउंड 1 से 14):
+            </div>
+            <div id="countingRoundPills" class="counting-round-pills-wrap"></div>
+
+            <!-- Selected Round Summary Strip -->
+            <div id="countingSelectedRoundSummary" class="card" style="padding: 14px 18px; margin-bottom: 16px; background: #ffffff;"></div>
+
+            <!-- 15 Table Cards Grid -->
+            <div id="countingTableCardsGrid" class="counting-cards-grid"></div>
+        </div>
+
+        <!-- SUBTAB 2: WARD RESULTS VIEW -->
+        <div id="countingView_ward_results" style="display: none;">
+            <div class="card">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <h3 style="margin: 0; color: #0f172a; font-size: 16px; font-weight: 800;">
+                        <i class="fas fa-trophy" style="color: #f59e0b;"></i> 21 पंचायत समिति वार्ड परिणाम सारणी (Live Tally)
+                    </h3>
+                    <div style="font-size: 12.5px; color: #64748b;">
+                        सभी 21 वार्डों की संकलित स्थिति एवं अग्रणी प्रत्याशी
+                    </div>
+                </div>
+                <div class="table-container" style="overflow-x: auto;">
+                    <table class="data-table" style="width: 100%; min-width: 950px;">
+                        <thead>
+                            <tr style="background: #f8fafc;">
+                                <th style="text-align: center; width: 75px;">वार्ड</th>
+                                <th style="text-align: center; width: 100px;">बूथ प्रगति</th>
+                                <th style="text-align: right; width: 95px;">कुल मतदाता</th>
+                                <th style="text-align: right; width: 95px;">गिने गए मत</th>
+                                <th style="text-align: right; width: 95px; color: #ea580c;">भाजपा</th>
+                                <th style="text-align: right; width: 95px; color: #0284c7;">कांग्रेस</th>
+                                <th style="text-align: right; width: 95px; color: #9333ea;">निर्दलीय</th>
+                                <th style="text-align: right; width: 75px; color: #64748b;">नोटा</th>
+                                <th style="width: 180px;">अग्रणी / विजयी प्रत्याशी</th>
+                                <th style="text-align: center; width: 110px;">बढ़त (Margin)</th>
+                                <th style="text-align: center; width: 110px;">परिणाम स्थिति</th>
+                                <th style="text-align: center; width: 75px;">विवरण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="countingWardResultsTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBTAB 3: MASTER MATRIX VIEW -->
+        <div id="countingView_master_matrix" style="display: none;">
+            <div class="card" style="padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h3 style="margin: 0; color: #1e1b4b; font-size: 16px; font-weight: 800;">
+                            <i class="fas fa-table-cells" style="color: #6366f1;"></i> 15 टेबल x 14 राउंड मतगणना हॉल मास्टर मैट्रिक्स
+                        </h3>
+                        <p style="margin: 2px 0 0 0; font-size: 12px; color: #64748b;">
+                            किसी भी सेल पर क्लिक करके उस टेबल का मत विवरण देखें या संपादित करें।
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 14px; font-size: 12px; font-weight: 700;">
+                        <span><span style="display: inline-block; width: 10px; height: 10px; background: #86efac; border-radius: 2px; margin-right: 4px;"></span> पूर्ण</span>
+                        <span><span style="display: inline-block; width: 10px; height: 10px; background: #fde047; border-radius: 2px; margin-right: 4px;"></span> गणना जारी</span>
+                        <span><span style="display: inline-block; width: 10px; height: 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 2px; margin-right: 4px;"></span> प्रतीक्षारत</span>
+                    </div>
+                </div>
+
+                <div class="counting-matrix-scroll-wrap">
+                    <table class="counting-matrix-table">
+                        <thead id="countingMatrixThead"></thead>
+                        <tbody id="countingMatrixTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBTAB 4: MANUAL ENTRY FORM VIEW -->
+        <div id="countingView_manual_entry" style="display: none;">
+            <div class="counting-entry-shell">
+                <div class="counting-controls-card">
+                    <div class="counting-control-group">
+                        <label><i class="fas fa-layer-group"></i> राउंड चुनें (1 से 14):</label>
+                        <select id="manualRoundSelect" class="counting-ward-select" onchange="onManualSlotChange()"></select>
+                    </div>
+
+                    <div class="counting-control-group">
+                        <label><i class="fas fa-table"></i> मेज चुनें (1 से 15):</label>
+                        <select id="manualTableSelect" class="counting-ward-select" onchange="onManualSlotChange()"></select>
+                    </div>
+
+                    <div class="counting-control-group">
+                        <label><i class="fas fa-info-circle"></i> आवंटन स्थिति:</label>
+                        <div class="counting-booth-pill">
+                            <span id="manualSlotBooth">लोड हो रहा है...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booth Metadata Cards -->
+                <div class="counting-kpi-grid">
+                    <div class="counting-kpi-card electors">
+                        <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">वार्ड संख्या</div>
+                        <div style="font-size: 18px; font-weight: 800; color: #1e3a8a; margin-top: 4px;" id="manualSlotWard">-</div>
+                    </div>
+                    <div class="counting-kpi-card polled">
+                        <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">ग्राम पंचायत</div>
+                        <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 4px;" id="manualSlotGp">-</div>
+                    </div>
+                    <div class="counting-kpi-card booths">
+                        <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">कुल पंजीकृत मतदाता</div>
+                        <div style="font-size: 18px; font-weight: 800; color: #0284c7; margin-top: 4px;" id="manualSlotElectors">-</div>
+                    </div>
+                    <div class="counting-kpi-card status">
+                        <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">दर्ज कुल मत</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #15803d; margin-top: 4px;" id="manualTotalVotesDisplay">0</div>
+                    </div>
+                </div>
+
+                <!-- Vote Inputs Card -->
+                <div class="card" style="padding: 24px;">
+                    <h3 style="margin: 0 0 16px 0; font-size: 16px; color: #0f172a; font-weight: 800;">
+                        <i class="fas fa-check-to-slot" style="color: #10b981;"></i> प्रत्याशी-वार मत प्रविष्टि
+                    </h3>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                        <div style="background: #fffaf5; border: 1.5px solid #fed7aa; padding: 14px; border-radius: 10px;">
+                            <label style="font-size: 12px; font-weight: 800; color: #9a3412; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                                <i class="fas fa-sun" style="color: #ea580c;"></i> <span id="manualLabelCand1">भाजपा प्रत्याशी</span>
+                            </label>
+                            <input type="number" id="manualInputCand1" class="counting-vote-input-stepper" min="0" value="0" oninput="calcManualTotal()" style="width: 100%; padding: 10px; font-size: 18px; font-weight: 800; text-align: center; border: 1.5px solid #cbd5e1; border-radius: 8px;">
+                        </div>
+
+                        <div style="background: #f0f9ff; border: 1.5px solid #bae6fd; padding: 14px; border-radius: 10px;">
+                            <label style="font-size: 12px; font-weight: 800; color: #0369a1; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                                <i class="fas fa-hand" style="color: #0284c7;"></i> <span id="manualLabelCand2">कांग्रेस प्रत्याशी</span>
+                            </label>
+                            <input type="number" id="manualInputCand2" class="counting-vote-input-stepper" min="0" value="0" oninput="calcManualTotal()" style="width: 100%; padding: 10px; font-size: 18px; font-weight: 800; text-align: center; border: 1.5px solid #cbd5e1; border-radius: 8px;">
+                        </div>
+
+                        <div style="background: #faf5ff; border: 1.5px solid #e9d5ff; padding: 14px; border-radius: 10px;">
+                            <label style="font-size: 12px; font-weight: 800; color: #7e22ce; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                                <i class="fas fa-user" style="color: #9333ea;"></i> <span id="manualLabelCand3">निर्दलीय प्रत्याशी</span>
+                            </label>
+                            <input type="number" id="manualInputCand3" class="counting-vote-input-stepper" min="0" value="0" oninput="calcManualTotal()" style="width: 100%; padding: 10px; font-size: 18px; font-weight: 800; text-align: center; border: 1.5px solid #cbd5e1; border-radius: 8px;">
+                        </div>
+
+                        <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; padding: 14px; border-radius: 10px;">
+                            <label style="font-size: 12px; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                                <i class="fas fa-ban" style="color: #64748b;"></i> नोटा (NOTA)
+                            </label>
+                            <input type="number" id="manualInputNota" class="counting-vote-input-stepper" min="0" value="0" oninput="calcManualTotal()" style="width: 100%; padding: 10px; font-size: 18px; font-weight: 800; text-align: center; border: 1.5px solid #cbd5e1; border-radius: 8px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px; display: block;">
+                            <i class="fas fa-comment"></i> टिप्पणी (वैकल्पिक):
+                        </label>
+                        <input type="text" id="manualInputRemark" placeholder="उदा. शांतिपूर्ण पूर्ण, सील सत्यापित" style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                        <button class="btn-primary" onclick="saveManualCountingSlot()" style="padding: 10px 22px; font-size: 14px; font-weight: 800; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i class="fas fa-floppy-disk"></i> मत सुरक्षित करें एवं अगली मेज
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 7: WHATSAPP BULLETIN ================= -->
+    <div id="view_whatsapp" class="page-view" style="display: none;">
+        <div class="card" style="max-width: 840px; margin: 0 auto;">
+            <div class="card-header">
+                <h3><i class="fab fa-whatsapp" style="color: #16a34a;"></i> WhatsApp बुलेटिन जनरेटर (DEO / SP / RO ग्रुप्स)</h3>
+            </div>
+            <div class="card-body" style="padding: 20px;">
+                <p style="font-size: 13px; color: var(--text-muted);">
+                    जिला निर्वाचन अधिकारी (DEO), पुलिस अधीक्षक (SP) एवं RO ग्रुप्स में 1-क्लिक में भेजने हेतु तैयार बुलेटिन संदेश।
+                </p>
+
+                <div style="display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap;">
+                    <button class="slot-tab-btn active" onclick="generateWhatsappMessage('7.15')">7:15 AM प्रारंभ</button>
+                    <button class="slot-tab-btn" onclick="generateWhatsappMessage('10')">10:00 AM स्लॉट</button>
+                    <button class="slot-tab-btn" onclick="generateWhatsappMessage('13')" style="background: #fef9c3; color: #854d0e;">01:00 PM स्लॉट</button>
+                    <button class="slot-tab-btn" onclick="generateWhatsappMessage('15')">03:00 PM स्लॉट</button>
+                    <button class="slot-tab-btn" onclick="generateWhatsappMessage('18')">06:00 PM स्लॉट</button>
+                    <button class="slot-tab-btn" onclick="generateWhatsappMessage('Final')">अंतिम (Final)</button>
+                </div>
+
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; white-space: pre-wrap; font-family: monospace; font-size: 13px; color: #14532d; max-height: 400px; overflow-y: auto;" id="whatsappBox">
+                    संदेश तैयार हो रहा है...
+                </div>
+
+                <div style="margin-top: 16px; text-align: right;">
+                    <button class="btn-primary" style="background: #16a34a; border-color: #16a34a;" onclick="copyWhatsappBulletin()">
+                        <i class="fas fa-copy"></i> क्लिपबोर्ड पर कॉपी करें (Copy Message)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 8: RO ADMIN TOOLS ================= -->
+    <div id="view_admin" class="page-view" style="display: none;">
+        <div class="card" style="max-width: 900px; margin: 0 auto;">
+            <div class="card-header">
+                <h3><i class="fas fa-shield-halved" style="color: #f59e0b;"></i> RO (SDM) सुपर-एडमिन टूल्स व डेटा प्रबंधन</h3>
+            </div>
+            <div class="card-body" style="padding: 20px; display: flex; flex-direction: column; gap: 20px;">
+                
+                <div style="background: #f8fafc; border: 1px solid var(--border); padding: 16px; border-radius: 8px;">
+                    <h4 style="margin: 0 0 6px;"><i class="fas fa-flask"></i> चुनाव पूर्व रिहर्सल / मॉक टेस्ट डेटा लोड करें</h4>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 0 0 12px;">
+                        सिस्टम एवं प्रारूप-11 की जांच हेतु सभी 152 बूथों पर यथार्थवादी मॉक मत भरें।
+                    </p>
+                    <button class="btn-secondary" onclick="seedMockData()"><i class="fas fa-dice"></i> 152 बूथों हेतु मॉक डेटा भरें</button>
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid var(--border); padding: 16px; border-radius: 8px;">
+                    <h4 style="margin: 0 0 6px;"><i class="fas fa-download"></i> संपूर्ण डेटा बैकअप डाउनलोड करें</h4>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 0 0 12px;">
+                        दर्ज किए गए समस्त मतों एवं लॉग्स का JSON बैकअप डाउनलोड करें।
+                    </p>
+                    <button class="btn-secondary" onclick="downloadBackupJson()"><i class="fas fa-file-code"></i> JSON स्नैपशॉट डाउनलोड</button>
+                </div>
+
+                <div style="background: #fef2f2; border: 1px solid #fecaca; padding: 16px; border-radius: 8px;">
+                    <h4 style="margin: 0 0 6px; color: #991b1b;"><i class="fas fa-triangle-exclamation"></i> चुनाव डेटा रीसेट (Clear / Reset)</h4>
+                    <p style="font-size: 12.5px; color: #b91c1c; margin: 0 0 12px;">
+                        सक्रिय चुनाव दिवस (22-10-2026 या 24-10-2026) का समस्त डेटा शून्य कर दिया जाएगा।
+                    </p>
+                    <button class="btn-primary" style="background: #dc2626; border-color: #dc2626;" onclick="resetElectionData()">
+                        <i class="fas fa-trash"></i> सक्रिय तिथि का डेटा रीसेट करें
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Rankings Modal -->
+<div id="rankingsModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:white; border-radius:12px; max-width:650px; width:95%; max-height:85vh; display:flex; flex-direction:column; overflow:hidden;">
+        <div style="padding:16px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+            <h3 id="rankingsModalTitle" style="margin:0; font-size:16px;">रैंकिंग सूची</h3>
+            <button onclick="closeRankingsModal()" style="border:none; background:transparent; font-size:20px; cursor:pointer;">&times;</button>
+        </div>
+        <div id="rankingsModalContent" style="padding:16px 20px; overflow-y:auto; flex:1;"></div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- BADE SCREEN PAR STATES (BIG SCREEN / TV WALLBOARD MODAL)       -->
+<!-- ============================================================== -->
+<div id="badeScreenModal" class="bade-screen-modal">
+    <!-- Top Command Header -->
+    <div class="bs-command-header">
+        <div class="bs-branding">
+            <div class="bs-emblem">🗳️</div>
+            <div class="bs-titles">
+                <h1>कार्यालय निर्वाचक रजिस्ट्रीकरण अधिकारी (एसडीएम) सुमेरपुर, जिला - पाली (राज.)</h1>
+                <p id="bsSubtitleDisplay">पंचायती राज आम चुनाव 2026 — लाइव मतदान सांख्यिकी एवं कंट्रोल रूम वॉल-बोर्ड</p>
+            </div>
+        </div>
+
+        <div class="bs-center-pills">
+            <div class="bs-live-pill">
+                <span class="bs-live-dot"></span>
+                <span>लाइव मॉनिटरिंग</span>
+            </div>
+            <div class="bs-clock-display" id="bsClock">00:00:00 AM</div>
+            <div class="bs-deadline-pill" id="bsDeadlinePill">
+                <span>🕒 सक्रिय स्लॉट: <strong id="bsCurrentRoundText">10:00 AM</strong></span>
+            </div>
+        </div>
+
+        <div class="bs-controls">
+            <button class="bs-btn" id="bsDateSwitchBtn" onclick="toggleBsElectionDate()">
+                📅 <span id="bsDateBtnText">22-10-2026 (PS व ZP)</span>
+            </button>
+            <button class="bs-btn" id="bsAutoCycleBtn" onclick="toggleBsAutoCycle()">
+                🔄 <span id="bsAutoCycleText">टीवी रोटेशन: बंद</span>
+            </button>
+            <button class="bs-btn bs-btn-primary" onclick="toggleBsFullscreen()">
+                ⛶ <span id="bsFsText">पूर्ण स्क्रीन (F11)</span>
+            </button>
+            <button class="bs-btn bs-btn-danger" onclick="closeBigScreenModal()">
+                ✕ बाहर निकलें (ESC)
+            </button>
+        </div>
+    </div>
+
+    <!-- Time-Slot Progress Ribbon -->
+    <div class="bs-slots-ribbon">
+        <span class="bs-slots-label">⏰ समय स्लॉट:</span>
+        <div class="bs-slot-chip" id="bsChip_715" onclick="setBsSlot('7.15 AM')">
+            <span class="bs-chip-title">07:15 AM</span>
+            <div class="bs-chip-stats" id="bsSlotVal_715">प्रारंभ</div>
+        </div>
+        <div class="bs-slot-chip active" id="bsChip_10" onclick="setBsSlot('10 AM')">
+            <span class="bs-chip-title">10:00 AM</span>
+            <div class="bs-chip-stats" id="bsSlotVal_10">0.00%</div>
+        </div>
+        <div class="bs-slot-chip highlight-yellow" id="bsChip_1" onclick="setBsSlot('1 PM')">
+            <span class="bs-chip-title">⭐ 01:00 PM (मुख्य)</span>
+            <div class="bs-chip-stats" id="bsSlotVal_1">0.00%</div>
+        </div>
+        <div class="bs-slot-chip" id="bsChip_3" onclick="setBsSlot('3 PM')">
+            <span class="bs-chip-title">03:00 PM</span>
+            <div class="bs-chip-stats" id="bsSlotVal_3">0.00%</div>
+        </div>
+        <div class="bs-slot-chip" id="bsChip_6" onclick="setBsSlot('6 PM')">
+            <span class="bs-chip-title">06:00 PM</span>
+            <div class="bs-chip-stats" id="bsSlotVal_6">0.00%</div>
+        </div>
+        <div class="bs-slot-chip" id="bsChip_Final" onclick="setBsSlot('Final')">
+            <span class="bs-chip-title">🏁 Final क्लोजिंग</span>
+            <div class="bs-chip-stats" id="bsSlotVal_Final">0.00%</div>
+        </div>
+    </div>
+
+    <!-- Massive Hero KPI Stat Cards -->
+    <div class="bs-kpi-grid">
+        <div class="bs-kpi-card blue">
+            <div class="bs-kpi-lbl">👥 कुल पंजीकृत मतदाता</div>
+            <div class="bs-kpi-num" id="bsTotalVoters">1,44,905</div>
+            <div class="bs-kpi-sub" id="bsScopeText">152 बूथ | 34 ग्राम पंचायतें | 10 ज़ोन</div>
+        </div>
+        <div class="bs-kpi-card green">
+            <div class="bs-kpi-lbl">🗳️ कुल डाले गए मत (Polled)</div>
+            <div class="bs-kpi-num" id="bsTotalPolledVotes">0</div>
+            <div class="bs-kpi-sub" id="bsReportedRatio">रिपोर्ट प्राप्त: 0 / 152 बूथ</div>
+        </div>
+        <div class="bs-kpi-card gold">
+            <div class="bs-kpi-lbl">📊 कुल मतदान प्रतिशत</div>
+            <div class="bs-kpi-num" id="bsTurnoutPercentage">0.00%</div>
+            <div class="bs-kpi-sub" id="bsPaceIndicator">मतदान गति: सक्रिय</div>
+        </div>
+        <div class="bs-kpi-card purple">
+            <div class="bs-kpi-lbl">✅ मॉक पोल पूर्ण (7 AM)</div>
+            <div class="bs-kpi-num" id="bsMockPollCount">152 / 152</div>
+            <div class="bs-kpi-sub">100% सत्यापित मतदान केंद्र</div>
+        </div>
+        <div class="bs-kpi-card emerald">
+            <div class="bs-kpi-lbl">🕊️ 7:15 AM शांतिपूर्ण प्रारंभ</div>
+            <div class="bs-kpi-num" id="bsPeacefulStartCount">152 / 152</div>
+            <div class="bs-kpi-sub">समस्त 152 बूथ शांतिपूर्ण</div>
+        </div>
+        <div class="bs-kpi-card amber">
+            <div class="bs-kpi-lbl">📍 सक्रिय प्रशासनिक ज़ोन</div>
+            <div class="bs-kpi-num">10 / 10</div>
+            <div class="bs-kpi-sub">10 जोनल मजिस्ट्रेट फील्ड में सक्रिय</div>
+        </div>
+    </div>
+
+    <!-- View Switcher -->
+    <div class="bs-view-switcher">
+        <button class="bs-view-tab active" id="bsTabZonesBtn" onclick="switchBsSubView('zones')">
+            <span>📍 10 प्रशासनिक ज़ोन सांख्यिकी (Zone Matrix)</span>
+        </button>
+        <button class="bs-view-tab" id="bsTabZpWardsBtn" onclick="switchBsSubView('zp_wards')">
+            <span>🏛️ 4 जिला परिषद (ZP) वार्ड सांख्यिकी</span>
+        </button>
+        <button class="bs-view-tab" id="bsTabPsWardsBtn" onclick="switchBsSubView('ps_wards')">
+            <span>🏢 21 पंचायत समिति (PS) वार्ड सांख्यिकी</span>
+        </button>
+        <button class="bs-view-tab" id="bsTabRankingsBtn" onclick="switchBsSubView('rankings')">
+            <span>🏆 शीर्ष एवं धीमे केंद्र (Top 5 & Slow 5)</span>
+        </button>
+        <button class="bs-view-tab" id="bsTabGpsBtn" onclick="switchBsSubView('gps')">
+            <span>📋 समस्त 34 ग्राम पंचायतें (GP Overview)</span>
+        </button>
+    </div>
+
+    <!-- Sub-View 1: 10 Administrative Zones Live Grid -->
+    <div id="bsViewZones" class="bs-zones-grid">
+        <!-- Dynamically Rendered via JS -->
+    </div>
+
+    <!-- Sub-View 2: 4 Zilla Parishad (ZP) Wards Grid -->
+    <div id="bsViewZpWards" class="bs-zp-grid" style="display: none;">
+        <!-- Dynamically Rendered via JS -->
+    </div>
+
+    <!-- Sub-View 3: 21 Panchayat Samiti (PS) Wards Grid -->
+    <div id="bsViewPsWards" class="bs-ps-grid" style="display: none;">
+        <!-- Dynamically Rendered via JS -->
+    </div>
+
+    <!-- Sub-View 4: Top & Slowest Booths Rankings -->
+    <div id="bsViewRankings" class="bs-rankings-container" style="display: none;">
+        <div class="bs-rank-panel high">
+            <div class="bs-rank-title">
+                <span>🚀 सर्वाधिक मतदान वाले टॉप 5 बूथ (Highest)</span>
+                <span style="font-size:0.8rem; color:#34d399;">आधिकारिक रुझान</span>
+            </div>
+            <div id="bsTopBoothsList"></div>
+        </div>
+        <div class="bs-rank-panel low">
+            <div class="bs-rank-title">
+                <span>⚠️ न्यूनतम / धीमी गति वाले 5 बूथ (Slowest - ध्यानार्थ)</span>
+                <span style="font-size:0.8rem; color:#f87171;">मोबाइल टीम अलर्ट</span>
+            </div>
+            <div id="bsSlowBoothsList"></div>
+        </div>
+    </div>
+
+    <!-- Sub-View 5: 34 Gram Panchayats Grid -->
+    <div id="bsViewGps" class="bs-gps-grid" style="display: none;">
+        <!-- Dynamically Rendered via JS -->
+    </div>
+
+    <!-- Footer Bar -->
+    <div class="bs-footer-bar">
+        <div>
+            <span>🟢 रीयल-टाइम डेटा सिंक सक्रिय | डेटा संग्रहण: सर्वर एवं SSE स्ट्रीम | सुमेरपुर (पाली) पंचायती राज 2026</span>
+        </div>
+        <div>
+            <span>कीबोर्ड शॉर्टकट: <b>[F11]</b> फुलस्क्रीन | <b>[ESC]</b> बाहर निकलें | <b>[Space]</b> टीवी रोटेशन पॉज़/प्ले</span>
+        </div>
+    </div>
+</div>
+
+<!-- Google Sheet Setup & Permission Guide Modal -->
+<div id="googleSheetHelpModal" class="modal-overlay" style="display:none; z-index:99999;">
+    <div class="modal-box" style="max-width:580px; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:16px;">
+            <h3 style="margin:0; color:#0f172a; font-size:17px;"><i class="fas fa-file-excel" style="color:#16a34a;"></i> Google Sheet ऑटो-सिंक सेटअप</h3>
+            <button class="modal-close-btn" onclick="closeGoogleSheetHelpModal()">&times;</button>
+        </div>
+        <div style="font-size:13px; color:#334155; line-height:1.6;">
+            <p><b>सक्रिय Google Sheet लिंक:</b></p>
+            <div style="background:#f1f5f9; padding:8px 12px; border-radius:6px; font-family:monospace; font-size:11.5px; word-break:break-all; margin-bottom:12px; border:1px solid #cbd5e1;">
+                <a href="https://docs.google.com/spreadsheets/d/1akpSIbiSWMT5XahHoZnCZiCS_yFrBThkoI_Ltys2tGY/edit?gid=1529625107#gid=1529625107" target="_blank" style="color:#0284c7;">https://docs.google.com/spreadsheets/d/1akpSIbiSWMT5XahHoZnCZiCS_yFrBThkoI_Ltys2tGY/edit?gid=1529625107#gid=1529625107</a>
+            </div>
+            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:12px; margin-bottom:14px;">
+                <h4 style="margin:0 0 6px; color:#1e40af; font-size:13.5px;"><i class="fas fa-key"></i> ऑटो-सिंक हेतु 1-बार आवश्यक सेटिंग:</h4>
+                <ol style="margin:0; padding-left:18px;">
+                    <li>ऊपर दिए गए लिंक से <b>Google Sheet</b> खोलें।</li>
+                    <li>ऊपर दाईं ओर नीला <b>"Share" (शेयर)</b> बटन दबाएं।</li>
+                    <li>नीचे <b>"General access"</b> (सामान्य एक्सेस) में <b>"Restricted"</b> की जगह <b>"Anyone with the link"</b> (कोई भी जिसके पास लिंक है -> Viewer) चुनें।</li>
+                    <li><b>"Done"</b> बटन दबाएं।</li>
+                </ol>
+            </div>
+            <p style="margin-bottom:6px;"><b>इसके बाद क्या होगा?</b></p>
+            <p style="margin:0 0 14px; color:#64748b;">पोर्टल स्वतः हर 30 सेकंड में या <b>"Google Sheet से अभी सिंक करें"</b> बटन दबाते ही शीट की <b>'22-OCT_BOOTH_ENTRY'</b> से 10 AM, 1 PM, 3 PM, 6 PM एवं Final मतों को स्वतः खींचकर पोर्टल में भर देगा!</p>
+        </div>
+        <div style="text-align:right; border-top:1px solid #e2e8f0; padding-top:12px;">
+            <button class="btn-primary" onclick="closeGoogleSheetHelpModal()">समझ गया, ठीक है</button>
+        </div>
+    </div>
+</div>
+
+<script src="xlsx.full.min.js"></script>
+<script src="html2pdf.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/counting.js"></script>
+
+<!-- 1. Google Sheet Counting Settings Modal -->
+<div id="countingSheetSettingsModal" class="modal-overlay" style="display:none; z-index:99999;">
+    <div class="modal-box" style="max-width:580px; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:16px;">
+            <h3 style="margin:0; color:#0f172a; font-size:17px;"><i class="fas fa-file-excel" style="color:#16a34a;"></i> मतगणना Google Sheet ऑटो-सिंक सेटअप</h3>
+            <button class="modal-close-btn" onclick="closeCountingSheetModal()">&times;</button>
+        </div>
+        <div style="font-size:13px; color:#334155; line-height:1.6;">
+            <p style="margin-top:0;"><b>Google Sheet ID या लिंक दर्ज करें:</b></p>
+            <input type="text" id="countingSettingSheetId" placeholder="Google Sheet ID दर्ज करें (उदा. 1akpSIbiSWMT5Xah...)" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:8px; font-family:monospace; font-size:12px; margin-bottom:12px;">
+
+            <p style="margin-bottom:6px;"><b>GID / शीट टैब संख्या (उदा. 0):</b></p>
+            <input type="text" id="countingSettingGid" placeholder="0" style="width:120px; padding:8px 10px; border:1px solid #cbd5e1; border-radius:8px; font-family:monospace; font-size:12px; margin-bottom:14px;">
+
+            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:12px; margin-bottom:14px;">
+                <h4 style="margin:0 0 6px; color:#1e40af; font-size:13px;"><i class="fas fa-circle-info"></i> Google Sheet में अपेक्षित कॉलम हेडर:</h4>
+                <div style="font-family:monospace; font-size:11px; background:#ffffff; padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; word-break:break-all;">
+                    Round | Table | Booth_No | PS_Ward | Candidate_1_BJP | Candidate_2_INC | Candidate_3_IND | NOTA | Total_Votes
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <button class="btn-secondary" onclick="downloadCountingTemplate()" style="font-size:12px;">
+                    <i class="fas fa-download" style="color:#10b981;"></i> नमूना Google Sheet टेम्पलेट डाउनलोड करें
+                </button>
+            </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #e2e8f0; padding-top:12px;">
+            <button class="btn-secondary" onclick="closeCountingSheetModal()">रद्द करें</button>
+            <button class="btn-primary" onclick="saveCountingSheetSettings()"><i class="fas fa-check"></i> सेटिंग्स सुरक्षित करें</button>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Edit Single Slot Modal -->
+<div id="countingEditSlotModal" class="modal-overlay" style="display:none; z-index:99999;">
+    <div class="modal-box" style="max-width:500px; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:14px;">
+            <div>
+                <h3 id="editSlotTitle" style="margin:0; color:#0f172a; font-size:16px; font-weight:800;">मतगणना प्रविष्टि</h3>
+                <div id="editSlotSubtitle" style="font-size:12px; color:#64748b; margin-top:2px;"></div>
+            </div>
+            <button class="modal-close-btn" onclick="closeEditSlotModal()">&times;</button>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <div>
+                <label id="editLabelCand1" style="font-size:12px; font-weight:700; color:#ea580c; display:block; margin-bottom:4px;">भाजपा प्रत्याशी</label>
+                <input type="number" id="editInputCand1" min="0" oninput="calcEditModalTotal()" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:16px; font-weight:700;">
+            </div>
+            <div>
+                <label id="editLabelCand2" style="font-size:12px; font-weight:700; color:#0284c7; display:block; margin-bottom:4px;">कांग्रेस प्रत्याशी</label>
+                <input type="number" id="editInputCand2" min="0" oninput="calcEditModalTotal()" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:16px; font-weight:700;">
+            </div>
+            <div>
+                <label id="editLabelCand3" style="font-size:12px; font-weight:700; color:#9333ea; display:block; margin-bottom:4px;">निर्दलीय प्रत्याशी</label>
+                <input type="number" id="editInputCand3" min="0" oninput="calcEditModalTotal()" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:16px; font-weight:700;">
+            </div>
+            <div>
+                <label style="font-size:12px; font-weight:700; color:#64748b; display:block; margin-bottom:4px;">नोटा (NOTA)</label>
+                <input type="number" id="editInputNota" min="0" oninput="calcEditModalTotal()" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:16px; font-weight:700;">
+            </div>
+            <div>
+                <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">टिप्पणी:</label>
+                <input type="text" id="editInputRemark" placeholder="वैकल्पिक टिप्पणी" style="width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
+            </div>
+            <div style="background:#f8fafc; padding:10px 14px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; font-weight:700;">
+                <span style="color:#475569;">कुल दर्ज मत:</span>
+                <span id="editSlotTotalDisplay" style="font-size:18px; color:#15803d; font-weight:900;">0</span>
+            </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #e2e8f0; padding-top:14px; margin-top:14px;">
+            <button class="btn-secondary" onclick="closeEditSlotModal()">रद्द करें</button>
+            <button class="btn-primary" onclick="saveEditSlotModal()"><i class="fas fa-check"></i> मत सुरक्षित करें</button>
+        </div>
+    </div>
+</div>
+
+<!-- 3. WhatsApp Bulletin Modal -->
+<div id="countingWhatsAppModal" class="modal-overlay" style="display:none; z-index:99999;">
+    <div class="modal-box" style="max-width:580px; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:14px;">
+            <h3 id="countingWhatsAppModalTitle" style="margin:0; color:#166534; font-size:16px; font-weight:800;">
+                <i class="fab fa-whatsapp"></i> WhatsApp मतगणना बुलेटिन
+            </h3>
+            <button class="modal-close-btn" onclick="closeCountingWhatsAppModal()">&times;</button>
+        </div>
+        <p style="font-size:12.5px; color:#64748b; margin-top:0;">
+            यह बुलेटिन उच्चाधिकारियों (DEO, SP, RO) एवं मीडिया ग्रुप्स में भेजने हेतु तैयार है:
+        </p>
+        <textarea id="countingWhatsAppText" readonly style="width:100%; height:280px; padding:12px; border:1px solid #cbd5e1; border-radius:8px; font-family:monospace; font-size:12.5px; line-height:1.5; background:#f8fafc; color:#0f172a; resize:none;"></textarea>
+        <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #e2e8f0; padding-top:12px; margin-top:12px;">
+            <button class="btn-secondary" onclick="closeCountingWhatsAppModal()">बंद करें</button>
+            <button class="btn-primary" onclick="copyCountingWhatsAppText()" style="background:#16a34a; border-color:#16a34a;">
+                <i class="fas fa-copy"></i> क्लिपबोर्ड पर कॉपी करें
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Ward Booths Breakdown Modal -->
+<div id="countingWardBoothsModal" class="modal-overlay" style="display:none; z-index:99999;">
+    <div class="modal-box" style="max-width:850px; text-align:left;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:14px;">
+            <div>
+                <h3 id="wardBoothsModalTitle" style="margin:0; color:#0f172a; font-size:17px; font-weight:800;">वार्ड विवरण</h3>
+                <div id="wardBoothsModalSubtitle" style="font-size:12px; color:#64748b; margin-top:2px;"></div>
+            </div>
+            <button class="modal-close-btn" onclick="closeWardBoothsModal()">&times;</button>
+        </div>
+        <div style="max-height:400px; overflow-y:auto;">
+            <table class="data-table" style="width:100%; font-size:12.5px;">
+                <thead id="wardBoothsModalThead"></thead>
+                <tbody id="wardBoothsModalTbody"></tbody>
+            </table>
+        </div>
+        <div style="display:flex; justify-content:flex-end; border-top:1px solid #e2e8f0; padding-top:12px; margin-top:12px;">
+            <button class="btn-primary" onclick="closeWardBoothsModal()">बंद करें</button>
+        </div>
+    </div>
+</div>
+
+<!-- 5. Fullscreen War Room Modal -->
+<div id="countingWarRoomModal" class="warroom-overlay" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1f2937; padding-bottom:14px; margin-bottom:16px;">
+        <div style="display:flex; align-items:center; gap:14px;">
+            <div style="font-size:24px;">🏛️</div>
+            <div>
+                <h1 style="margin:0; font-size:22px; font-weight:900; color:#ffffff; letter-spacing:0.5px;">
+                    सुमेरपुर पंचायत समिति मतगणना 2026 — वॉर रूम
+                </h1>
+                <div style="font-size:12.5px; color:#9ca3af; margin-top:2px;">
+                    14 राउंड • 15 टेबल • 21 पं.स. वार्ड • 152 मतदान केंद्र • कंट्रोल रूम लाइव प्रसारण
+                </div>
+            </div>
+        </div>
+
+        <!-- Party Tally in War Room -->
+        <div id="warRoomPartyTally" style="display:flex; gap:12px;"></div>
+
+        <div style="display:flex; align-items:center; gap:14px;">
+            <div style="text-align:right;">
+                <div style="font-size:18px; font-weight:800; color:#38bdf8;" id="warRoomClock">00:00:00</div>
+                <div style="font-size:11px; color:#9ca3af;">लाइव ऑटो-रोटेशन (12s)</div>
+            </div>
+            <button onclick="closeCountingWarRoomModal()" style="background:#ef4444; color:#ffffff; border:none; padding:8px 14px; border-radius:8px; font-weight:700; cursor:pointer;">
+                <i class="fas fa-xmark"></i> बाहर निकलें
+            </button>
+        </div>
+    </div>
+
+    <!-- Live Grid (Wards or Current Round Tables) -->
+    <div id="warRoomTilesGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; flex:1;"></div>
+</div>
+
+</body>
+</html>
