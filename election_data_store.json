@@ -8951,7 +8951,6 @@
           "c2": 207,
           "c3": 0,
           "c4": 0,
-          "c5": 0,
           "nota": 7,
           "total": 437
         },
@@ -8960,14 +8959,14 @@
         "ps_leader": {
           "name": "पेमाराम",
           "party": "BJP",
-          "votes": 217,
-          "margin": 4
+          "votes": 233,
+          "margin": 36
         },
         "zp_leader": {
           "name": "करण सिंह",
           "party": "INC",
-          "votes": 225,
-          "margin": 20
+          "votes": 223,
+          "margin": 16
         }
       },
       "2": {
@@ -9009,10 +9008,10 @@
           "margin": 20
         },
         "zp_leader": {
-          "name": "गुडिया",
-          "party": "INC",
-          "votes": 171,
-          "margin": 15
+          "name": "सुगना",
+          "party": "BJP",
+          "votes": 167,
+          "margin": 7
         }
       },
       "3": {
@@ -9054,10 +9053,10 @@
           "margin": 24
         },
         "zp_leader": {
-          "name": "सुगना",
-          "party": "BJP",
-          "votes": 201,
-          "margin": 2
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 220,
+          "margin": 40
         }
       },
       "4": {
@@ -9099,10 +9098,10 @@
           "margin": 27
         },
         "zp_leader": {
-          "name": "करण सिंह",
-          "party": "INC",
-          "votes": 235,
-          "margin": 29
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 232,
+          "margin": 23
         }
       },
       "5": {
@@ -9140,8 +9139,8 @@
         "ps_leader": {
           "name": "राजवीर परमार",
           "party": "INC",
-          "votes": 217,
-          "margin": 18
+          "votes": 213,
+          "margin": 10
         },
         "zp_leader": {
           "name": "गीता कुमारी",
@@ -9189,10 +9188,10 @@
           "margin": 35
         },
         "zp_leader": {
-          "name": "पोसी सुरेश कुमार देवासी",
-          "party": "INC",
-          "votes": 292,
-          "margin": 5
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 299,
+          "margin": 19
         }
       },
       "7": {
@@ -9230,14 +9229,14 @@
         "ps_leader": {
           "name": "अनिता मीणा",
           "party": "INC",
-          "votes": 288,
-          "margin": 19
+          "votes": 306,
+          "margin": 55
         },
         "zp_leader": {
-          "name": "करण सिंह",
-          "party": "INC",
-          "votes": 305,
-          "margin": 53
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 280,
+          "margin": 3
         }
       },
       "8": {
@@ -9326,8 +9325,8 @@
         "zp_leader": {
           "name": "गीता कुमारी",
           "party": "BJP",
-          "votes": 200,
-          "margin": 35
+          "votes": 195,
+          "margin": 25
         }
       },
       "10": {
@@ -9371,8 +9370,8 @@
         "zp_leader": {
           "name": "गुडिया",
           "party": "INC",
-          "votes": 290,
-          "margin": 50
+          "votes": 287,
+          "margin": 44
         }
       },
       "11": {
@@ -9416,8 +9415,8 @@
         "zp_leader": {
           "name": "विजय कुमार",
           "party": "BJP",
-          "votes": 288,
-          "margin": 18
+          "votes": 294,
+          "margin": 30
         }
       },
       "12": {
@@ -9596,8 +9595,8 @@
         "zp_leader": {
           "name": "करण सिंह",
           "party": "INC",
-          "votes": 331,
-          "margin": 2
+          "votes": 351,
+          "margin": 42
         }
       },
       "16": {
@@ -9635,14 +9634,14 @@
         "ps_leader": {
           "name": "पेमाराम",
           "party": "BJP",
-          "votes": 237,
-          "margin": 27
+          "votes": 238,
+          "margin": 29
         },
         "zp_leader": {
-          "name": "विजय कुमार",
-          "party": "BJP",
-          "votes": 237,
-          "margin": 27
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 242,
+          "margin": 37
         }
       },
       "17": {
@@ -9684,10 +9683,10 @@
           "margin": 23
         },
         "zp_leader": {
-          "name": "गुडिया",
-          "party": "INC",
-          "votes": 214,
-          "margin": 34
+          "name": "सुगना",
+          "party": "BJP",
+          "votes": 202,
+          "margin": 10
         }
       },
       "18": {
@@ -9731,8 +9730,8 @@
         "zp_leader": {
           "name": "गुडिया",
           "party": "INC",
-          "votes": 272,
-          "margin": 33
+          "votes": 262,
+          "margin": 13
         }
       },
       "19": {
@@ -9776,8 +9775,8 @@
         "zp_leader": {
           "name": "विजय कुमार",
           "party": "BJP",
-          "votes": 232,
-          "margin": 19
+          "votes": 230,
+          "margin": 15
         }
       },
       "20": {
@@ -9813,16 +9812,16 @@
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
         "ps_leader": {
-          "name": "लक्ष्मणराम",
-          "party": "BJP",
-          "votes": 175,
-          "margin": 3
+          "name": "राजवीर परमार",
+          "party": "INC",
+          "votes": 186,
+          "margin": 25
         },
         "zp_leader": {
           "name": "पोसी सुरेश कुमार देवासी",
           "party": "INC",
-          "votes": 183,
-          "margin": 19
+          "votes": 182,
+          "margin": 17
         }
       },
       "21": {
@@ -9866,8 +9865,8 @@
         "zp_leader": {
           "name": "गीता कुमारी",
           "party": "BJP",
-          "votes": 323,
-          "margin": 20
+          "votes": 333,
+          "margin": 40
         }
       },
       "22": {
@@ -9903,16 +9902,16 @@
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
         "ps_leader": {
-          "name": "अनिता मीणा",
-          "party": "INC",
+          "name": "चंदा कंवर",
+          "party": "BJP",
           "votes": 279,
           "margin": 29
         },
         "zp_leader": {
           "name": "करण सिंह",
           "party": "INC",
-          "votes": 290,
-          "margin": 51
+          "votes": 270,
+          "margin": 11
         }
       },
       "23": {
@@ -9950,8 +9949,8 @@
         "ps_leader": {
           "name": "विमला कुमारी",
           "party": "INC",
-          "votes": 109,
-          "margin": 7
+          "votes": 111,
+          "margin": 11
         },
         "zp_leader": {
           "name": "नागेश माणकराम देवासी",
@@ -10001,8 +10000,8 @@
         "zp_leader": {
           "name": "पोसी सुरेश कुमार देवासी",
           "party": "INC",
-          "votes": 216,
-          "margin": 8
+          "votes": 215,
+          "margin": 6
         }
       },
       "25": {
@@ -10046,8 +10045,8 @@
         "zp_leader": {
           "name": "गुडिया",
           "party": "INC",
-          "votes": 273,
-          "margin": 17
+          "votes": 269,
+          "margin": 9
         }
       },
       "26": {
@@ -10089,10 +10088,10 @@
           "margin": 31
         },
         "zp_leader": {
-          "name": "करण सिंह",
-          "party": "INC",
-          "votes": 267,
-          "margin": 26
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 260,
+          "margin": 12
         }
       },
       "27": {
@@ -10271,8 +10270,8 @@
         "zp_leader": {
           "name": "करण सिंह",
           "party": "INC",
-          "votes": 252,
-          "margin": 0
+          "votes": 273,
+          "margin": 42
         }
       },
       "31": {
@@ -10308,16 +10307,16 @@
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
         "ps_leader": {
-          "name": "पेमाराम",
-          "party": "BJP",
-          "votes": 140,
-          "margin": 2
+          "name": "वरदाराम उर्फ वरदराम",
+          "party": "INC",
+          "votes": 141,
+          "margin": 4
         },
         "zp_leader": {
-          "name": "करण सिंह",
-          "party": "INC",
-          "votes": 149,
-          "margin": 20
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 142,
+          "margin": 6
         }
       },
       "32": {
@@ -10361,8 +10360,8 @@
         "zp_leader": {
           "name": "गुडिया",
           "party": "INC",
-          "votes": 250,
-          "margin": 36
+          "votes": 249,
+          "margin": 34
         }
       },
       "33": {
@@ -10404,10 +10403,10 @@
           "margin": 30
         },
         "zp_leader": {
-          "name": "गुडिया",
-          "party": "INC",
-          "votes": 275,
-          "margin": 43
+          "name": "सुगना",
+          "party": "BJP",
+          "votes": 256,
+          "margin": 5
         }
       },
       "34": {
@@ -10449,10 +10448,10 @@
           "margin": 29
         },
         "zp_leader": {
-          "name": "विजय कुमार",
-          "party": "BJP",
-          "votes": 260,
-          "margin": 24
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 258,
+          "margin": 20
         }
       },
       "35": {
@@ -10490,14 +10489,14 @@
         "ps_leader": {
           "name": "राजवीर परमार",
           "party": "INC",
-          "votes": 268,
-          "margin": 37
+          "votes": 255,
+          "margin": 11
         },
         "zp_leader": {
           "name": "गीता कुमारी",
           "party": "BJP",
-          "votes": 274,
-          "margin": 49
+          "votes": 263,
+          "margin": 27
         }
       },
       "36": {
@@ -10541,8 +10540,8 @@
         "zp_leader": {
           "name": "पोसी सुरेश कुमार देवासी",
           "party": "INC",
-          "votes": 280,
-          "margin": 29
+          "votes": 275,
+          "margin": 19
         }
       },
       "37": {
@@ -10580,14 +10579,14 @@
         "ps_leader": {
           "name": "अनिता मीणा",
           "party": "INC",
-          "votes": 279,
-          "margin": 31
+          "votes": 287,
+          "margin": 47
         },
         "zp_leader": {
-          "name": "करण सिंह",
-          "party": "INC",
-          "votes": 284,
-          "margin": 41
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 277,
+          "margin": 27
         }
       },
       "38": {
@@ -10623,10 +10622,10 @@
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
         "ps_leader": {
-          "name": "जीवी",
-          "party": "BJP",
-          "votes": 189,
-          "margin": 28
+          "name": "विमला कुमारी",
+          "party": "INC",
+          "votes": 179,
+          "margin": 8
         },
         "zp_leader": {
           "name": "नागेश माणकराम देवासी",
@@ -10674,10 +10673,10 @@
           "margin": 25
         },
         "zp_leader": {
-          "name": "पोसी सुरेश कुमार देवासी",
-          "party": "INC",
-          "votes": 208,
-          "margin": 10
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 215,
+          "margin": 24
         }
       },
       "40": {
@@ -10721,8 +10720,8 @@
         "zp_leader": {
           "name": "सुगना",
           "party": "BJP",
-          "votes": 281,
-          "margin": 31
+          "votes": 277,
+          "margin": 23
         }
       },
       "41": {
@@ -10766,8 +10765,8 @@
         "zp_leader": {
           "name": "करण सिंह",
           "party": "INC",
-          "votes": 254,
-          "margin": 23
+          "votes": 257,
+          "margin": 29
         }
       },
       "42": {
@@ -10944,10 +10943,10 @@
           "margin": 36
         },
         "zp_leader": {
-          "name": "करण सिंह",
-          "party": "INC",
-          "votes": 330,
-          "margin": 60
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 313,
+          "margin": 26
         }
       },
       "46": {
@@ -10982,8 +10981,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "वरदाराम उर्फ वरदराम",
+          "party": "INC",
+          "votes": 275,
+          "margin": 28
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 264,
+          "margin": 6
+        }
       },
       "47": {
         "s_no": 47,
@@ -11017,8 +11026,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कंचन कुंवर",
+          "party": "INC",
+          "votes": 151,
+          "margin": 21
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 188,
+          "margin": 33
+        }
       },
       "48": {
         "s_no": 48,
@@ -11052,8 +11071,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कमला",
+          "party": "INC",
+          "votes": 190,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "सुगना",
+          "party": "BJP",
+          "votes": 216,
+          "margin": 1
+        }
       },
       "49": {
         "s_no": 49,
@@ -11087,8 +11116,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "बिहारीलाल",
+          "party": "BJP",
+          "votes": 153,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 209,
+          "margin": 15
+        }
       },
       "50": {
         "s_no": 50,
@@ -11122,8 +11161,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजवीर परमार",
+          "party": "INC",
+          "votes": 254,
+          "margin": 38
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 244,
+          "margin": 18
+        }
       },
       "51": {
         "s_no": 51,
@@ -11157,8 +11206,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "नन्दिनी कंवर राणावत",
+          "party": "INC",
+          "votes": 172,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 198,
+          "margin": 6
+        }
       },
       "52": {
         "s_no": 52,
@@ -11192,8 +11251,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चंदा कंवर",
+          "party": "BJP",
+          "votes": 204,
+          "margin": 11
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 205,
+          "margin": 13
+        }
       },
       "53": {
         "s_no": 53,
@@ -11227,8 +11296,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विमला कुमारी",
+          "party": "INC",
+          "votes": 274,
+          "margin": 21
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 232,
+          "margin": 32
+        }
       },
       "54": {
         "s_no": 54,
@@ -11262,8 +11341,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "प्रकाश कुमार",
+          "party": "INC",
+          "votes": 209,
+          "margin": 29
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 251,
+          "margin": 28
+        }
       },
       "55": {
         "s_no": 55,
@@ -11297,8 +11386,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मादाराम",
+          "party": "BJP",
+          "votes": 306,
+          "margin": 42
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 369,
+          "margin": 42
+        }
       },
       "56": {
         "s_no": 56,
@@ -11332,8 +11431,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "खेमराज खारवाल",
+          "party": "INC",
+          "votes": 242,
+          "margin": 33
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 289,
+          "margin": 29
+        }
       },
       "57": {
         "s_no": 57,
@@ -11367,8 +11476,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "प्रितम कुमार व्यास",
+          "party": "INC",
+          "votes": 171,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 171,
+          "margin": 24
+        }
       },
       "58": {
         "s_no": 58,
@@ -11402,8 +11521,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "जमना देवी",
+          "party": "BJP",
+          "votes": 186,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 186,
+          "margin": 26
+        }
       },
       "59": {
         "s_no": 59,
@@ -11437,8 +11566,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विक्रम कुमार",
+          "party": "INC",
+          "votes": 148,
+          "margin": 21
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 187,
+          "margin": 26
+        }
       },
       "60": {
         "s_no": 60,
@@ -11472,8 +11611,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पूरण कंवर",
+          "party": "INC",
+          "votes": 282,
+          "margin": 38
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 352,
+          "margin": 63
+        }
       },
       "61": {
         "s_no": 61,
@@ -11507,8 +11656,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पेमाराम",
+          "party": "BJP",
+          "votes": 149,
+          "margin": 23
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 142,
+          "margin": 9
+        }
       },
       "62": {
         "s_no": 62,
@@ -11542,8 +11701,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कंचन कुंवर",
+          "party": "INC",
+          "votes": 191,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 221,
+          "margin": 7
+        }
       },
       "63": {
         "s_no": 63,
@@ -11577,8 +11746,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कमला",
+          "party": "INC",
+          "votes": 207,
+          "margin": 28
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 242,
+          "margin": 14
+        }
       },
       "64": {
         "s_no": 64,
@@ -11612,8 +11791,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "बिहारीलाल",
+          "party": "BJP",
+          "votes": 154,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 213,
+          "margin": 21
+        }
       },
       "65": {
         "s_no": 65,
@@ -11647,8 +11836,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "लक्ष्मणराम",
+          "party": "BJP",
+          "votes": 175,
+          "margin": 16
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 179,
+          "margin": 24
+        }
       },
       "66": {
         "s_no": 66,
@@ -11682,8 +11881,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "नन्दिनी कंवर राणावत",
+          "party": "INC",
+          "votes": 216,
+          "margin": 29
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 267,
+          "margin": 42
+        }
       },
       "67": {
         "s_no": 67,
@@ -11717,8 +11926,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "अनिता मीणा",
+          "party": "INC",
+          "votes": 176,
+          "margin": 8
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 173,
+          "margin": 2
+        }
       },
       "68": {
         "s_no": 68,
@@ -11752,8 +11971,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विमला कुमारी",
+          "party": "INC",
+          "votes": 241,
+          "margin": 1
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 212,
+          "margin": 29
+        }
       },
       "69": {
         "s_no": 69,
@@ -11787,8 +12016,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "प्रकाश कुमार",
+          "party": "INC",
+          "votes": 259,
+          "margin": 36
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 304,
+          "margin": 20
+        }
       },
       "70": {
         "s_no": 70,
@@ -11822,8 +12061,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मादाराम",
+          "party": "BJP",
+          "votes": 249,
+          "margin": 34
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 295,
+          "margin": 25
+        }
       },
       "71": {
         "s_no": 71,
@@ -11857,8 +12106,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "खेमराज खारवाल",
+          "party": "INC",
+          "votes": 166,
+          "margin": 23
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 191,
+          "margin": 5
+        }
       },
       "72": {
         "s_no": 72,
@@ -11892,8 +12151,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "प्रितम कुमार व्यास",
+          "party": "INC",
+          "votes": 274,
+          "margin": 38
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 274,
+          "margin": 38
+        }
       },
       "73": {
         "s_no": 73,
@@ -11927,8 +12196,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "जमना देवी",
+          "party": "BJP",
+          "votes": 189,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 189,
+          "margin": 26
+        }
       },
       "74": {
         "s_no": 74,
@@ -11962,8 +12241,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विक्रम कुमार",
+          "party": "INC",
+          "votes": 198,
+          "margin": 28
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 249,
+          "margin": 34
+        }
       },
       "75": {
         "s_no": 75,
@@ -11997,8 +12286,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पूरण कंवर",
+          "party": "INC",
+          "votes": 267,
+          "margin": 36
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 311,
+          "margin": 15
+        }
       },
       "76": {
         "s_no": 76,
@@ -12032,8 +12331,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पेमाराम",
+          "party": "BJP",
+          "votes": 152,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 140,
+          "margin": 2
+        }
       },
       "77": {
         "s_no": 77,
@@ -12067,8 +12376,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कंचन कुंवर",
+          "party": "INC",
+          "votes": 213,
+          "margin": 29
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 265,
+          "margin": 46
+        }
       },
       "78": {
         "s_no": 78,
@@ -12102,8 +12421,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कमला",
+          "party": "INC",
+          "votes": 182,
+          "margin": 25
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 207,
+          "margin": 0
+        }
       },
       "79": {
         "s_no": 79,
@@ -12137,8 +12466,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "बिहारीलाल",
+          "party": "BJP",
+          "votes": 168,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 243,
+          "margin": 43
+        }
       },
       "80": {
         "s_no": 80,
@@ -12172,8 +12511,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजवीर परमार",
+          "party": "INC",
+          "votes": 250,
+          "margin": 4
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 263,
+          "margin": 30
+        }
       },
       "81": {
         "s_no": 81,
@@ -12207,8 +12556,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "नन्दिनी कंवर राणावत",
+          "party": "INC",
+          "votes": 266,
+          "margin": 36
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 320,
+          "margin": 36
+        }
       },
       "82": {
         "s_no": 82,
@@ -12242,8 +12601,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चंदा कंवर",
+          "party": "BJP",
+          "votes": 176,
+          "margin": 10
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 173,
+          "margin": 4
+        }
       },
       "83": {
         "s_no": 83,
@@ -12277,8 +12646,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विमला कुमारी",
+          "party": "INC",
+          "votes": 361,
+          "margin": 32
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 304,
+          "margin": 42
+        }
       },
       "84": {
         "s_no": 84,
@@ -12312,8 +12691,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "प्रकाश कुमार",
+          "party": "INC",
+          "votes": 178,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 214,
+          "margin": 24
+        }
       },
       "85": {
         "s_no": 85,
@@ -12347,8 +12736,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मादाराम",
+          "party": "BJP",
+          "votes": 246,
+          "margin": 33
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 291,
+          "margin": 22
+        }
       },
       "86": {
         "s_no": 86,
@@ -12382,8 +12781,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "खेमराज खारवाल",
+          "party": "INC",
+          "votes": 234,
+          "margin": 32
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 273,
+          "margin": 14
+        }
       },
       "87": {
         "s_no": 87,
@@ -12417,8 +12826,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "खेमराज खारवाल",
+          "party": "INC",
+          "votes": 125,
+          "margin": 17
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 148,
+          "margin": 12
+        }
       },
       "88": {
         "s_no": 88,
@@ -12452,8 +12871,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "प्रितम कुमार व्यास",
+          "party": "INC",
+          "votes": 198,
+          "margin": 27
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 198,
+          "margin": 27
+        }
       },
       "89": {
         "s_no": 89,
@@ -12487,8 +12916,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "जमना देवी",
+          "party": "BJP",
+          "votes": 117,
+          "margin": 16
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 137,
+          "margin": 7
+        }
       },
       "90": {
         "s_no": 90,
@@ -12522,8 +12961,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विक्रम कुमार",
+          "party": "INC",
+          "votes": 182,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 229,
+          "margin": 31
+        }
       },
       "91": {
         "s_no": 91,
@@ -12557,8 +13006,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पूरण कंवर",
+          "party": "INC",
+          "votes": 249,
+          "margin": 34
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 288,
+          "margin": 11
+        }
       },
       "92": {
         "s_no": 92,
@@ -12592,8 +13051,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पेमाराम",
+          "party": "BJP",
+          "votes": 87,
+          "margin": 16
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 81,
+          "margin": 4
+        }
       },
       "93": {
         "s_no": 93,
@@ -12627,8 +13096,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कंचन कुंवर",
+          "party": "INC",
+          "votes": 224,
+          "margin": 31
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 260,
+          "margin": 11
+        }
       },
       "94": {
         "s_no": 94,
@@ -12662,8 +13141,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कमला",
+          "party": "INC",
+          "votes": 176,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 219,
+          "margin": 38
+        }
       },
       "95": {
         "s_no": 95,
@@ -12697,8 +13186,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "बिहारीलाल",
+          "party": "BJP",
+          "votes": 137,
+          "margin": 21
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 194,
+          "margin": 27
+        }
       },
       "96": {
         "s_no": 96,
@@ -12732,8 +13231,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजवीर परमार",
+          "party": "INC",
+          "votes": 222,
+          "margin": 12
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 218,
+          "margin": 4
+        }
       },
       "97": {
         "s_no": 97,
@@ -12767,8 +13276,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "नन्दिनी कंवर राणावत",
+          "party": "INC",
+          "votes": 242,
+          "margin": 33
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 290,
+          "margin": 30
+        }
       },
       "98": {
         "s_no": 98,
@@ -12802,8 +13321,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चंदा कंवर",
+          "party": "BJP",
+          "votes": 179,
+          "margin": 6
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 184,
+          "margin": 16
+        }
       },
       "99": {
         "s_no": 99,
@@ -12837,8 +13366,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विमला कुमारी",
+          "party": "INC",
+          "votes": 325,
+          "margin": 11
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 281,
+          "margin": 38
+        }
       },
       "100": {
         "s_no": 100,
@@ -12872,8 +13411,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "प्रकाश कुमार",
+          "party": "INC",
+          "votes": 173,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 197,
+          "margin": 1
+        }
       },
       "101": {
         "s_no": 101,
@@ -12907,8 +13456,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सुरेन्द्र सिंह",
+          "party": "INC",
+          "votes": 198,
+          "margin": 27
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 247,
+          "margin": 45
+        }
       },
       "102": {
         "s_no": 102,
@@ -12942,8 +13501,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजेन्द्र सिंह राठौड़",
+          "party": "INC",
+          "votes": 257,
+          "margin": 23
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 267,
+          "margin": 43
+        }
       },
       "103": {
         "s_no": 103,
@@ -12977,8 +13546,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चेलाराम",
+          "party": "BJP",
+          "votes": 245,
+          "margin": 3
+        },
+        "zp_leader": {
+          "name": "सुगना",
+          "party": "BJP",
+          "votes": 252,
+          "margin": 17
+        }
       },
       "104": {
         "s_no": 104,
@@ -13012,8 +13591,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "जमना देवी",
+          "party": "BJP",
+          "votes": 154,
+          "margin": 21
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 184,
+          "margin": 18
+        }
       },
       "105": {
         "s_no": 105,
@@ -13047,8 +13636,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "विक्रम कुमार",
+          "party": "INC",
+          "votes": 171,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 215,
+          "margin": 29
+        }
       },
       "106": {
         "s_no": 106,
@@ -13082,8 +13681,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पूरण कंवर",
+          "party": "INC",
+          "votes": 254,
+          "margin": 35
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 289,
+          "margin": 1
+        }
       },
       "107": {
         "s_no": 107,
@@ -13117,8 +13726,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पेमाराम",
+          "party": "BJP",
+          "votes": 231,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 220,
+          "margin": 4
+        }
       },
       "108": {
         "s_no": 108,
@@ -13152,8 +13771,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कंचन कुंवर",
+          "party": "INC",
+          "votes": 191,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "सुगना",
+          "party": "BJP",
+          "votes": 221,
+          "margin": 7
+        }
       },
       "109": {
         "s_no": 109,
@@ -13187,8 +13816,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "कमला",
+          "party": "INC",
+          "votes": 209,
+          "margin": 28
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 249,
+          "margin": 22
+        }
       },
       "110": {
         "s_no": 110,
@@ -13222,8 +13861,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "बिहारीलाल",
+          "party": "BJP",
+          "votes": 150,
+          "margin": 24
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 204,
+          "margin": 14
+        }
       },
       "111": {
         "s_no": 111,
@@ -13257,8 +13906,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजवीर परमार",
+          "party": "INC",
+          "votes": 195,
+          "margin": 1
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 214,
+          "margin": 39
+        }
       },
       "112": {
         "s_no": 112,
@@ -13292,8 +13951,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "नन्दिनी कंवर राणावत",
+          "party": "INC",
+          "votes": 145,
+          "margin": 20
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 172,
+          "margin": 15
+        }
       },
       "113": {
         "s_no": 113,
@@ -13327,8 +13996,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सरिता कुमारी",
+          "party": "INC",
+          "votes": 270,
+          "margin": 20
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 262,
+          "margin": 4
+        }
       },
       "114": {
         "s_no": 114,
@@ -13362,8 +14041,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "रिंकू कुमारी",
+          "party": "INC",
+          "votes": 198,
+          "margin": 31
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 279,
+          "margin": 36
+        }
       },
       "115": {
         "s_no": 115,
@@ -13397,8 +14086,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मंजू",
+          "party": "INC",
+          "votes": 201,
+          "margin": 32
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 232,
+          "margin": 31
+        }
       },
       "116": {
         "s_no": 116,
@@ -13432,8 +14131,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सुरेन्द्र सिंह",
+          "party": "INC",
+          "votes": 254,
+          "margin": 35
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 290,
+          "margin": 3
+        }
       },
       "117": {
         "s_no": 117,
@@ -13467,8 +14176,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "शिवेन्द्रजीत सिंह",
+          "party": "BJP",
+          "votes": 338,
+          "margin": 30
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 337,
+          "margin": 28
+        }
       },
       "118": {
         "s_no": 118,
@@ -13502,8 +14221,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "जयन्तिलाल",
+          "party": "INC",
+          "votes": 270,
+          "margin": 17
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 273,
+          "margin": 23
+        }
       },
       "119": {
         "s_no": 119,
@@ -13537,8 +14266,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सरिता कुमारी",
+          "party": "INC",
+          "votes": 231,
+          "margin": 18
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 228,
+          "margin": 12
+        }
       },
       "120": {
         "s_no": 120,
@@ -13572,8 +14311,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "रिंकू कुमारी",
+          "party": "INC",
+          "votes": 206,
+          "margin": 32
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 296,
+          "margin": 49
+        }
       },
       "121": {
         "s_no": 121,
@@ -13607,8 +14356,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मंजू",
+          "party": "INC",
+          "votes": 139,
+          "margin": 22
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 161,
+          "margin": 22
+        }
       },
       "122": {
         "s_no": 122,
@@ -13642,8 +14401,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सुरेन्द्र सिंह",
+          "party": "INC",
+          "votes": 260,
+          "margin": 35
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 316,
+          "margin": 41
+        }
       },
       "123": {
         "s_no": 123,
@@ -13677,8 +14446,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजेन्द्र सिंह राठौड़",
+          "party": "INC",
+          "votes": 336,
+          "margin": 47
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 339,
+          "margin": 53
+        }
       },
       "124": {
         "s_no": 124,
@@ -13712,8 +14491,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चेलाराम",
+          "party": "BJP",
+          "votes": 209,
+          "margin": 19
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 219,
+          "margin": 39
+        }
       },
       "125": {
         "s_no": 125,
@@ -13747,8 +14536,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सरिता कुमारी",
+          "party": "INC",
+          "votes": 252,
+          "margin": 17
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 256,
+          "margin": 25
+        }
       },
       "126": {
         "s_no": 126,
@@ -13782,8 +14581,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "रिंकू कुमारी",
+          "party": "INC",
+          "votes": 141,
+          "margin": 22
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 200,
+          "margin": 28
+        }
       },
       "127": {
         "s_no": 127,
@@ -13817,8 +14626,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मंजू",
+          "party": "INC",
+          "votes": 209,
+          "margin": 33
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 242,
+          "margin": 33
+        }
       },
       "128": {
         "s_no": 128,
@@ -13852,8 +14671,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सुरेन्द्र सिंह",
+          "party": "INC",
+          "votes": 149,
+          "margin": 20
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 173,
+          "margin": 7
+        }
       },
       "129": {
         "s_no": 129,
@@ -13887,8 +14716,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजेन्द्र सिंह राठौड़",
+          "party": "INC",
+          "votes": 307,
+          "margin": 0
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 332,
+          "margin": 50
+        }
       },
       "130": {
         "s_no": 130,
@@ -13922,8 +14761,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चेलाराम",
+          "party": "BJP",
+          "votes": 239,
+          "margin": 27
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 240,
+          "margin": 29
+        }
       },
       "131": {
         "s_no": 131,
@@ -13957,8 +14806,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पंकु देवी",
+          "party": "BJP",
+          "votes": 161,
+          "margin": 21
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 155,
+          "margin": 9
+        }
       },
       "132": {
         "s_no": 132,
@@ -13992,8 +14851,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "रिंकू कुमारी",
+          "party": "INC",
+          "votes": 166,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 221,
+          "margin": 5
+        }
       },
       "133": {
         "s_no": 133,
@@ -14027,8 +14896,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मंजू",
+          "party": "INC",
+          "votes": 188,
+          "margin": 30
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 217,
+          "margin": 29
+        }
       },
       "134": {
         "s_no": 134,
@@ -14062,8 +14941,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सुरेन्द्र सिंह",
+          "party": "INC",
+          "votes": 124,
+          "margin": 17
+        },
+        "zp_leader": {
+          "name": "विजय कुमार",
+          "party": "BJP",
+          "votes": 149,
+          "margin": 16
+        }
       },
       "135": {
         "s_no": 135,
@@ -14097,8 +14986,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "राजेन्द्र सिंह राठौड़",
+          "party": "INC",
+          "votes": 358,
+          "margin": 7
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 358,
+          "margin": 7
+        }
       },
       "136": {
         "s_no": 136,
@@ -14132,8 +15031,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चेलाराम",
+          "party": "BJP",
+          "votes": 232,
+          "margin": 14
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 236,
+          "margin": 22
+        }
       },
       "137": {
         "s_no": 137,
@@ -14167,8 +15076,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सरिता कुमारी",
+          "party": "INC",
+          "votes": 169,
+          "margin": 17
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 163,
+          "margin": 5
+        }
       },
       "138": {
         "s_no": 138,
@@ -14202,8 +15121,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "रिंकू कुमारी",
+          "party": "INC",
+          "votes": 200,
+          "margin": 32
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 274,
+          "margin": 23
+        }
       },
       "139": {
         "s_no": 139,
@@ -14237,8 +15166,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मंजू",
+          "party": "INC",
+          "votes": 220,
+          "margin": 35
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 254,
+          "margin": 34
+        }
       },
       "140": {
         "s_no": 140,
@@ -14272,8 +15211,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सुरेन्द्र सिंह",
+          "party": "INC",
+          "votes": 143,
+          "margin": 20
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 170,
+          "margin": 16
+        }
       },
       "141": {
         "s_no": 141,
@@ -14307,8 +15256,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "शिवेन्द्रजीत सिंह",
+          "party": "BJP",
+          "votes": 364,
+          "margin": 37
+        },
+        "zp_leader": {
+          "name": "पोसी सुरेश कुमार देवासी",
+          "party": "INC",
+          "votes": 348,
+          "margin": 5
+        }
       },
       "142": {
         "s_no": 142,
@@ -14342,8 +15301,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चेलाराम",
+          "party": "BJP",
+          "votes": 200,
+          "margin": 34
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 193,
+          "margin": 20
+        }
       },
       "143": {
         "s_no": 143,
@@ -14377,8 +15346,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पंकु देवी",
+          "party": "BJP",
+          "votes": 187,
+          "margin": 32
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 187,
+          "margin": 32
+        }
       },
       "144": {
         "s_no": 144,
@@ -14412,8 +15391,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "रिंकू कुमारी",
+          "party": "INC",
+          "votes": 169,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 240,
+          "margin": 34
+        }
       },
       "145": {
         "s_no": 145,
@@ -14447,8 +15436,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मंजू",
+          "party": "INC",
+          "votes": 166,
+          "margin": 26
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 192,
+          "margin": 26
+        }
       },
       "146": {
         "s_no": 146,
@@ -14482,8 +15481,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "सुरेन्द्र सिंह",
+          "party": "INC",
+          "votes": 293,
+          "margin": 40
+        },
+        "zp_leader": {
+          "name": "करण सिंह",
+          "party": "INC",
+          "votes": 364,
+          "margin": 62
+        }
       },
       "147": {
         "s_no": 147,
@@ -14517,8 +15526,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "शिवेन्द्रजीत सिंह",
+          "party": "BJP",
+          "votes": 304,
+          "margin": 8
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 300,
+          "margin": 0
+        }
       },
       "148": {
         "s_no": 148,
@@ -14552,8 +15571,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चेलाराम",
+          "party": "BJP",
+          "votes": 195,
+          "margin": 10
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 197,
+          "margin": 14
+        }
       },
       "149": {
         "s_no": 149,
@@ -14587,8 +15616,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "पंकु देवी",
+          "party": "BJP",
+          "votes": 151,
+          "margin": 25
+        },
+        "zp_leader": {
+          "name": "गीता कुमारी",
+          "party": "BJP",
+          "votes": 141,
+          "margin": 5
+        }
       },
       "150": {
         "s_no": 150,
@@ -14622,8 +15661,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "रिंकू कुमारी",
+          "party": "INC",
+          "votes": 177,
+          "margin": 28
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 243,
+          "margin": 20
+        }
       },
       "151": {
         "s_no": 151,
@@ -14657,8 +15706,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "मंजू",
+          "party": "INC",
+          "votes": 182,
+          "margin": 28
+        },
+        "zp_leader": {
+          "name": "नागेश माणकराम देवासी",
+          "party": "BJP",
+          "votes": 211,
+          "margin": 29
+        }
       },
       "152": {
         "s_no": 152,
@@ -14692,8 +15751,18 @@
         },
         "status": "COMPLETED",
         "remark": "मॉक टेस्ट प्रविष्टि (17C EVM सत्यापित)",
-        "ps_leader": null,
-        "zp_leader": null
+        "ps_leader": {
+          "name": "चेलाराम",
+          "party": "BJP",
+          "votes": 58,
+          "margin": 10
+        },
+        "zp_leader": {
+          "name": "गुडिया",
+          "party": "INC",
+          "votes": 56,
+          "margin": 6
+        }
       }
     },
     "zp_candidates": {
