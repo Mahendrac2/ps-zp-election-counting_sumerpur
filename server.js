@@ -724,6 +724,60 @@ app.post('/api/counting/slot', (req, res) => {
   });
 });
 
+// 11b. POST /api/counting/postal-ballot (Save Postal Ballot votes for PS or ZP ward)
+app.post('/api/counting/postal-ballot', (req, res) => {
+  const { type, ward, votes, total_received, rejected, remark } = req.body;
+  if (!ward) {
+    return res.status(400).json({ success: false, message: 'वार्ड (ward) अनिवार्य है।' });
+  }
+
+  countingSvc.initCounting(store, boothsMaster);
+  if (!store.counting.postal_ballots) {
+    store.counting.postal_ballots = { ps: {}, zp: {} };
+  }
+
+  const isZP = (type && String(type).toLowerCase() === 'zp') || String(ward).toUpperCase().startsWith('Z-');
+  const cat = isZP ? 'zp' : 'ps';
+  if (!store.counting.postal_ballots[cat]) {
+    store.counting.postal_ballots[cat] = {};
+  }
+
+  const v = (votes && typeof votes === 'object') ? votes : {};
+  const c1 = Number(v.c1) || 0;
+  const c2 = Number(v.c2) || 0;
+  const c3 = Number(v.c3) || 0;
+  const c4 = Number(v.c4) || 0;
+  const c5 = Number(v.c5) || 0;
+  const nota = Number(v.nota) || 0;
+  const rej = Number(rejected) || 0;
+  const valid = c1 + c2 + c3 + c4 + c5 + nota;
+  const userRec = Number(total_received);
+  const rec = userRec > 0 ? userRec : (valid + rej);
+
+  store.counting.postal_ballots[cat][ward] = {
+    ward,
+    c1, c2, c3, c4, c5,
+    nota,
+    rejected: rej,
+    total_valid: valid,
+    total_received: rec,
+    status: (rec > 0) ? 'COMPLETED' : 'PENDING',
+    remark: remark || '',
+    updated_at: new Date().toISOString()
+  };
+
+  saveStore();
+  broadcastUpdate('COUNTING_UPDATE');
+  const data = countingSvc.computeCountingStats(store.counting, boothsMaster, store);
+
+  res.json({
+    success: true,
+    message: `${isZP ? 'जिला परिषद' : 'पंचायत समिति'} वार्ड ${ward} के डाक मतपत्र (कुल प्राप्त: ${rec}, विधिमान्य: ${valid}, निरस्त: ${rej}) सुरक्षित किए गए।`,
+    postal_ballot: store.counting.postal_ballots[cat][ward],
+    ...data
+  });
+});
+
 // 12. POST /api/counting/bulk-slots (Bulk update counting slots)
 app.post('/api/counting/bulk-slots', (req, res) => {
   const { updates } = req.body;
@@ -837,7 +891,7 @@ async function fetchAndSyncCountingGoogleSheet(sheetId, gid) {
       saveStore();
       broadcastUpdate('COUNTING_UPDATE');
     }
-    const computed = countingSvc.computeCountingStats(store.counting, boothsMaster);
+    const computed = countingSvc.computeCountingStats(store.counting, boothsMaster, store);
     return { ...result, ...computed };
   } catch (err) {
     return { success: false, error: err.message, message: 'Google Sheet से कनेक्ट करने में त्रुटि: ' + err.message };
@@ -868,7 +922,7 @@ app.post('/api/counting/sync-csv', (req, res) => {
     saveStore();
     broadcastUpdate('COUNTING_UPDATE');
   }
-  const computed = countingSvc.computeCountingStats(store.counting, boothsMaster);
+  const computed = countingSvc.computeCountingStats(store.counting, boothsMaster, store);
   res.json({ ...result, ...computed });
 });
 
@@ -881,8 +935,55 @@ app.get('/api/counting/template-csv', (req, res) => {
   res.send('\uFEFF' + csv);
 });
 
-// 17. GET /api/counting/export-csv (Export Current Counting Results)
+// 17. GET /api/counting/export-csv (Export Current Official Counting Results - PS & ZP)
 app.get('/api/counting/export-csv', (req, res) => {
+  countingSvc.initCounting(store, boothsMaster);
+  const stats = countingSvc.computeCountingStats(store.counting, boothsMaster, store);
+  const psWards = stats.ps_wards || {};
+  const zpWards = stats.zp_wards || {};
+
+  let csv = 'CATEGORY,WARD NO,COMPLETED BOOTHS,TOTAL BOOTHS,ELECTORS,EVM POLLED (17C),POSTAL VOTES,TOTAL COUNTED (EVM+PB),CANDIDATE BREAKDOWN,NOTA,WINNER / LEADER,PARTY,MARGIN,STATUS,PB RECEIVED,PB REJECTED\n';
+
+  // 1. PS 21 Wards
+  for (let w = 1; w <= 21; w++) {
+    const wKey = `W-${w}`;
+    const wm = psWards[wKey] || {};
+    const cands = wm.candidates || [];
+    const cv = wm.candVotes || {};
+    const pb = wm.postalBallots || {};
+    const candStr = cands.map(c => `${c.name} [${c.party}]: ${cv[c.key] || 0}`).join(' | ');
+    const leader = (wm.leader && wm.leader.name !== '-') ? `${wm.leader.name}` : '-';
+    const party = wm.leader?.party || '-';
+    const status = wm.status === 'DECLARED' ? 'DECLARED (विजयी घोषित)' : (wm.status === 'COUNTING' ? 'COUNTING (गणना जारी)' : 'PENDING');
+
+    csv += `"पंचायत समिति","${wKey}",${wm.completedBooths || 0},${wm.totalBooths || 0},${wm.totalElectors || 0},${wm.totalPolledVotes || 0},` +
+           `${wm.postalCountedVotes || 0},${wm.totalCountedVotes || 0},"${candStr}",${cv.nota || 0},"${leader}","${party}",` +
+           `${wm.margin || 0},"${status}",${pb.total_received || 0},${pb.rejected || 0}\n`;
+  }
+
+  // 2. ZP 4 Wards
+  ['Z-7', 'Z-8', 'Z-9', 'Z-10'].forEach(zKey => {
+    const zw = zpWards[zKey] || {};
+    const cands = zw.candidates || [];
+    const cv = zw.candVotes || {};
+    const pb = zw.postalBallots || {};
+    const candStr = cands.map(c => `${c.name} [${c.party}]: ${cv[c.key] || 0}`).join(' | ');
+    const leader = (zw.leader && zw.leader.name !== '-') ? `${zw.leader.name}` : '-';
+    const party = zw.leader?.party || '-';
+    const status = zw.status === 'DECLARED' ? 'DECLARED (विजयी घोषित)' : (zw.status === 'COUNTING' ? 'COUNTING (गणना जारी)' : 'PENDING');
+
+    csv += `"जिला परिषद","${zKey}",${zw.completedBooths || 0},${zw.totalBooths || 0},${zw.totalElectors || 0},${zw.totalPolledVotes || 0},` +
+           `${zw.postalCountedVotes || 0},${zw.totalCountedVotes || 0},"${candStr}",${cv.nota || 0},"${leader}","${party}",` +
+           `${zw.margin || 0},"${status}",${pb.total_received || 0},${pb.rejected || 0}\n`;
+  });
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename=Sumerpur_Counting_Results_Official_PS_ZP.csv');
+  res.send('\uFEFF' + csv);
+});
+
+// 17b. GET /api/counting/export-booths-csv (Export 152 Booths EVM Form 17C Raw Data)
+app.get('/api/counting/export-booths-csv', (req, res) => {
   countingSvc.initCounting(store, boothsMaster);
   const stats = countingSvc.computeCountingStats(store.counting, boothsMaster, store);
   const slots = store.counting.slots || {};
@@ -905,11 +1006,11 @@ app.get('/api/counting/export-csv', (req, res) => {
 
     csv += `${s.s_no},${s.round},${s.table},"${s.booth_no}","${s.cu_id || ''}","${s.gp_name || ''}","${(s.location || '').replace(/"/g, '""')}",` +
            `"${s.ps_ward || ''}","${s.zp_ward || ''}",${polled},${psTot},${zpTot},"${s.status || 'PENDING'}",` +
-           `"${psLead}",${pw.margin || 0},"${zpLead}",${zw.margin || 0},"${(s.remark || '').replace(/"/g, '""')}"\n`;
+           `"${psLead}",${pw.margin || 0},"${zpLead}",${zw.margin || 0},"${(s.remark || '').replace(/"/g, '""')}\n`;
   });
 
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', 'attachment; filename=Sumerpur_PS_Counting_Results_Live.csv');
+  res.setHeader('Content-Disposition', 'attachment; filename=Sumerpur_EVM_152_Booths_Form17C.csv');
   res.send('\uFEFF' + csv);
 });
 

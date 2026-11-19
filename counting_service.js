@@ -11,6 +11,41 @@ const TOTAL_WARDS_ZP = 4;
 const TOTAL_BOOTHS = 152;
 
 // Load Counting Plan Master (Official DEO Pali)
+
+// Initialize empty postal ballots structure
+function createInitialPostalBallots() {
+  const pb = { ps: {}, zp: {} };
+  for (let w = 1; w <= TOTAL_WARDS_PS; w++) {
+    const wKey = `W-${w}`;
+    pb.ps[wKey] = {
+      ward: wKey,
+      c1: 0, c2: 0, c3: 0, c4: 0, c5: 0,
+      nota: 0,
+      rejected: 0,
+      total_valid: 0,
+      total_received: 0,
+      status: 'PENDING',
+      remark: '',
+      updated_at: null
+    };
+  }
+  ['Z-7', 'Z-8', 'Z-9', 'Z-10'].forEach(zKey => {
+    pb.zp[zKey] = {
+      ward: zKey,
+      c1: 0, c2: 0, c3: 0, c4: 0,
+      nota: 0,
+      rejected: 0,
+      total_valid: 0,
+      total_received: 0,
+      status: 'PENDING',
+      remark: '',
+      updated_at: null
+    };
+  });
+  return pb;
+}
+
+// Load Official 152 Booths Counting Plan Master
 function loadPlanMaster() {
   const p = path.join(__dirname, 'counting_plan_master.json');
   if (fs.existsSync(p)) {
@@ -89,6 +124,12 @@ function generatePlanSlots(boothsMaster, store) {
 
 // Initialize Counting Store
 function initCounting(store, boothsMaster) {
+  if (!store.counting) {
+    store.counting = {};
+  }
+  if (!store.counting.postal_ballots) {
+    store.counting.postal_ballots = createInitialPostalBallots();
+  }
   const candMaster = loadCandidatesMaster();
 
   if (!store.counting) {
@@ -296,6 +337,86 @@ function computeCountingStats(counting, boothsMaster, store) {
     }
   });
 
+
+  // Integrate Postal Ballots (डाक मतपत्र) into PS and ZP Ward Totals
+  const postalBallots = (store && store.counting && store.counting.postal_ballots) || counting.postal_ballots || createInitialPostalBallots();
+
+  // 1b. Merge Postal Ballots into PS Wards
+  Object.values(psWardMap).forEach(pwm => {
+    // Preserve EVM booth counted votes
+    pwm.evmCountedVotes = pwm.totalCountedVotes;
+    pwm.evmCandVotes = { ...pwm.candVotes };
+
+    const pb = (postalBallots.ps && postalBallots.ps[pwm.ward]) || {
+      ward: pwm.ward, c1: 0, c2: 0, c3: 0, c4: 0, c5: 0, nota: 0, rejected: 0, total_valid: 0, total_received: 0, status: 'PENDING'
+    };
+    const c1 = Number(pb.c1) || 0;
+    const c2 = Number(pb.c2) || 0;
+    const c3 = Number(pb.c3) || 0;
+    const c4 = Number(pb.c4) || 0;
+    const c5 = Number(pb.c5) || 0;
+    const nota = Number(pb.nota) || 0;
+    const rej = Number(pb.rejected) || 0;
+    const valid = c1 + c2 + c3 + c4 + c5 + nota;
+    const rec = (pb.total_received !== undefined && Number(pb.total_received) > 0) ? Number(pb.total_received) : (valid + rej);
+
+    pwm.postalBallots = {
+      ...pb,
+      c1, c2, c3, c4, c5, nota, rejected: rej,
+      total_valid: valid,
+      total_received: rec,
+      status: (rec > 0) ? 'COMPLETED' : 'PENDING'
+    };
+    pwm.postalCandVotes = { c1, c2, c3, c4, c5, nota };
+    pwm.postalCountedVotes = valid;
+
+    // Combined Official Total: EVM Votes + Postal Ballot Votes
+    pwm.candVotes.c1 += c1;
+    pwm.candVotes.c2 += c2;
+    pwm.candVotes.c3 += c3;
+    pwm.candVotes.c4 += c4;
+    pwm.candVotes.c5 += c5;
+    pwm.candVotes.nota += nota;
+    pwm.totalCountedVotes += valid;
+  });
+
+  // 2b. Merge Postal Ballots into ZP Wards
+  Object.values(zpWardMap).forEach(zwm => {
+    // Preserve EVM booth counted votes
+    zwm.evmCountedVotes = zwm.totalCountedVotes;
+    zwm.evmCandVotes = { ...zwm.candVotes };
+
+    const pb = (postalBallots.zp && postalBallots.zp[zwm.ward]) || {
+      ward: zwm.ward, c1: 0, c2: 0, c3: 0, c4: 0, nota: 0, rejected: 0, total_valid: 0, total_received: 0, status: 'PENDING'
+    };
+    const c1 = Number(pb.c1) || 0;
+    const c2 = Number(pb.c2) || 0;
+    const c3 = Number(pb.c3) || 0;
+    const c4 = Number(pb.c4) || 0;
+    const nota = Number(pb.nota) || 0;
+    const rej = Number(pb.rejected) || 0;
+    const valid = c1 + c2 + c3 + c4 + nota;
+    const rec = (pb.total_received !== undefined && Number(pb.total_received) > 0) ? Number(pb.total_received) : (valid + rej);
+
+    zwm.postalBallots = {
+      ...pb,
+      c1, c2, c3, c4, nota, rejected: rej,
+      total_valid: valid,
+      total_received: rec,
+      status: (rec > 0) ? 'COMPLETED' : 'PENDING'
+    };
+    zwm.postalCandVotes = { c1, c2, c3, c4, nota };
+    zwm.postalCountedVotes = valid;
+
+    // Combined Official Total: EVM Votes + Postal Ballot Votes
+    zwm.candVotes.c1 += c1;
+    zwm.candVotes.c2 += c2;
+    zwm.candVotes.c3 += c3;
+    if (zwm.candVotes.c4 !== undefined) zwm.candVotes.c4 += c4;
+    zwm.candVotes.nota += nota;
+    zwm.totalCountedVotes += valid;
+  });
+
   // Calculate PS Party Tallies, Leads & Declared Status
   const psPartyTally = {
     BJP: { won: 0, lead: 0, total: 0 },
@@ -472,8 +593,36 @@ function computeCountingStats(counting, boothsMaster, store) {
       pendingWardsPS: TOTAL_WARDS_PS - psDeclaredCount - psInProgressCount,
       declaredWardsZP: zpDeclaredCount,
       psPartyTally,
-      zpPartyTally
+      zpPartyTally,
+      postalKPI: (() => {
+        let psRec = 0, psVal = 0, psRej = 0, psComp = 0;
+        Object.values(psWardMap).forEach(pwm => {
+          if (pwm.postalBallots && pwm.postalBallots.status === 'COMPLETED') psComp++;
+          psRec += (pwm.postalBallots?.total_received || 0);
+          psVal += (pwm.postalBallots?.total_valid || 0);
+          psRej += (pwm.postalBallots?.rejected || 0);
+        });
+        let zpRec = 0, zpVal = 0, zpRej = 0, zpComp = 0;
+        Object.values(zpWardMap).forEach(zwm => {
+          if (zwm.postalBallots && zwm.postalBallots.status === 'COMPLETED') zpComp++;
+          zpRec += (zwm.postalBallots?.total_received || 0);
+          zpVal += (zwm.postalBallots?.total_valid || 0);
+          zpRej += (zwm.postalBallots?.rejected || 0);
+        });
+        return {
+          totalReceived: psRec + zpRec,
+          totalValid: psVal + zpVal,
+          totalRejected: psRej + zpRej,
+          completedWards: psComp + zpComp,
+          totalWards: TOTAL_WARDS_PS + TOTAL_WARDS_ZP,
+          ps: { received: psRec, valid: psVal, rejected: psRej, completed: psComp },
+          zp: { received: zpRec, valid: zpVal, rejected: zpRej, completed: zpComp }
+        };
+      })()
     },
+    postal_ballots: postalBallots,
+    candidates: psCandidates,
+    zp_candidates: zpCandidates,
     ps_wards: psWardMap,
     zp_wards: zpWardMap,
     rounds: roundStats,
@@ -512,8 +661,9 @@ function processCountingSheetRows(rows, counting, boothsMaster) {
   if (!rows || rows.length < 2) return { success: false, message: 'डेटा पंक्तियां अपर्याप्त हैं।' };
 
   let headerRowIdx = -1;
-  let colSNo = -1, colRound = -1, colTable = -1, colBooth = -1, colCUID = -1;
-  let colC1 = -1, colC2 = -1, colC3 = -1, colC4 = -1, colC5 = -1, colNota = -1, colTotal = -1, colRemark = -1;
+  let colSNo = -1, colRound = -1, colTable = -1, colBooth = -1, colCUID = -1, colRemark = -1;
+  let colPsC1 = -1, colPsC2 = -1, colPsC3 = -1, colPsC4 = -1, colPsC5 = -1, colPsNota = -1, colPsTotal = -1;
+  let colZpC1 = -1, colZpC2 = -1, colZpC3 = -1, colZpC4 = -1, colZpNota = -1, colZpTotal = -1;
 
   for (let r = 0; r < Math.min(rows.length, 5); r++) {
     const row = rows[r].map(c => c.toLowerCase().trim());
@@ -523,14 +673,56 @@ function processCountingSheetRows(rows, counting, boothsMaster) {
       else if (cell.includes('table') || cell.includes('टेबल') || cell.includes('मेज') || cell === 't') colTable = idx;
       else if (cell.includes('booth') || cell.includes('बूथ') || cell === 'b') colBooth = idx;
       else if (cell.includes('cu') || cell.includes('सी.यू.')) colCUID = idx;
-      else if (cell.includes('c1') || cell.includes('cand1') || cell.includes('प्रत्याशी 1')) colC1 = idx;
-      else if (cell.includes('c2') || cell.includes('cand2') || cell.includes('प्रत्याशी 2')) colC2 = idx;
-      else if (cell.includes('c3') || cell.includes('cand3') || cell.includes('प्रत्याशी 3')) colC3 = idx;
-      else if (cell.includes('c4') || cell.includes('cand4') || cell.includes('प्रत्याशी 4')) colC4 = idx;
-      else if (cell.includes('c5') || cell.includes('cand5') || cell.includes('प्रत्याशी 5')) colC5 = idx;
-      else if (cell.includes('nota') || cell.includes('नोटा')) colNota = idx;
-      else if (cell.includes('total') || cell.includes('कुल') || cell.includes('योग')) colTotal = idx;
       else if (cell.includes('remark') || cell.includes('टिप्पणी')) colRemark = idx;
+      
+      // ZP Columns (Check for zp / जि.प prefix or context)
+      else if (cell.includes('zp') || cell.includes('जि.प') || cell.includes('जिला परिषद')) {
+        if (cell.includes('c1') || cell.includes('cand1') || cell.includes('प्रत्याशी 1')) colZpC1 = idx;
+        else if (cell.includes('c2') || cell.includes('cand2') || cell.includes('प्रत्याशी 2')) colZpC2 = idx;
+        else if (cell.includes('c3') || cell.includes('cand3') || cell.includes('प्रत्याशी 3')) colZpC3 = idx;
+        else if (cell.includes('c4') || cell.includes('cand4') || cell.includes('प्रत्याशी 4')) colZpC4 = idx;
+        else if (cell.includes('nota') || cell.includes('नोटा')) colZpNota = idx;
+        else if (cell.includes('total') || cell.includes('counted') || cell.includes('कुल') || cell.includes('गिने')) colZpTotal = idx;
+      }
+      
+      // PS Columns (Check for ps / पं.स prefix or context)
+      else if (cell.includes('ps') || cell.includes('पं.स') || cell.includes('पंचायत समिति')) {
+        if (cell.includes('c1') || cell.includes('cand1') || cell.includes('प्रत्याशी 1')) colPsC1 = idx;
+        else if (cell.includes('c2') || cell.includes('cand2') || cell.includes('प्रत्याशी 2')) colPsC2 = idx;
+        else if (cell.includes('c3') || cell.includes('cand3') || cell.includes('प्रत्याशी 3')) colPsC3 = idx;
+        else if (cell.includes('c4') || cell.includes('cand4') || cell.includes('प्रत्याशी 4')) colPsC4 = idx;
+        else if (cell.includes('c5') || cell.includes('cand5') || cell.includes('प्रत्याशी 5')) colPsC5 = idx;
+        else if (cell.includes('nota') || cell.includes('नोटा')) colPsNota = idx;
+        else if (cell.includes('total') || cell.includes('counted') || cell.includes('कुल') || cell.includes('गिने')) colPsTotal = idx;
+      }
+      // Fallback generic candidate columns (if no prefix)
+      else if (cell.includes('c1') || cell.includes('cand1') || cell.includes('प्रत्याशी 1')) {
+        if (colPsC1 === -1) colPsC1 = idx;
+        else if (colZpC1 === -1) colZpC1 = idx;
+      }
+      else if (cell.includes('c2') || cell.includes('cand2') || cell.includes('प्रत्याशी 2')) {
+        if (colPsC2 === -1) colPsC2 = idx;
+        else if (colZpC2 === -1) colZpC2 = idx;
+      }
+      else if (cell.includes('c3') || cell.includes('cand3') || cell.includes('प्रत्याशी 3')) {
+        if (colPsC3 === -1) colPsC3 = idx;
+        else if (colZpC3 === -1) colZpC3 = idx;
+      }
+      else if (cell.includes('c4') || cell.includes('cand4') || cell.includes('प्रत्याशी 4')) {
+        if (colPsC4 === -1) colPsC4 = idx;
+        else if (colZpC4 === -1) colZpC4 = idx;
+      }
+      else if (cell.includes('c5') || cell.includes('cand5') || cell.includes('प्रत्याशी 5')) {
+        if (colPsC5 === -1) colPsC5 = idx;
+      }
+      else if (cell.includes('nota') || cell.includes('नोटा')) {
+        if (colPsNota === -1) colPsNota = idx;
+        else if (colZpNota === -1) colZpNota = idx;
+      }
+      else if (cell.includes('total') || cell.includes('counted') || cell.includes('कुल') || cell.includes('योग')) {
+        if (colPsTotal === -1) colPsTotal = idx;
+        else if (colZpTotal === -1) colZpTotal = idx;
+      }
     });
 
     if ((colRound !== -1 && colTable !== -1) || colSNo !== -1 || colBooth !== -1) {
@@ -539,9 +731,7 @@ function processCountingSheetRows(rows, counting, boothsMaster) {
     }
   }
 
-  if (headerRowIdx === -1) {
-    headerRowIdx = 0;
-  }
+  if (headerRowIdx === -1) headerRowIdx = 0;
 
   let updatedCount = 0;
   const cleanNum = v => {
@@ -550,7 +740,6 @@ function processCountingSheetRows(rows, counting, boothsMaster) {
     return isNaN(n) ? 0 : n;
   };
 
-  // Build lookup maps for existing slots
   const slots = counting.slots || {};
   const sNoMap = {};
   const boothMap = {};
@@ -579,21 +768,34 @@ function processCountingSheetRows(rows, counting, boothsMaster) {
     if (!targetSlot && colRound !== -1 && colTable !== -1 && row[colRound] && row[colTable]) {
       const rNum = cleanNum(row[colRound]);
       const tNum = cleanNum(row[colTable]);
-      // find matching slot
       targetSlot = Object.values(slots).find(s => s.round === rNum && s.table === tNum);
     }
 
     if (targetSlot) {
-      const c1 = colC1 !== -1 ? cleanNum(row[colC1]) : targetSlot.votes.c1;
-      const c2 = colC2 !== -1 ? cleanNum(row[colC2]) : targetSlot.votes.c2;
-      const c3 = colC3 !== -1 ? cleanNum(row[colC3]) : targetSlot.votes.c3;
-      const c4 = colC4 !== -1 ? cleanNum(row[colC4]) : targetSlot.votes.c4;
-      const c5 = colC5 !== -1 ? cleanNum(row[colC5]) : targetSlot.votes.c5;
-      const nota = colNota !== -1 ? cleanNum(row[colNota]) : targetSlot.votes.nota;
-      const tot = c1 + c2 + c3 + c4 + c5 + nota;
+      // PS Votes
+      const c1 = colPsC1 !== -1 ? cleanNum(row[colPsC1]) : targetSlot.votes.c1;
+      const c2 = colPsC2 !== -1 ? cleanNum(row[colPsC2]) : targetSlot.votes.c2;
+      const c3 = colPsC3 !== -1 ? cleanNum(row[colPsC3]) : targetSlot.votes.c3;
+      const c4 = colPsC4 !== -1 ? cleanNum(row[colPsC4]) : targetSlot.votes.c4;
+      const c5 = colPsC5 !== -1 ? cleanNum(row[colPsC5]) : targetSlot.votes.c5;
+      const nota = colPsNota !== -1 ? cleanNum(row[colPsNota]) : targetSlot.votes.nota;
+      let psTot = c1 + c2 + c3 + c4 + c5 + nota;
+      if (psTot === 0 && colPsTotal !== -1) psTot = cleanNum(row[colPsTotal]);
 
-      targetSlot.votes = { c1, c2, c3, c4, c5, nota, total: tot };
-      if (tot > 0) targetSlot.status = 'COMPLETED';
+      targetSlot.votes = { c1, c2, c3, c4, c5, nota, total: psTot };
+
+      // ZP Votes
+      const zc1 = colZpC1 !== -1 ? cleanNum(row[colZpC1]) : targetSlot.zp_votes.c1;
+      const zc2 = colZpC2 !== -1 ? cleanNum(row[colZpC2]) : targetSlot.zp_votes.c2;
+      const zc3 = colZpC3 !== -1 ? cleanNum(row[colZpC3]) : targetSlot.zp_votes.c3;
+      const zc4 = colZpC4 !== -1 ? cleanNum(row[colZpC4]) : targetSlot.zp_votes.c4;
+      const znota = colZpNota !== -1 ? cleanNum(row[colZpNota]) : targetSlot.zp_votes.nota;
+      let zpTot = zc1 + zc2 + zc3 + zc4 + znota;
+      if (zpTot === 0 && colZpTotal !== -1) zpTot = cleanNum(row[colZpTotal]);
+
+      targetSlot.zp_votes = { c1: zc1, c2: zc2, c3: zc3, c4: zc4, nota: znota, total: zpTot };
+
+      if (psTot > 0 || zpTot > 0) targetSlot.status = 'COMPLETED';
       if (colRemark !== -1 && row[colRemark]) targetSlot.remark = String(row[colRemark]).trim();
       updatedCount++;
     }
@@ -660,6 +862,11 @@ function runMockSimulation(counting, action) {
   const psCandidates = counting.candidates || {};
   const zpCandidates = counting.zp_candidates || {};
 
+  if (action === 'reset_postal_ballots') {
+    counting.postal_ballots = { ps: {}, zp: {} };
+    return { success: true, message: 'समस्त 21 पं.स. एवं 4 जि.प. वार्डों के डाक मतपत्र (Postal Ballots) का डेटा सफलतापूर्वक रीसेट (शून्य) कर दिया गया है।' };
+  }
+
   if (action === 'reset_all') {
     Object.values(slots).forEach(s => {
       s.votes = { c1: 0, c2: 0, c3: 0, c4: 0, c5: 0, nota: 0, total: 0 };
@@ -667,7 +874,8 @@ function runMockSimulation(counting, action) {
       s.status = 'PENDING';
       s.remark = '';
     });
-    return { success: true, message: 'समस्त 152 मतदान केंद्रों का मतगणना डेटा सफलतापूर्वक रीसेट (शून्य) कर दिया गया है।' };
+    counting.postal_ballots = { ps: {}, zp: {} };
+    return { success: true, message: 'समस्त 152 मतदान केंद्रों का EVM डेटा एवं सभी डाक मतपत्र (Postal Ballots) सफलतापूर्वक रीसेट (शून्य) कर दिए गए हैं।' };
   }
 
   let targetRounds = [1];
