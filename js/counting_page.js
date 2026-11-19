@@ -4139,15 +4139,36 @@ function downloadOperatorWorkbook() {
     const wb = XLSX.utils.book_new();
     const slots = countingData.slots || {};
     const sortedSlots = Object.values(slots).sort((a, b) => Number(a.s_no) - Number(b.s_no));
-    const psCandidates = countingData.candidates || {};
-    const zpCandidates = countingData.zp_candidates || {};
+
+    // Robust candidate lookups with fallback to ps_wards / zp_wards
+    function getPsCandidates(wKey) {
+        if (countingData.candidates && countingData.candidates[wKey] && countingData.candidates[wKey].length > 0) {
+            return countingData.candidates[wKey];
+        }
+        if (countingData.ps_wards && countingData.ps_wards[wKey] && countingData.ps_wards[wKey].candidates) {
+            return countingData.ps_wards[wKey].candidates;
+        }
+        return [];
+    }
+
+    function getZpCandidates(zKey) {
+        if (countingData.zp_candidates && countingData.zp_candidates[zKey]) {
+            const z = countingData.zp_candidates[zKey];
+            const list = Array.isArray(z) ? z : (z.candidates || []);
+            if (list.length > 0) return list;
+        }
+        if (countingData.zp_wards && countingData.zp_wards[zKey] && countingData.zp_wards[zKey].candidates) {
+            return countingData.zp_wards[zKey].candidates;
+        }
+        return [];
+    }
 
     // Helper functions for formula cells with cached value & type (avoids SheetJS dropping formula cells)
     function numForm(formula, defaultVal = 0) {
-        return { f: formula, v: defaultVal, t: 'n' };
+        return { f: formula, v: (typeof defaultVal === 'number' ? defaultVal : 0), t: 'n' };
     }
     function strForm(formula, defaultVal = '') {
-        return { f: formula, v: defaultVal, t: 's' };
+        return { f: formula, v: String(defaultVal != null ? defaultVal : ''), t: 's' };
     }
 
     // =============================================================
@@ -4177,17 +4198,39 @@ function downloadOperatorWorkbook() {
         const rowNum = idx + 2; // Row number in Excel (header is row 1)
         const wKey = s.ps_ward || '';
         const zKey = s.zp_ward || '';
-        const psList = psCandidates[wKey] || [];
-        const zpList = (zpCandidates[zKey]?.candidates) || [];
+        const psList = getPsCandidates(wKey);
+        const zpList = getZpCandidates(zKey);
 
-        const psC1Name = psList[0] ? `${psList[0].name} [${psList[0].party}]` : '-';
-        const psC2Name = psList[1] ? `${psList[1].name} [${psList[1].party}]` : '-';
-        const psC3Name = psList[2] ? `${psList[2].name} [${psList[2].party}]` : '-';
-        const psC4Name = psList[3] ? `${psList[3].name} [${psList[3].party}]` : (psList[4] ? `${psList[4].name} [${psList[4].party}]` : '-');
+        const psC1Name = psList[0] ? (psList[0].name + ' [' + psList[0].party + ']') : '-';
+        const psC2Name = psList[1] ? (psList[1].name + ' [' + psList[1].party + ']') : '-';
+        const psC3Name = psList[2] ? (psList[2].name + ' [' + psList[2].party + ']') : '-';
+        const psC4Name = psList[3] ? (psList[3].name + ' [' + psList[3].party + ']') : (psList[4] ? (psList[4].name + ' [' + psList[4].party + ']') : '-');
 
-        const zpC1Name = zpList[0] ? `${zpList[0].name} [${zpList[0].party}]` : '-';
-        const zpC2Name = zpList[1] ? `${zpList[1].name} [${zpList[1].party}]` : '-';
-        const zpC3Name = zpList[2] ? `${zpList[2].name} [${zpList[2].party}]` : '-';
+        const zpC1Name = zpList[0] ? (zpList[0].name + ' [' + zpList[0].party + ']') : '-';
+        const zpC2Name = zpList[1] ? (zpList[1].name + ' [' + zpList[1].party + ']') : '-';
+        const zpC3Name = zpList[2] ? (zpList[2].name + ' [' + zpList[2].party + ']') : '-';
+
+        // Live votes from slot
+        const psC1Votes = (s.votes && s.votes.c1 != null) ? Number(s.votes.c1) : 0;
+        const psC2Votes = (s.votes && s.votes.c2 != null) ? Number(s.votes.c2) : 0;
+        const psC3Votes = (s.votes && s.votes.c3 != null) ? Number(s.votes.c3) : 0;
+        const psC4Votes = (s.votes && s.votes.c4 != null) ? (Number(s.votes.c4) + Number(s.votes.c5 || 0)) : 0;
+        const psNotaVotes = (s.votes && s.votes.nota != null) ? Number(s.votes.nota) : 0;
+        const psTotalVotes = psC1Votes + psC2Votes + psC3Votes + psC4Votes + psNotaVotes;
+        const polledVotes = Number(s.polled_votes) || 0;
+
+        const psMatchCached = psTotalVotes === 0 ? '-' : (psTotalVotes === polledVotes ? '✓ OK (मिलान)' : ('अंतर: ' + (psTotalVotes - polledVotes)));
+
+        const zpC1Votes = (s.zp_votes && s.zp_votes.c1 != null) ? Number(s.zp_votes.c1) : 0;
+        const zpC2Votes = (s.zp_votes && s.zp_votes.c2 != null) ? Number(s.zp_votes.c2) : 0;
+        const zpC3Votes = (s.zp_votes && s.zp_votes.c3 != null) ? Number(s.zp_votes.c3) : 0;
+        const zpNotaVotes = (s.zp_votes && s.zp_votes.nota != null) ? Number(s.zp_votes.nota) : 0;
+        const zpTotalVotes = zpC1Votes + zpC2Votes + zpC3Votes + zpNotaVotes;
+
+        const zpMatchCached = zpTotalVotes === 0 ? '-' : (zpTotalVotes === polledVotes ? '✓ OK (मिलान)' : ('अंतर: ' + (zpTotalVotes - polledVotes)));
+
+        const slotStatus = s.status || (psTotalVotes > 0 ? 'COMPLETED' : 'PENDING');
+        const slotRemark = s.remark || '';
 
         entryRows.push([
             s.s_no,
@@ -4197,32 +4240,32 @@ function downloadOperatorWorkbook() {
             s.cu_id || '',
             s.gp_name || '',
             s.location || '',
-            s.polled_votes || 0,
+            polledVotes,
             wKey,
             psC1Name,
-            0, // PS C1 Vote
+            psC1Votes,
             psC2Name,
-            0, // PS C2 Vote
+            psC2Votes,
             psC3Name,
-            0, // PS C3 Vote
+            psC3Votes,
             psC4Name,
-            0, // PS C4/5 Vote
-            0, // PS NOTA
-            numForm(`K${rowNum}+M${rowNum}+O${rowNum}+Q${rowNum}+R${rowNum}`, 0), // PS Total
-            strForm(`IF(S${rowNum}=0,"-",IF(S${rowNum}=H${rowNum},"✓ OK (मिलान)","अंतर: "&(S${rowNum}-H${rowNum})))`, '-'), // PS 17C Match
+            psC4Votes,
+            psNotaVotes,
+            numForm('K' + rowNum + '+M' + rowNum + '+O' + rowNum + '+Q' + rowNum + '+R' + rowNum, psTotalVotes),
+            strForm('IF(S' + rowNum + '=0,"-",IF(S' + rowNum + '=H' + rowNum + ',"✓ OK (मिलान)","अंतर: "&(S' + rowNum + '-H' + rowNum + ')))', psMatchCached),
             zKey,
             zpC1Name,
-            0, // ZP C1 Vote
+            zpC1Votes,
             zpC2Name,
-            0, // ZP C2 Vote
+            zpC2Votes,
             zpC3Name,
-            0, // ZP C3 Vote
-            0, // ZP NOTA
-            numForm(`W${rowNum}+Y${rowNum}+AA${rowNum}+AB${rowNum}`, 0), // ZP Total
-            strForm(`IF(AC${rowNum}=0,"-",IF(AC${rowNum}=H${rowNum},"✓ OK (मिलान)","अंतर: "&(AC${rowNum}-H${rowNum})))`, '-'), // ZP 17C Match
-            strForm(`IF(S${rowNum}>0,"COMPLETED","PENDING")`, 'PENDING'),
-            '',
-            `${s.round}_${s.table}`
+            zpC3Votes,
+            zpNotaVotes,
+            numForm('W' + rowNum + '+Y' + rowNum + '+AA' + rowNum + '+AB' + rowNum, zpTotalVotes),
+            strForm('IF(AC' + rowNum + '=0,"-",IF(AC' + rowNum + '=H' + rowNum + ',"✓ OK (मिलान)","अंतर: "&(AC' + rowNum + '-H' + rowNum + ')))', zpMatchCached),
+            strForm('IF(S' + rowNum + '>0,"COMPLETED","PENDING")', slotStatus),
+            slotRemark,
+            s.round + '_' + s.table
         ]);
     });
 
@@ -4232,7 +4275,6 @@ function downloadOperatorWorkbook() {
 
     // =============================================================
     // SHEET 2: SYNC_MASTER (पोर्टल सिंक मास्टर - 152 बूथ)
-    // Linked with formulas to ROUND_WISE_ENTRY so portal sync works seamlessly!
     // =============================================================
     const syncHeaders = [
         'S.NO.', 'ROUND NO.', 'TABLE NO.', 'BOOTH NO.', 'CU ID', 'GP NAME', 'LOCATION',
@@ -4245,6 +4287,22 @@ function downloadOperatorWorkbook() {
     const syncRows = [syncHeaders];
     sortedSlots.forEach((s, idx) => {
         const rowNum = idx + 2;
+        const psC1Votes = (s.votes && s.votes.c1 != null) ? Number(s.votes.c1) : 0;
+        const psC2Votes = (s.votes && s.votes.c2 != null) ? Number(s.votes.c2) : 0;
+        const psC3Votes = (s.votes && s.votes.c3 != null) ? Number(s.votes.c3) : 0;
+        const psC4Votes = (s.votes && s.votes.c4 != null) ? (Number(s.votes.c4) + Number(s.votes.c5 || 0)) : 0;
+        const psNotaVotes = (s.votes && s.votes.nota != null) ? Number(s.votes.nota) : 0;
+        const psTotalVotes = psC1Votes + psC2Votes + psC3Votes + psC4Votes + psNotaVotes;
+
+        const zpC1Votes = (s.zp_votes && s.zp_votes.c1 != null) ? Number(s.zp_votes.c1) : 0;
+        const zpC2Votes = (s.zp_votes && s.zp_votes.c2 != null) ? Number(s.zp_votes.c2) : 0;
+        const zpC3Votes = (s.zp_votes && s.zp_votes.c3 != null) ? Number(s.zp_votes.c3) : 0;
+        const zpNotaVotes = (s.zp_votes && s.zp_votes.nota != null) ? Number(s.zp_votes.nota) : 0;
+        const zpTotalVotes = zpC1Votes + zpC2Votes + zpC3Votes + zpNotaVotes;
+
+        const slotStatus = s.status || (psTotalVotes > 0 ? 'COMPLETED' : 'PENDING');
+        const slotRemark = s.remark || '';
+
         syncRows.push([
             s.s_no,
             s.round,
@@ -4256,20 +4314,20 @@ function downloadOperatorWorkbook() {
             s.ps_ward || '',
             s.zp_ward || '',
             s.polled_votes || 0,
-            numForm(`ROUND_WISE_ENTRY!K${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!M${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!O${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!Q${rowNum}`, 0),
+            numForm('ROUND_WISE_ENTRY!K' + rowNum, psC1Votes),
+            numForm('ROUND_WISE_ENTRY!M' + rowNum, psC2Votes),
+            numForm('ROUND_WISE_ENTRY!O' + rowNum, psC3Votes),
+            numForm('ROUND_WISE_ENTRY!Q' + rowNum, psC4Votes),
             0,
-            numForm(`ROUND_WISE_ENTRY!R${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!S${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!W${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!Y${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!AA${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!AB${rowNum}`, 0),
-            numForm(`ROUND_WISE_ENTRY!AC${rowNum}`, 0),
-            strForm(`ROUND_WISE_ENTRY!AE${rowNum}`, 'PENDING'),
-            strForm(`ROUND_WISE_ENTRY!AF${rowNum}`, '')
+            numForm('ROUND_WISE_ENTRY!R' + rowNum, psNotaVotes),
+            numForm('ROUND_WISE_ENTRY!S' + rowNum, psTotalVotes),
+            numForm('ROUND_WISE_ENTRY!W' + rowNum, zpC1Votes),
+            numForm('ROUND_WISE_ENTRY!Y' + rowNum, zpC2Votes),
+            numForm('ROUND_WISE_ENTRY!AA' + rowNum, zpC3Votes),
+            numForm('ROUND_WISE_ENTRY!AB' + rowNum, zpNotaVotes),
+            numForm('ROUND_WISE_ENTRY!AC' + rowNum, zpTotalVotes),
+            strForm('ROUND_WISE_ENTRY!AE' + rowNum, slotStatus),
+            strForm('ROUND_WISE_ENTRY!AF' + rowNum, slotRemark)
         ]);
     });
 
@@ -4278,7 +4336,7 @@ function downloadOperatorWorkbook() {
 
     // =============================================================
     // SHEET 3: SELECT_ROUND_VIEW (राउंड निरीक्षण व प्रमाणक दृश्य)
-    // Standard INDEX-MATCH formulas - works in 100% of Excel & Google Sheets!
+    // Standard INDEX-MATCH formulas with pre-populated Round 1 data
     // =============================================================
     const selectRoundRows = [
         ['सुमेरपुर पंचायती राज मतगणना - राउंड-वार टेबल दृश्य व प्रमाणक (Round Inspector View)'],
@@ -4293,64 +4351,135 @@ function downloadOperatorWorkbook() {
         ]
     ];
 
+    const round1Slots = sortedSlots.filter(s => Number(s.round) === 1).sort((a, b) => Number(a.table) - Number(b.table));
+    let r1SumPolled = 0, r1SumPsC1 = 0, r1SumPsC2 = 0, r1SumPsC3 = 0, r1SumPsC4 = 0, r1SumPsNota = 0, r1SumPsTotal = 0;
+    let r1SumZpC1 = 0, r1SumZpC2 = 0, r1SumZpC3 = 0, r1SumZpNota = 0, r1SumZpTotal = 0;
+
     for (let t = 1; t <= 16; t++) {
         const rIdx = t + 4; // Excel row 5 to 20
-        const matchFormula = `MATCH($B$2&"_"&${t},ROUND_WISE_ENTRY!$AG$2:$AG$153,0)`;
+        const matchFormula = 'MATCH($B$2&"_"&' + t + ',ROUND_WISE_ENTRY!$AG$2:$AG$153,0)';
+
+        const r1 = (t <= round1Slots.length) ? round1Slots[t - 1] : null;
+
+        let dRound = 1, dBooth = '-', dCu = '-', dGp = '-', dLoc = '-', dPolled = 0;
+        let dPsWard = '-', dPsC1Name = '-', dPsC1 = 0, dPsC2Name = '-', dPsC2 = 0, dPsC3Name = '-', dPsC3 = 0;
+        let dPsC4Name = '-', dPsC4 = 0, dPsNota = 0, dPsTotal = 0, dPsMatch = '-';
+        let dZpWard = '-', dZpC1Name = '-', dZpC1 = 0, dZpC2Name = '-', dZpC2 = 0, dZpC3Name = '-', dZpC3 = 0;
+        let dZpNota = 0, dZpTotal = 0, dZpMatch = '-';
+        let dStatus = 'PENDING', dRemark = '';
+
+        if (r1) {
+            dRound = Number(r1.round) || 1;
+            dBooth = String(r1.booth_no || '');
+            dCu = String(r1.cu_id || '');
+            dGp = String(r1.gp_name || '');
+            dLoc = String(r1.location || '');
+            dPolled = Number(r1.polled_votes) || 0;
+            dPsWard = String(r1.ps_ward || '');
+            dZpWard = String(r1.zp_ward || '');
+
+            const psList = getPsCandidates(dPsWard);
+            const zpList = getZpCandidates(dZpWard);
+
+            dPsC1Name = psList[0] ? (psList[0].name + ' [' + psList[0].party + ']') : '-';
+            dPsC2Name = psList[1] ? (psList[1].name + ' [' + psList[1].party + ']') : '-';
+            dPsC3Name = psList[2] ? (psList[2].name + ' [' + psList[2].party + ']') : '-';
+            dPsC4Name = psList[3] ? (psList[3].name + ' [' + psList[3].party + ']') : (psList[4] ? (psList[4].name + ' [' + psList[4].party + ']') : '-');
+
+            dZpC1Name = zpList[0] ? (zpList[0].name + ' [' + zpList[0].party + ']') : '-';
+            dZpC2Name = zpList[1] ? (zpList[1].name + ' [' + zpList[1].party + ']') : '-';
+            dZpC3Name = zpList[2] ? (zpList[2].name + ' [' + zpList[2].party + ']') : '-';
+
+            dPsC1 = (r1.votes && r1.votes.c1 != null) ? Number(r1.votes.c1) : 0;
+            dPsC2 = (r1.votes && r1.votes.c2 != null) ? Number(r1.votes.c2) : 0;
+            dPsC3 = (r1.votes && r1.votes.c3 != null) ? Number(r1.votes.c3) : 0;
+            dPsC4 = (r1.votes && r1.votes.c4 != null) ? (Number(r1.votes.c4) + Number(r1.votes.c5 || 0)) : 0;
+            dPsNota = (r1.votes && r1.votes.nota != null) ? Number(r1.votes.nota) : 0;
+            dPsTotal = dPsC1 + dPsC2 + dPsC3 + dPsC4 + dPsNota;
+            dPsMatch = dPsTotal === 0 ? '-' : (dPsTotal === dPolled ? '✓ OK (मिलान)' : ('अंतर: ' + (dPsTotal - dPolled)));
+
+            dZpC1 = (r1.zp_votes && r1.zp_votes.c1 != null) ? Number(r1.zp_votes.c1) : 0;
+            dZpC2 = (r1.zp_votes && r1.zp_votes.c2 != null) ? Number(r1.zp_votes.c2) : 0;
+            dZpC3 = (r1.zp_votes && r1.zp_votes.c3 != null) ? Number(r1.zp_votes.c3) : 0;
+            dZpNota = (r1.zp_votes && r1.zp_votes.nota != null) ? Number(r1.zp_votes.nota) : 0;
+            dZpTotal = dZpC1 + dZpC2 + dZpC3 + dZpNota;
+            dZpMatch = dZpTotal === 0 ? '-' : (dZpTotal === dPolled ? '✓ OK (मिलान)' : ('अंतर: ' + (dZpTotal - dPolled)));
+
+            dStatus = r1.status || (dPsTotal > 0 ? 'COMPLETED' : 'PENDING');
+            dRemark = r1.remark || '';
+
+            r1SumPolled += dPolled;
+            r1SumPsC1 += dPsC1;
+            r1SumPsC2 += dPsC2;
+            r1SumPsC3 += dPsC3;
+            r1SumPsC4 += dPsC4;
+            r1SumPsNota += dPsNota;
+            r1SumPsTotal += dPsTotal;
+            r1SumZpC1 += dZpC1;
+            r1SumZpC2 += dZpC2;
+            r1SumZpC3 += dZpC3;
+            r1SumZpNota += dZpNota;
+            r1SumZpTotal += dZpTotal;
+        }
+
         selectRoundRows.push([
             t,
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$B$2:$B$153,${matchFormula}),"-")`, 1),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$B$2:$B$153,' + matchFormula + '),"-")', dRound),
             t,
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$D$2:$D$153,${matchFormula}),"-")`, '-'),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$E$2:$E$153,${matchFormula}),"-")`, '-'),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$F$2:$F$153,${matchFormula}),"-")`, '-'),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$G$2:$G$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$H$2:$H$153,${matchFormula}),0)`, 0),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$I$2:$I$153,${matchFormula}),"-")`, '-'),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$J$2:$J$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$K$2:$K$153,${matchFormula}),0)`, 0),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$L$2:$L$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$M$2:$M$153,${matchFormula}),0)`, 0),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$N$2:$N$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$O$2:$O$153,${matchFormula}),0)`, 0),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$P$2:$P$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$Q$2:$Q$153,${matchFormula}),0)`, 0),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$R$2:$R$153,${matchFormula}),0)`, 0),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$S$2:$S$153,${matchFormula}),0)`, 0),
-            strForm(`IF(H${rIdx}=0,"-",IF(S${rIdx}=H${rIdx},"✓ OK (मिलान)","अंतर: "&(S${rIdx}-H${rIdx})))`, '-'),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$U$2:$U$153,${matchFormula}),"-")`, '-'),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$V$2:$V$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$W$2:$W$153,${matchFormula}),0)`, 0),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$X$2:$X$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$Y$2:$Y$153,${matchFormula}),0)`, 0),
-            strForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$Z$2:$Z$153,${matchFormula}),"-")`, '-'),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$AA$2:$AA$153,${matchFormula}),0)`, 0),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$AB$2:$AB$153,${matchFormula}),0)`, 0),
-            numForm(`IFERROR(INDEX(ROUND_WISE_ENTRY!$AC$2:$AC$153,${matchFormula}),0)`, 0),
-            strForm(`IF(H${rIdx}=0,"-",IF(AC${rIdx}=H${rIdx},"✓ OK (मिलान)","अंतर: "&(AC${rIdx}-H${rIdx})))`, '-'),
-            strForm(`IF(S${rIdx}>0,"COMPLETED","PENDING")`, 'PENDING'),
-            ''
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$D$2:$D$153,' + matchFormula + '),"-")', dBooth),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$E$2:$E$153,' + matchFormula + '),"-")', dCu),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$F$2:$F$153,' + matchFormula + '),"-")', dGp),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$G$2:$G$153,' + matchFormula + '),"-")', dLoc),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$H$2:$H$153,' + matchFormula + '),0)', dPolled),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$I$2:$I$153,' + matchFormula + '),"-")', dPsWard),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$J$2:$J$153,' + matchFormula + '),"-")', dPsC1Name),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$K$2:$K$153,' + matchFormula + '),0)', dPsC1),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$L$2:$L$153,' + matchFormula + '),"-")', dPsC2Name),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$M$2:$M$153,' + matchFormula + '),0)', dPsC2),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$N$2:$N$153,' + matchFormula + '),"-")', dPsC3Name),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$O$2:$O$153,' + matchFormula + '),0)', dPsC3),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$P$2:$P$153,' + matchFormula + '),"-")', dPsC4Name),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$Q$2:$Q$153,' + matchFormula + '),0)', dPsC4),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$R$2:$R$153,' + matchFormula + '),0)', dPsNota),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$S$2:$S$153,' + matchFormula + '),0)', dPsTotal),
+            strForm('IF(H' + rIdx + '=0,"-",IF(S' + rIdx + '=H' + rIdx + ',"✓ OK (मिलान)","अंतर: "&(S' + rIdx + '-H' + rIdx + ')))', dPsMatch),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$U$2:$U$153,' + matchFormula + '),"-")', dZpWard),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$V$2:$V$153,' + matchFormula + '),"-")', dZpC1Name),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$W$2:$W$153,' + matchFormula + '),0)', dZpC1),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$X$2:$X$153,' + matchFormula + '),"-")', dZpC2Name),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$Y$2:$Y$153,' + matchFormula + '),0)', dZpC2),
+            strForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$Z$2:$Z$153,' + matchFormula + '),"-")', dZpC3Name),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$AA$2:$AA$153,' + matchFormula + '),0)', dZpC3),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$AB$2:$AB$153,' + matchFormula + '),0)', dZpNota),
+            numForm('IFERROR(INDEX(ROUND_WISE_ENTRY!$AC$2:$AC$153,' + matchFormula + '),0)', dZpTotal),
+            strForm('IF(H' + rIdx + '=0,"-",IF(AC' + rIdx + '=H' + rIdx + ',"✓ OK (मिलान)","अंतर: "&(AC' + rIdx + '-H' + rIdx + ')))', dZpMatch),
+            strForm('IF(S' + rIdx + '>0,"COMPLETED","PENDING")', dStatus),
+            dRemark
         ]);
     }
 
     // Summary Row for Round Total
+    const r1PsSummaryMatch = r1SumPsTotal === 0 ? '-' : (r1SumPsTotal === r1SumPolled ? '✓ राउंड मिलान पूर्ण' : ('अंतर: ' + (r1SumPsTotal - r1SumPolled)));
+    const r1ZpSummaryMatch = r1SumZpTotal === 0 ? '-' : (r1SumZpTotal === r1SumPolled ? '✓ राउंड मिलान पूर्ण' : ('अंतर: ' + (r1SumZpTotal - r1SumPolled)));
+
     selectRoundRows.push([
         'कुल योग', '', '', '', '', '', 'इस राउंड का कुल योग:',
-        numForm('SUM(H5:H20)', 0),
+        numForm('SUM(H5:H20)', r1SumPolled),
         '', '',
-        numForm('SUM(K5:K20)', 0), '',
-        numForm('SUM(M5:M20)', 0), '',
-        numForm('SUM(O5:O20)', 0), '',
-        numForm('SUM(Q5:Q20)', 0),
-        numForm('SUM(R5:R20)', 0),
-        numForm('SUM(S5:S20)', 0),
-        strForm('IF(S21=0,"-",IF(S21=H21,"✓ राउंड मिलान पूर्ण","अंतर: "&(S21-H21)))', '-'),
+        numForm('SUM(K5:K20)', r1SumPsC1), '',
+        numForm('SUM(M5:M20)', r1SumPsC2), '',
+        numForm('SUM(O5:O20)', r1SumPsC3), '',
+        numForm('SUM(Q5:Q20)', r1SumPsC4),
+        numForm('SUM(R5:R20)', r1SumPsNota),
+        numForm('SUM(S5:S20)', r1SumPsTotal),
+        strForm('IF(S21=0,"-",IF(S21=H21,"✓ राउंड मिलान पूर्ण","अंतर: "&(S21-H21)))', r1PsSummaryMatch),
         '', '',
-        numForm('SUM(W5:W20)', 0), '',
-        numForm('SUM(Y5:Y20)', 0), '',
-        numForm('SUM(AA5:AA20)', 0),
-        numForm('SUM(AB5:AB20)', 0),
-        numForm('SUM(AC5:AC20)', 0),
-        strForm('IF(AC21=0,"-",IF(AC21=H21,"✓ राउंड मिलान पूर्ण","अंतर: "&(AC21-H21)))', '-'),
+        numForm('SUM(W5:W20)', r1SumZpC1), '',
+        numForm('SUM(Y5:Y20)', r1SumZpC2), '',
+        numForm('SUM(AA5:AA20)', r1SumZpC3),
+        numForm('SUM(AB5:AB20)', r1SumZpNota),
+        numForm('SUM(AC5:AC20)', r1SumZpTotal),
+        strForm('IF(AC21=0,"-",IF(AC21=H21,"✓ राउंड मिलान पूर्ण","अंतर: "&(AC21-H21)))', r1ZpSummaryMatch),
         '', ''
     ]);
 
@@ -4370,13 +4499,28 @@ function downloadOperatorWorkbook() {
     const candRows = [candHeaders];
     let candRowNum = 2;
 
+    // Helper to calculate EVM candidate votes per round from live data
+    function getLiveCandRoundVotes(wardKey, candKey, roundNum, isZp = false) {
+        return sortedSlots.filter(s => Number(s.round) === roundNum && (isZp ? s.zp_ward === wardKey : s.ps_ward === wardKey))
+            .reduce((sum, s) => {
+                const vObj = isZp ? s.zp_votes : s.votes;
+                if (!vObj) return sum;
+                if (candKey === 'c4_5') return sum + (Number(vObj.c4) || 0) + (Number(vObj.c5) || 0);
+                return sum + (Number(vObj[candKey]) || 0);
+            }, 0);
+    }
+
     // PS Candidates
     for (let w = 1; w <= 21; w++) {
         const wKey = 'W-' + w;
-        const cands = psCandidates[wKey] || [];
+        const cands = getPsCandidates(wKey);
+        const pbWard = (countingData.postal_ballots && countingData.postal_ballots[wKey]) || {};
+        const pbCandVotes = pbWard.candVotes || {};
+
         cands.forEach((c, cIdx) => {
             // In ROUND_WISE_ENTRY, C1 vote is K, C2 is M, C3 is O, C4 is Q
             const colLetter = cIdx === 0 ? 'K' : (cIdx === 1 ? 'M' : (cIdx === 2 ? 'O' : 'Q'));
+            const candVoteKey = cIdx === 0 ? 'c1' : (cIdx === 1 ? 'c2' : (cIdx === 2 ? 'c3' : 'c4_5'));
             const row = [
                 'पंचायत समिति',
                 wKey,
@@ -4384,12 +4528,16 @@ function downloadOperatorWorkbook() {
                 c.party || 'IND',
                 c.symbol || '-'
             ];
+            let evmSum = 0;
             for (let r = 1; r <= 14; r++) {
-                row.push(numForm(`SUMIFS(ROUND_WISE_ENTRY!${colLetter}:${colLetter}, ROUND_WISE_ENTRY!B:B, ${r}, ROUND_WISE_ENTRY!I:I, "${wKey}")`, 0));
+                const rVotes = getLiveCandRoundVotes(wKey, candVoteKey, r, false);
+                evmSum += rVotes;
+                row.push(numForm('SUMIFS(ROUND_WISE_ENTRY!' + colLetter + ':' + colLetter + ', ROUND_WISE_ENTRY!B:B, ' + r + ', ROUND_WISE_ENTRY!I:I, "' + wKey + '")', rVotes));
             }
-            row.push(numForm(`SUM(F${candRowNum}:S${candRowNum})`, 0));
-            row.push(0); // Postal Ballots default
-            row.push(numForm(`T${candRowNum}+U${candRowNum}`, 0));
+            row.push(numForm('SUM(F' + candRowNum + ':S' + candRowNum + ')', evmSum));
+            const pbVal = Number(pbCandVotes[c.key]) || 0;
+            row.push(pbVal); // Postal Ballots live
+            row.push(numForm('T' + candRowNum + '+U' + candRowNum, evmSum + pbVal));
             candRows.push(row);
             candRowNum++;
         });
@@ -4402,23 +4550,30 @@ function downloadOperatorWorkbook() {
             'NOTA',
             '-'
         ];
+        let notaSum = 0;
         for (let r = 1; r <= 14; r++) {
-            notaRow.push(numForm(`SUMIFS(ROUND_WISE_ENTRY!R:R, ROUND_WISE_ENTRY!B:B, ${r}, ROUND_WISE_ENTRY!I:I, "${wKey}")`, 0));
+            const rVotes = getLiveCandRoundVotes(wKey, 'nota', r, false);
+            notaSum += rVotes;
+            notaRow.push(numForm('SUMIFS(ROUND_WISE_ENTRY!R:R, ROUND_WISE_ENTRY!B:B, ' + r + ', ROUND_WISE_ENTRY!I:I, "' + wKey + '")', rVotes));
         }
-        notaRow.push(numForm(`SUM(F${candRowNum}:S${candRowNum})`, 0));
-        notaRow.push(0);
-        notaRow.push(numForm(`T${candRowNum}+U${candRowNum}`, 0));
+        notaRow.push(numForm('SUM(F' + candRowNum + ':S' + candRowNum + ')', notaSum));
+        const pbNota = Number(pbCandVotes['nota']) || 0;
+        notaRow.push(pbNota);
+        notaRow.push(numForm('T' + candRowNum + '+U' + candRowNum, notaSum + pbNota));
         candRows.push(notaRow);
         candRowNum++;
     }
 
     // ZP Candidates
     ['Z-7', 'Z-8', 'Z-9', 'Z-10'].forEach(zKey => {
-        const zwInfo = zpCandidates[zKey] || {};
-        const cands = zwInfo.candidates || [];
+        const cands = getZpCandidates(zKey);
+        const pbWard = (countingData.postal_ballots && countingData.postal_ballots[zKey]) || {};
+        const pbCandVotes = pbWard.candVotes || {};
+
         cands.forEach((c, cIdx) => {
             // In ROUND_WISE_ENTRY, ZP C1 vote is W, C2 is Y, C3 is AA
             const colLetter = cIdx === 0 ? 'W' : (cIdx === 1 ? 'Y' : 'AA');
+            const candVoteKey = cIdx === 0 ? 'c1' : (cIdx === 1 ? 'c2' : 'c3');
             const row = [
                 'जिला परिषद',
                 zKey,
@@ -4426,12 +4581,16 @@ function downloadOperatorWorkbook() {
                 c.party || 'IND',
                 c.symbol || '-'
             ];
+            let evmSum = 0;
             for (let r = 1; r <= 14; r++) {
-                row.push(numForm(`SUMIFS(ROUND_WISE_ENTRY!${colLetter}:${colLetter}, ROUND_WISE_ENTRY!B:B, ${r}, ROUND_WISE_ENTRY!U:U, "${zKey}")`, 0));
+                const rVotes = getLiveCandRoundVotes(zKey, candVoteKey, r, true);
+                evmSum += rVotes;
+                row.push(numForm('SUMIFS(ROUND_WISE_ENTRY!' + colLetter + ':' + colLetter + ', ROUND_WISE_ENTRY!B:B, ' + r + ', ROUND_WISE_ENTRY!U:U, "' + zKey + '")', rVotes));
             }
-            row.push(numForm(`SUM(F${candRowNum}:S${candRowNum})`, 0));
-            row.push(0);
-            row.push(numForm(`T${candRowNum}+U${candRowNum}`, 0));
+            row.push(numForm('SUM(F' + candRowNum + ':S' + candRowNum + ')', evmSum));
+            const pbVal = Number(pbCandVotes[c.key]) || 0;
+            row.push(pbVal);
+            row.push(numForm('T' + candRowNum + '+U' + candRowNum, evmSum + pbVal));
             candRows.push(row);
             candRowNum++;
         });
@@ -4444,12 +4603,16 @@ function downloadOperatorWorkbook() {
             'NOTA',
             '-'
         ];
+        let notaSum = 0;
         for (let r = 1; r <= 14; r++) {
-            notaRow.push(numForm(`SUMIFS(ROUND_WISE_ENTRY!AB:AB, ROUND_WISE_ENTRY!B:B, ${r}, ROUND_WISE_ENTRY!U:U, "${zKey}")`, 0));
+            const rVotes = getLiveCandRoundVotes(zKey, 'nota', r, true);
+            notaSum += rVotes;
+            notaRow.push(numForm('SUMIFS(ROUND_WISE_ENTRY!AB:AB, ROUND_WISE_ENTRY!B:B, ' + r + ', ROUND_WISE_ENTRY!U:U, "' + zKey + '")', notaSum));
         }
-        notaRow.push(numForm(`SUM(F${candRowNum}:S${candRowNum})`, 0));
-        notaRow.push(0);
-        notaRow.push(numForm(`T${candRowNum}+U${candRowNum}`, 0));
+        notaRow.push(numForm('SUM(F' + candRowNum + ':S' + candRowNum + ')', notaSum));
+        const pbNota = Number(pbCandVotes['nota']) || 0;
+        notaRow.push(pbNota);
+        notaRow.push(numForm('T' + candRowNum + '+U' + candRowNum, notaSum + pbNota));
         candRows.push(notaRow);
         candRowNum++;
     });
@@ -4479,7 +4642,14 @@ function downloadOperatorWorkbook() {
     const wsGuide = XLSX.utils.aoa_to_sheet(guideRows);
     XLSX.utils.book_append_sheet(wb, wsGuide, 'HOW_TO_USE');
 
+    // Ensure full calculation on load
+    wb.Workbook = {
+        CalcPr: {
+            fullCalcOnLoad: true
+        }
+    };
+
     // Download File
-    XLSX.writeFile(wb, `Sumerpur_Counting_Operator_Master_Template_${new Date().toISOString().slice(0, 10)}.xlsx`);
+    XLSX.writeFile(wb, 'Sumerpur_Counting_Operator_Master_Template_' + new Date().toISOString().slice(0, 10) + '.xlsx');
     showToast('मास्टर टेम्पलेट डाउनलोड सफल!', 'Sumerpur_Counting_Operator_Master_Template.xlsx सफलतापूर्वक डाउनलोड हो गया है।', 'success', 5000);
 }
