@@ -977,9 +977,18 @@ app.post('/api/counting/bulk-slots', (req, res) => {
 // 13. POST /api/counting/config (Save Sheet ID, GID, Active Round)
 app.post('/api/counting/config', (req, res) => {
   countingSvc.initCounting(store, boothsMaster);
-  const { sheetId, gid, activeRound } = req.body;
-  if (sheetId) store.counting.config.sheetId = String(sheetId).trim();
-  if (gid !== undefined) store.counting.config.gid = String(gid).trim();
+  let { sheetId, gid, activeRound } = req.body;
+
+  if (sheetId) {
+    const parsed = parseGoogleSheetUrl(sheetId, gid);
+    store.counting.config.sheetId = parsed.sheetId;
+    if (parsed.gid && parsed.gid !== '0') {
+      store.counting.config.gid = parsed.gid;
+    }
+  }
+  if (gid !== undefined && (!store.counting.config.gid || store.counting.config.gid === '0')) {
+    store.counting.config.gid = String(gid).trim();
+  }
   if (activeRound) store.counting.config.activeRound = Number(activeRound);
 
   saveStore();
@@ -1022,12 +1031,15 @@ function parseGoogleSheetUrl(input, fallbackGid = '') {
 async function fetchAndSyncCountingGoogleSheet(sheetId, gid) {
   countingSvc.initCounting(store, boothsMaster);
   
-  // Smartly extract Sheet ID and GID if full URL was passed
-  const parsed = parseGoogleSheetUrl(sheetId, gid);
-  const sId = parsed.sheetId || store.counting?.config?.sheetId || DEFAULT_COUNTING_SHEET_ID;
-  const gId = (parsed.gid && parsed.gid !== '0') ? parsed.gid : (store.counting?.config?.gid || DEFAULT_COUNTING_GID);
+  // Smartly extract clean Sheet ID and GID from input OR from existing store config
+  const rawId = sheetId || store.counting?.config?.sheetId || DEFAULT_COUNTING_SHEET_ID;
+  const rawGid = gid || store.counting?.config?.gid || DEFAULT_COUNTING_GID;
 
-  // Remember in config
+  const parsed = parseGoogleSheetUrl(rawId, rawGid);
+  const sId = parsed.sheetId || DEFAULT_COUNTING_SHEET_ID;
+  const gId = (parsed.gid && parsed.gid !== '0') ? parsed.gid : (rawGid || DEFAULT_COUNTING_GID);
+
+  // Store clean IDs in config
   if (!store.counting.config) store.counting.config = {};
   store.counting.config.sheetId = sId;
   store.counting.config.gid = gId;
