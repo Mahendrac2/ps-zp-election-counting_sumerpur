@@ -141,8 +141,8 @@ function initCounting(store, boothsMaster) {
         totalWardsZP: TOTAL_WARDS_ZP,
         totalBooths: TOTAL_BOOTHS,
         activeRound: 1,
-        sheetId: '1akpSIbiSWMT5XahHoZnCZiCS_yFrBThkoI_Ltys2tGY',
-        gid: '0',
+        sheetId: '1PWgTogFXPf7ZEJXQien75xOvXneDUr3VRUKReFpAEVo',
+        gid: '177343943',
         lastSyncTime: null
       },
       candidates: candMaster.ps,

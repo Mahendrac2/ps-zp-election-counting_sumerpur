@@ -1086,8 +1086,11 @@ async function triggerGoogleSheetSync() {
     const statusEl = document.getElementById('syncStatusIndicator');
     if (statusEl) statusEl.innerHTML = '<i class="fas fa-spinner fa-spin" style="color:#6366f1;"></i> Google Sheet से डेटा सिंक हो रहा है...';
 
+    const sId = countingData?.config?.sheetId || '1PWgTogFXPf7ZEJXQien75xOvXneDUr3VRUKReFpAEVo';
+    const gId = countingData?.config?.gid || '177343943';
+
     try {
-        const res = await fetch('/api/counting/sync-google-sheet');
+        const res = await fetch(`/api/counting/sync-google-sheet?sheetId=${encodeURIComponent(sId)}&gid=${encodeURIComponent(gId)}`);
         const data = await res.json();
         if (data.success) {
             countingData = data;
@@ -1124,8 +1127,8 @@ function toggleAutoSync(enabled) {
 function openSheetSettingsModal() {
     const m = document.getElementById('sheetSettingsModal');
     if (m) {
-        document.getElementById('settingSheetId').value = countingData?.config?.sheetId || '';
-        document.getElementById('settingGid').value = countingData?.config?.gid || '0';
+        document.getElementById('settingSheetId').value = countingData?.config?.sheetId || '1PWgTogFXPf7ZEJXQien75xOvXneDUr3VRUKReFpAEVo';
+        document.getElementById('settingGid').value = countingData?.config?.gid || '177343943';
         m.style.display = 'flex';
     }
 }
@@ -1136,8 +1139,20 @@ function closeSheetSettingsModal() {
 }
 
 async function saveSheetSettings() {
-    const sheetId = document.getElementById('settingSheetId').value.trim();
-    const gid = document.getElementById('settingGid').value.trim();
+    let sheetId = document.getElementById('settingSheetId').value.trim();
+    let gid = document.getElementById('settingGid').value.trim();
+
+    // Smart URL extractor: automatically extract Sheet ID and GID if user pasted the full Google Sheet link
+    const matchId = sheetId.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+    if (matchId) {
+        const fullUrl = sheetId;
+        sheetId = matchId[1];
+        const matchGid = fullUrl.match(/[?#&]gid=([0-9]+)/);
+        if (matchGid && (!gid || gid === '0')) {
+            gid = matchGid[1];
+        }
+    }
+
     try {
         const res = await fetch('/api/counting/config', {
             method: 'POST',

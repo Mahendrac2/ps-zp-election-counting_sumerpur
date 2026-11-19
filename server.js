@@ -999,11 +999,41 @@ app.post('/api/counting/mock-test', (req, res) => {
 });
 
 // 14. Google Sheet Auto-Sync for Counting
+const DEFAULT_COUNTING_SHEET_ID = '1PWgTogFXPf7ZEJXQien75xOvXneDUr3VRUKReFpAEVo';
+const DEFAULT_COUNTING_GID = '177343943';
+
+function parseGoogleSheetUrl(input, fallbackGid = '') {
+  if (!input) return { sheetId: '', gid: fallbackGid };
+  let str = String(input).trim();
+  let sId = str;
+  let gId = fallbackGid;
+
+  // Extract Sheet ID from full URL
+  const matchId = str.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if (matchId) sId = matchId[1];
+
+  // Extract GID from URL if present
+  const matchGid = str.match(/[?#&]gid=([0-9]+)/);
+  if (matchGid) gId = matchGid[1];
+
+  return { sheetId: sId, gid: gId };
+}
+
 async function fetchAndSyncCountingGoogleSheet(sheetId, gid) {
   countingSvc.initCounting(store, boothsMaster);
-  const sId = sheetId || store.counting.config.sheetId || DEFAULT_SHEET_ID;
-  const gId = gid || store.counting.config.gid || '0';
+  
+  // Smartly extract Sheet ID and GID if full URL was passed
+  const parsed = parseGoogleSheetUrl(sheetId, gid);
+  const sId = parsed.sheetId || store.counting?.config?.sheetId || DEFAULT_COUNTING_SHEET_ID;
+  const gId = (parsed.gid && parsed.gid !== '0') ? parsed.gid : (store.counting?.config?.gid || DEFAULT_COUNTING_GID);
+
+  // Remember in config
+  if (!store.counting.config) store.counting.config = {};
+  store.counting.config.sheetId = sId;
+  store.counting.config.gid = gId;
+
   const exportUrl = `https://docs.google.com/spreadsheets/d/${sId}/export?format=csv&gid=${gId}`;
+  console.log(`🔄 Fetching Counting Google Sheet: ID=${sId}, GID=${gId}`);
 
   try {
     const resp = await fetch(exportUrl, {

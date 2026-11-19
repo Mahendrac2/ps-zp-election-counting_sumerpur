@@ -8510,9 +8510,9 @@
       "totalWards": 21,
       "totalBooths": 152,
       "activeRound": 1,
-      "sheetId": "1akpSIbiSWMT5XahHoZnCZiCS_yFrBThkoI_Ltys2tGY",
-      "gid": "20261101",
-      "lastSyncTime": null
+      "sheetId": "1PWgTogFXPf7ZEJXQien75xOvXneDUr3VRUKReFpAEVo",
+      "gid": "177343943",
+      "lastSyncTime": "2026-11-19T08:51:34.805Z"
     },
     "candidates": {
       "W-1": [
@@ -8938,23 +8938,23 @@
         "electors": 1006,
         "polled_votes": 437,
         "votes": {
-          "c1": 0,
-          "c2": 0,
+          "c1": 400,
+          "c2": 30,
           "c3": 0,
           "c4": 0,
           "c5": 0,
-          "nota": 0,
-          "total": 0
+          "nota": 7,
+          "total": 437
         },
         "zp_votes": {
-          "c1": 0,
-          "c2": 0,
+          "c1": 400,
+          "c2": 30,
           "c3": 0,
           "c4": 0,
-          "nota": 0,
-          "total": 0
+          "nota": 7,
+          "total": 437
         },
-        "status": "PENDING",
+        "status": "COMPLETED",
         "remark": "",
         "ps_leader": null,
         "zp_leader": null
