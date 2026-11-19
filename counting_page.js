@@ -80,6 +80,8 @@ async function fetchCountingData(silent = false) {
                     selectedRound = data.kpi.activeRound;
                 }
                 renderAll();
+                saveLocalCountingSnapshot(data);
+                checkAndPromptLocalCountingRestore(data);
                 if (!silent) {
                     const syncTimeEl = document.getElementById('syncTimeText');
                     if (syncTimeEl) syncTimeEl.textContent = `अंतिम सिंक: ${new Date().toLocaleTimeString('en-IN')}`;
@@ -102,6 +104,8 @@ async function fetchCountingData(silent = false) {
                     selectedRound = data.kpi.activeRound;
                 }
                 renderAll();
+                saveLocalCountingSnapshot(data);
+                checkAndPromptLocalCountingRestore(data);
                 if (!silent) {
                     const syncTimeEl = document.getElementById('syncTimeText');
                     if (syncTimeEl) syncTimeEl.textContent = `GitHub Pages मोड • अंतिम सिंक: ${new Date().toLocaleTimeString('en-IN')}`;
@@ -4652,4 +4656,199 @@ function downloadOperatorWorkbook() {
     // Download File
     XLSX.writeFile(wb, 'Sumerpur_Counting_Operator_Master_Template_' + new Date().toISOString().slice(0, 10) + '.xlsx');
     showToast('मास्टर टेम्पलेट डाउनलोड सफल!', 'Sumerpur_Counting_Operator_Master_Template.xlsx सफलतापूर्वक डाउनलोड हो गया है।', 'success', 5000);
+}
+
+// =============================================================
+// CLOUD PERSISTENCE & AUTO-RESTORE SHIELD (RENDER.COM COMPATIBLE)
+// =============================================================
+
+function saveLocalCountingSnapshot(data) {
+    try {
+        if (!data || !data.slots) return;
+        const slots = Object.values(data.slots || {});
+        const hasVotes = slots.some(s => (s.votes && Number(s.votes.total) > 0) || (s.zp_votes && Number(s.zp_votes.total) > 0));
+        if (hasVotes) {
+            localStorage.setItem('sumerpur_counting_local_backup', JSON.stringify({
+                timestamp: new Date().toISOString(),
+                savedAtText: new Date().toLocaleTimeString('en-IN') + ' (' + new Date().toLocaleDateString('en-IN') + ')',
+                slotsCount: slots.length,
+                totalCounted: data.kpi ? data.kpi.totalCounted : 0,
+                slots: data.slots,
+                postalBallot: data.postalBallot || null
+            }));
+        }
+    } catch (e) {
+        console.warn('Could not save local counting backup to localStorage:', e);
+    }
+}
+
+function checkAndPromptLocalCountingRestore(currentData) {
+    try {
+        const raw = localStorage.getItem('sumerpur_counting_local_backup');
+        if (!raw) return;
+        const backup = JSON.parse(raw);
+        if (!backup || !backup.slots) return;
+
+        const currentSlots = Object.values(currentData.slots || {});
+        const currentHasVotes = currentSlots.some(s => (s.votes && Number(s.votes.total) > 0) || (s.zp_votes && Number(s.zp_votes.total) > 0));
+
+        // If server currently has 0 votes, but local backup has votes recorded
+        if (!currentHasVotes && backup.totalCounted > 0) {
+            showAutoRestoreNotificationBanner(backup);
+        }
+    } catch (e) {
+        console.warn('Error checking local backup restore:', e);
+    }
+}
+
+function showAutoRestoreNotificationBanner(backup) {
+    if (document.getElementById('renderRestoreBanner')) return;
+    const banner = document.createElement('div');
+    banner.id = 'renderRestoreBanner';
+    banner.style.cssText = 'position:fixed; top:70px; left:50%; transform:translateX(-50%); width:94%; max-width:850px; background:#fef2f2; border:2px solid #ef4444; border-radius:12px; padding:14px 20px; z-index:999999; box-shadow:0 12px 30px rgba(239,68,68,0.25); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; animation:slideDown 0.3s ease;';
+    banner.innerHTML = `
+        <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:280px;">
+            <div style="width:38px; height:38px; border-radius:50%; background:#fee2e2; color:#dc2626; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+            <div>
+                <div style="font-weight:900; font-size:14px; color:#991b1b;">⚠️ सर्वर रीस्टार्ट / डेटा रीसेट डिटेक्ट हुआ!</div>
+                <div style="font-size:12px; color:#b91c1c; margin-top:2px;">
+                    सर्वर पर मत 0 हैं, लेकिन आपके ब्राउज़र में सुरक्षित बैकअप उपलब्ध है (दर्ज मत: <b>${backup.totalCounted}</b> • समय: ${backup.savedAtText})।
+                </div>
+            </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+            <button onclick="restoreFromLocalSnapshot()" style="background:#dc2626; color:#ffffff; border:none; padding:8px 16px; border-radius:8px; font-weight:800; font-size:12.5px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+                <i class="fas fa-arrows-rotate"></i> तुरंत डेटा रीस्टोर करें
+            </button>
+            <button onclick="document.getElementById('renderRestoreBanner').remove()" style="background:#ffffff; color:#64748b; border:1px solid #cbd5e1; padding:8px 12px; border-radius:8px; font-weight:700; font-size:12px; cursor:pointer;">
+                खारिज करें
+            </button>
+        </div>
+    `;
+    document.body.appendChild(banner);
+}
+
+async function restoreFromLocalSnapshot() {
+    try {
+        const raw = localStorage.getItem('sumerpur_counting_local_backup');
+        if (!raw) return;
+        const backup = JSON.parse(raw);
+        showToast('डेटा रीस्टोर हो रहा है...', 'ब्राउज़र बैकअप से सर्वर पर डेटा भेजा जा रहा है...', 'info', 3000);
+
+        const res = await fetch('/api/restore', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                store: {
+                    counting: {
+                        slots: backup.slots,
+                        postalBallot: backup.postalBallot
+                    }
+                }
+            })
+        });
+        const result = await res.json();
+        if (result.success) {
+            showToast('सफलता!', 'डेटा सफलतापूर्वक सर्वर पर रीस्टोर हो गया!', 'success', 5000);
+            const banner = document.getElementById('renderRestoreBanner');
+            if (banner) banner.remove();
+            await fetchCountingData(true);
+        } else {
+            showToast('रीस्टोर विफल', result.message || 'त्रुटि हुई', 'error', 5000);
+        }
+    } catch (e) {
+        showToast('त्रुटि', e.message, 'error', 5000);
+    }
+}
+
+// Modal UI Handlers for Counting Page
+function openRestoreModal() {
+    const modal = document.getElementById('restoreModal');
+    if (modal) modal.style.display = 'flex';
+}
+function closeRestoreModal() {
+    const modal = document.getElementById('restoreModal');
+    if (modal) modal.style.display = 'none';
+}
+
+async function executeCountingRestore() {
+    const fileInput = document.getElementById('countingRestoreFile');
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        showToast('फ़ाइल चुनें', 'कृपया JSON बैकअप फ़ाइल का चयन करें।', 'warning', 4000);
+        return;
+    }
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        try {
+            const parsed = JSON.parse(e.target.result);
+            showToast('डेटा अपलोड हो रहा है...', 'सर्वर पर डेटा रीस्टोर किया जा रहा है...', 'info', 3000);
+            const res = await fetch('/api/restore', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ store: parsed })
+            });
+            const result = await res.json();
+            if (result.success) {
+                showToast('रीस्टोर सफल!', result.message, 'success', 5000);
+                closeRestoreModal();
+                await fetchCountingData(true);
+            } else {
+                showToast('रीस्टोर त्रुटि', result.message || 'अमान्य डेटा', 'error', 5000);
+            }
+        } catch (err) {
+            showToast('अमान्य JSON फ़ाइल', 'फ़ाइल को पार्स नहीं किया जा सका: ' + err.message, 'error', 5000);
+        }
+    };
+    reader.readAsText(file);
+}
+
+function openCloudPersistenceModal() {
+    const modal = document.getElementById('cloudPersistenceModal');
+    const content = document.getElementById('cloudModalContent');
+    if (modal) modal.style.display = 'flex';
+    if (content) {
+        content.innerHTML = '<i class="fas fa-spinner fa-spin"></i> स्थिति जांची जा रही है...';
+        fetch('/api/system-status')
+            .then(r => r.json())
+            .then(data => {
+                const p = data.persistence || {};
+                const isCloud = p.isMongoConnected;
+                content.innerHTML = `
+                    <div style="background:${isCloud ? '#f0fdf4' : '#fffbeb'}; border:1.5px solid ${isCloud ? '#86efac' : '#fde68a'}; border-radius:10px; padding:14px; margin-bottom:14px;">
+                        <div style="display:flex; align-items:center; gap:8px; font-weight:900; font-size:14px; color:${isCloud ? '#166534' : '#92400e'};">
+                            <i class="fas ${isCloud ? 'fa-circle-check' : 'fa-circle-exclamation'}" style="color:${isCloud ? '#16a34a' : '#f59e0b'};"></i>
+                            स्टोरेज मोड: ${isCloud ? 'MongoDB Atlas (क्लाउड सुरक्षित - परमानेंट)' : 'लोकल फ़ाइल मोड (Render पर स्लीप होने पर रीसेट हो सकता है)'}
+                        </div>
+                        <div style="font-size:12px; color:${isCloud ? '#15803d' : '#b45309'}; margin-top:4px;">
+                            अंतिम डेटा सुरक्षित समय: <b>${p.lastSaved ? new Date(p.lastSaved).toLocaleTimeString('en-IN') : 'अभी'}</b>
+                        </div>
+                    </div>
+
+                    ${isCloud ? `
+                        <p style="color:#166534; font-weight:600;">
+                            🎉 बधाई! आपका पोर्टल <b>MongoDB Atlas</b> से जुड़ा हुआ है। Render.com सर्वर स्लीप या रीस्टार्ट होने पर भी 1 भी वोट डिलीट नहीं होगा!
+                        </p>
+                    ` : `
+                        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-bottom:12px;">
+                            <b style="color:#0f172a;">Render.com पर डेटा सुरक्षित रखने के 3 आसान उपाय:</b>
+                            <ol style="margin:8px 0 0 18px; padding:0; font-size:12px; line-height:1.7; color:#475569;">
+                                <li><b>MongoDB Atlas (सर्वोत्तम):</b> Render Dashboard -> Environment Variables में <code>MONGODB_URI</code> जोड़ें (फ्री M0 क्लस्टर)।</li>
+                                <li><b>1-क्लिक बैकअप डाउनलोड:</b> हर राउंड के बाद नीचे दिए गए बटन से बैकअप JSON डाउनलोड करके अपने फोन/लैपटॉप पर रख लें।</li>
+                                <li><b>ब्राउज़र ऑटो-शील्ड:</b> आपके ब्राउज़र में डेटा का ऑटो-स्नैपशॉट रहता है; सर्वर रीस्टार्ट होने पर पोर्टल स्वतः 1-क्लिक रीस्टोर का विकल्प देगा।</li>
+                            </ol>
+                        </div>
+                    `}
+                `;
+            })
+            .catch(err => {
+                content.innerHTML = `<div style="color:#ef4444;">सर्वर से कनेक्ट करने में त्रुटि: ${err.message}</div>`;
+            });
+    }
+}
+function closeCloudPersistenceModal() {
+    const modal = document.getElementById('cloudPersistenceModal');
+    if (modal) modal.style.display = 'none';
 }

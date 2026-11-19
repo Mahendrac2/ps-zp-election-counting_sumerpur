@@ -189,6 +189,7 @@ function navigateTo(tab) {
     });
 
     if (liveData) renderCurrentTab();
+    if (tab === 'admin') checkCloudStatus();
 }
 
 function switchElectionDate(date) {
@@ -224,10 +225,91 @@ async function fetchData() {
             liveData = d;
             document.getElementById('syncStatusText').textContent = 'लाइव सिंक सक्रिय';
             renderCurrentTab();
+            savePollSnapshot(d);
+            checkPollRestore(d);
         }
     } catch (e) {
         document.getElementById('syncStatusText').textContent = 'ऑफ़लाइन / पुनः प्रयास...';
         console.warn('API error:', e);
+    }
+}
+
+function savePollSnapshot(data) {
+    try {
+        if (!data || !data.booths) return;
+        const totalVotes = data.kpi ? data.kpi.totalVotes : 0;
+        if (totalVotes > 0) {
+            localStorage.setItem('sumerpur_poll_local_backup_' + selectedDate, JSON.stringify({
+                date: selectedDate,
+                timestamp: new Date().toISOString(),
+                totalVotes: totalVotes,
+                booths: data.booths
+            }));
+        }
+    } catch (e) {}
+}
+
+function checkPollRestore(data) {
+    try {
+        const raw = localStorage.getItem('sumerpur_poll_local_backup_' + selectedDate);
+        if (!raw) return;
+        const backup = JSON.parse(raw);
+        const currentVotes = data.kpi ? data.kpi.totalVotes : 0;
+        if (currentVotes === 0 && backup.totalVotes > 0 && !document.getElementById('pollRestoreBanner')) {
+            const banner = document.createElement('div');
+            banner.id = 'pollRestoreBanner';
+            banner.style.cssText = 'position:fixed; top:70px; left:50%; transform:translateX(-50%); width:94%; max-width:850px; background:#fef2f2; border:2px solid #ef4444; border-radius:12px; padding:12px 18px; z-index:999999; box-shadow:0 12px 30px rgba(239,68,68,0.25); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;';
+            banner.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-triangle-exclamation" style="color:#dc2626; font-size:22px;"></i>
+                    <div>
+                        <b style="color:#991b1b; font-size:13px;">सर्वर रीस्टार्ट डिटेक्ट हुआ (मतदान डेटा शून्य है)।</b>
+                        <div style="font-size:12px; color:#b91c1c;">ब्राउज़र में कुल <b>${backup.totalVotes}</b> मतों का बैकअप मौजूद है।</div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="restorePollFromLocal('${selectedDate}')" style="background:#dc2626; color:#fff; border:none; padding:7px 14px; border-radius:6px; font-weight:800; font-size:12px; cursor:pointer;">
+                        तुरंत रिस्टोर करें
+                    </button>
+                    <button onclick="document.getElementById('pollRestoreBanner').remove()" style="background:#fff; color:#475569; border:1px solid #cbd5e1; padding:7px 10px; border-radius:6px; font-size:12px; cursor:pointer;">
+                        खारिज करें
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(banner);
+        }
+    } catch (e) {}
+}
+
+async function restorePollFromLocal(date) {
+    try {
+        const raw = localStorage.getItem('sumerpur_poll_local_backup_' + date);
+        if (!raw) return;
+        const backup = JSON.parse(raw);
+        const boothMap = {};
+        (backup.booths || []).forEach(b => {
+            boothMap[b.id] = b;
+        });
+        const res = await fetch('/api/restore', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                store: {
+                    dates: {
+                        [date]: boothMap
+                    }
+                }
+            })
+        });
+        const resData = await res.json();
+        if (resData.success) {
+            alert('डेटा सफलतापूर्वक रिस्टोर हो गया!');
+            const banner = document.getElementById('pollRestoreBanner');
+            if (banner) banner.remove();
+            fetchData();
+        }
+    } catch (e) {
+        alert('त्रुटि: ' + e.message);
     }
 }
 
@@ -2384,7 +2466,68 @@ async function resetElectionData() {
 }
 
 function downloadBackupJson() {
-    window.location.href = `/api/data?date=${selectedDate}`;
+    window.location.href = '/api/backup';
+}
+
+async function uploadAndRestoreBackup() {
+    const fileInput = document.getElementById('restoreFileInput');
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        alert('कृपया JSON बैकअप फ़ाइल का चयन करें।');
+        return;
+    }
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+        try {
+            const parsed = JSON.parse(e.target.result);
+            if (!confirm('क्या आप सुनिश्चित हैं कि इस बैकअप फ़ाइल से समस्त चुनाव एवं मतगणना डेटा पुनर्स्थापित (Restore) करना चाहते हैं?')) {
+                return;
+            }
+            showToast('डेटा रीस्टोर हो रहा है...', 'info');
+            const res = await fetch('/api/restore', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ store: parsed })
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert('सफलता: ' + data.message);
+                fetchData();
+            } else {
+                alert('त्रुटि: ' + (data.message || 'अमान्य डेटा'));
+            }
+        } catch (err) {
+            alert('अमान्य JSON बैकअप फ़ाइल: ' + err.message);
+        }
+    };
+    reader.readAsText(file);
+}
+
+async function checkCloudStatus() {
+    const badge = document.getElementById('cloudStatusBadge');
+    const desc = document.getElementById('cloudStatusDescText');
+    if (!badge || !desc) return;
+
+    try {
+        const res = await fetch('/api/system-status');
+        const data = await res.json();
+        const p = data.persistence || {};
+        if (p.isMongoConnected) {
+            badge.style.background = '#dcfce7';
+            badge.style.color = '#15803d';
+            badge.style.border = '1.5px solid #86efac';
+            badge.innerHTML = '<i class="fas fa-circle-check"></i> MongoDB Atlas सक्रिय (100% परमानेंट क्लाउड स्टोरेज)';
+            desc.innerHTML = `क्लाउड डेटाबेस से कनेक्टेड है। Render.com रीस्टार्ट या स्लीप होने पर भी डेटा पूरी तरह सुरक्षित रहेगा। अंतिम सेव: <b>${new Date(p.lastSaved).toLocaleTimeString('en-IN')}</b>`;
+        } else {
+            badge.style.background = '#fef3c7';
+            badge.style.color = '#92400e';
+            badge.style.border = '1.5px solid #fde68a';
+            badge.innerHTML = '<i class="fas fa-triangle-exclamation"></i> लोकल फ़ाइल स्टोरेज (Render फ्री टियर पर स्लीप होने पर रीसेट का जोखिम)';
+            desc.innerHTML = `सलाह: Render.com पर डेटा स्थायी रखने के लिए Environment Variables में <code>MONGODB_URI</code> जोड़ें, या ऊपर दिए गए <b>JSON बैकअप</b> का उपयोग करें।`;
+        }
+    } catch (e) {
+        badge.innerHTML = '<i class="fas fa-circle-xmark"></i> स्थिति अज्ञात';
+    }
 }
 
 // -------------------------------------------------------------

@@ -2,13 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const { MongoClient } = require('mongodb');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Load Master Data
@@ -18,6 +19,15 @@ const countingSvc = require('./counting_service');
 
 // Data Store File
 const DATA_STORE_PATH = path.join(__dirname, 'election_data_store.json');
+
+// MongoDB Cloud Persistence Variables
+let mongoClient = null;
+let mongoDb = null;
+let mongoCollection = null;
+let isMongoConnected = false;
+let lastSavedTimestamp = new Date().toISOString();
+let mongoSaveTimer = null;
+let githubSyncTimer = null;
 
 let store = {
   config: {
@@ -104,18 +114,154 @@ function loadStore() {
   initBoothsForDate('22-10-2026');
   initBoothsForDate('24-10-2026');
   countingSvc.initCounting(store, boothsMaster);
-  saveStore();
+  saveStoreLocal();
+}
+
+function saveStoreLocal() {
+  try {
+    fs.writeFileSync(DATA_STORE_PATH, JSON.stringify(store, null, 2), 'utf-8');
+    lastSavedTimestamp = new Date().toISOString();
+  } catch (e) {
+    console.error('Error saving store locally:', e);
+  }
 }
 
 function saveStore() {
+  saveStoreLocal();
+
+  // If MongoDB Atlas is connected, asynchronously persist
+  if (isMongoConnected && mongoCollection) {
+    if (mongoSaveTimer) clearTimeout(mongoSaveTimer);
+    mongoSaveTimer = setTimeout(async () => {
+      try {
+        await mongoCollection.updateOne(
+          { _id: 'sumerpur_election_2026' },
+          { $set: { data: store, updatedAt: new Date().toISOString() } },
+          { upsert: true }
+        );
+        // console.log('☁️ Synced state to MongoDB Atlas successfully.');
+      } catch (err) {
+        console.error('⚠️ Failed to sync state to MongoDB Atlas:', err.message);
+      }
+    }, 400);
+  }
+
+  // If GitHub Auto-Commit is configured, schedule sync
+  if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
+    scheduleGitHubSync();
+  }
+}
+
+// GitHub Auto-Backup via REST API (Keeps the git repository updated on Render)
+async function pushToGitHub() {
+  const token = process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO; // e.g. "Mahendrac2/ps-zp-election-counting_sumerpur"
+  const branch = process.env.GITHUB_BRANCH || 'main';
+  const filePath = 'election_data_store.json';
+
+  if (!token || !repo) return;
+
   try {
-    fs.writeFileSync(DATA_STORE_PATH, JSON.stringify(store, null, 2), 'utf-8');
-  } catch (e) {
-    console.error('Error saving store:', e);
+    const fileUrl = `https://api.github.com/repos/${repo}/contents/${filePath}?ref=${branch}`;
+    const getRes = await fetch(fileUrl, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Sumerpur-Election-Server'
+      }
+    });
+
+    let sha = undefined;
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    }
+
+    const contentBase64 = Buffer.from(JSON.stringify(store, null, 2), 'utf-8').toString('base64');
+    const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Sumerpur-Election-Server',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Auto-backup election data [${new Date().toLocaleTimeString('en-IN')}]`,
+        content: contentBase64,
+        sha: sha,
+        branch: branch
+      })
+    });
+
+    if (putRes.ok) {
+      console.log('🐙 Successfully backed up election data to GitHub repository!');
+    } else {
+      const errText = await putRes.text();
+      console.warn('⚠️ GitHub auto-backup failed:', putRes.status, errText);
+    }
+  } catch (err) {
+    console.error('⚠️ GitHub sync error:', err.message);
+  }
+}
+
+function scheduleGitHubSync() {
+  if (githubSyncTimer) return;
+  // Debounce to at most once every 60 seconds
+  githubSyncTimer = setTimeout(async () => {
+    githubSyncTimer = null;
+    await pushToGitHub();
+  }, 60000);
+}
+
+// Connect to MongoDB Atlas (Permanent Cloud Storage for Render.com)
+async function initMongoPersistence() {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    console.log('💾 Running in Local File Mode. (Tip: Set MONGODB_URI on Render.com for 100% permanent data preservation)');
+    return;
+  }
+
+  try {
+    console.log('🔄 Connecting to MongoDB Atlas...');
+    mongoClient = new MongoClient(uri, {
+      serverSelectionTimeoutMS: 8000,
+      connectTimeoutMS: 10000
+    });
+    await mongoClient.connect();
+    const dbName = process.env.MONGODB_DB_NAME || 'sumerpur_election_db';
+    mongoDb = mongoClient.db(dbName);
+    mongoCollection = mongoDb.collection('election_store');
+    isMongoConnected = true;
+    console.log(`✅ MongoDB Atlas connected successfully! (Database: ${dbName})`);
+
+    // Load latest data from cloud
+    const cloudDoc = await mongoCollection.findOne({ _id: 'sumerpur_election_2026' });
+    if (cloudDoc && cloudDoc.data) {
+      console.log(`☁️ Loaded persisted election data from MongoDB Atlas (Updated: ${cloudDoc.updatedAt || 'N/A'})`);
+      store = { ...store, ...cloudDoc.data };
+      initBoothsForDate('22-10-2026');
+      initBoothsForDate('24-10-2026');
+      countingSvc.initCounting(store, boothsMaster);
+      saveStoreLocal();
+      broadcastUpdate('INIT_FROM_CLOUD');
+    } else {
+      console.log('☁️ No cloud data found yet. Uploading initial state to MongoDB Atlas...');
+      await mongoCollection.updateOne(
+        { _id: 'sumerpur_election_2026' },
+        { $set: { data: store, updatedAt: new Date().toISOString() } },
+        { upsert: true }
+      );
+    }
+  } catch (err) {
+    isMongoConnected = false;
+    console.error('⚠️ Could not connect to MongoDB Atlas:', err.message);
+    console.log('⚠️ Continuing with local file storage.');
   }
 }
 
 loadStore();
+initMongoPersistence();
 
 // SSE (Server-Sent Events) Clients
 let sseClients = [];
@@ -1012,6 +1158,81 @@ app.get('/api/counting/export-booths-csv', (req, res) => {
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
   res.setHeader('Content-Disposition', 'attachment; filename=Sumerpur_EVM_152_Booths_Form17C.csv');
   res.send('\uFEFF' + csv);
+});
+
+// 18. BACKUP & RESTORE API ENDPOINTS (RENDER.COM DATA PERSISTENCE SHIELD)
+// GET /api/backup - Download complete current election state as a JSON file
+app.get('/api/backup', (req, res) => {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const filename = `sumerpur_election_backup_${timestamp}.json`;
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.send(JSON.stringify(store, null, 2));
+});
+
+// POST /api/restore - Upload / restore election state from a backup JSON object
+app.post('/api/restore', (req, res) => {
+  try {
+    let payload = req.body;
+    if (payload.store) payload = payload.store;
+
+    // Validate that payload has the necessary election structure
+    if (!payload || typeof payload !== 'object' || (!payload.dates && !payload.counting && !payload.config)) {
+      return res.status(400).json({
+        success: false,
+        error: 'INVALID_DATA',
+        message: 'अमान्य बैकअप डेटा! बैकअप फ़ाइल में dates, counting या config ऑब्जेक्ट होना आवश्यक है।'
+      });
+    }
+
+    // Deep merge into current store
+    store = {
+      ...store,
+      ...payload
+    };
+
+    initBoothsForDate('22-10-2026');
+    initBoothsForDate('24-10-2026');
+    countingSvc.initCounting(store, boothsMaster);
+
+    saveStore();
+    broadcastUpdate('RESTORE');
+
+    console.log(`📥 Election state successfully restored via API at ${new Date().toLocaleTimeString('en-IN')}`);
+    res.json({
+      success: true,
+      message: 'डेटा सफलतापूर्वक पुनर्स्थापित (Restore) हो गया! सभी स्क्रीन्स स्वतः अपडेट हो गई हैं।',
+      updatedAt: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('Error during data restore:', err);
+    res.status(500).json({ success: false, error: err.message, message: 'डेटा रिस्टोर करने में त्रुटि: ' + err.message });
+  }
+});
+
+// GET /api/system-status - Check Cloud Database and persistence status
+app.get('/api/system-status', (req, res) => {
+  res.json({
+    success: true,
+    persistence: {
+      isMongoConnected,
+      storageMode: isMongoConnected ? 'MONGODB_ATLAS (Cloud Safe)' : 'LOCAL_FILE (Caution: Ephemeral on Render without MONGODB_URI)',
+      hasGithubAutoBackup: Boolean(process.env.GITHUB_TOKEN && process.env.GITHUB_REPO),
+      lastSaved: lastSavedTimestamp
+    },
+    activeDate: store.config.activeDate,
+    totalBooths: boothsMaster.length,
+    activeSSE: sseClients.length
+  });
+});
+
+// POST /api/sync-github-now - Trigger immediate GitHub commit
+app.post('/api/sync-github-now', async (req, res) => {
+  if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REPO) {
+    return res.status(400).json({ success: false, message: 'GITHUB_TOKEN या GITHUB_REPO पर्यावरण चर (Environment Variables) सेट नहीं हैं।' });
+  }
+  await pushToGitHub();
+  res.json({ success: true, message: 'GitHub पर बैकअप कमिट करने का प्रयास किया गया।' });
 });
 
 // Dedicated Counting Page

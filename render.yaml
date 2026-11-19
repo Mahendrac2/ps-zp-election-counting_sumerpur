@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: sumerpur-election-counting
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/system-status
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB_NAME
+        value: sumerpur_election_db
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: GITHUB_REPO
+        value: Mahendrac2/ps-zp-election-counting_sumerpur

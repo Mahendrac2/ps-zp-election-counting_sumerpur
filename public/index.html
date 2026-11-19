@@ -1109,11 +1109,34 @@
                 </div>
 
                 <div style="background: #f8fafc; border: 1px solid var(--border); padding: 16px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 6px;"><i class="fas fa-download"></i> संपूर्ण डेटा बैकअप डाउनलोड करें</h4>
+                    <h4 style="margin: 0 0 6px;"><i class="fas fa-download"></i> संपूर्ण डेटा बैकअप डाउनलोड करें (JSON)</h4>
                     <p style="font-size: 12.5px; color: var(--text-muted); margin: 0 0 12px;">
-                        दर्ज किए गए समस्त मतों एवं लॉग्स का JSON बैकअप डाउनलोड करें।
+                        मतदान प्रगति, मतगणना के समस्त 14 राउंड, डाक मतपत्र, 152 बूथ एवं लॉग्स का पूर्ण JSON स्नैपशॉट डाउनलोड करें।
                     </p>
-                    <button class="btn-secondary" onclick="downloadBackupJson()"><i class="fas fa-file-code"></i> JSON स्नैपशॉट डाउनलोड</button>
+                    <button class="btn-secondary" onclick="downloadBackupJson()"><i class="fas fa-file-arrow-down"></i> संपूर्ण JSON बैकअप डाउनलोड करें</button>
+                </div>
+
+                <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 8px;">
+                    <h4 style="margin: 0 0 6px; color: #1e40af;"><i class="fas fa-upload"></i> बैकअप फ़ाइल से डेटा पुनर्स्थापित करें (Restore JSON)</h4>
+                    <p style="font-size: 12.5px; color: #1e3a8a; margin: 0 0 12px;">
+                        Render.com रीस्टार्ट होने या डेटा खाली होने पर, पहले डाउनलोड की गई JSON बैकअप फ़ाइल को यहाँ अपलोड करके 1-सेकंड में सब कुछ वापस लाएं।
+                    </p>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <input type="file" id="restoreFileInput" accept=".json" style="font-size: 13px; max-width: 280px;">
+                        <button class="btn-primary" style="background: #2563eb; border-color: #1d4ed8;" onclick="uploadAndRestoreBackup()">
+                            <i class="fas fa-arrows-rotate"></i> डेटा रीस्टोर करें
+                        </button>
+                    </div>
+                </div>
+
+                <div id="cloudPersistenceStatusBox" style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 16px; border-radius: 8px;">
+                    <h4 style="margin: 0 0 6px; color: #166534;"><i class="fas fa-cloud"></i> Render.com क्लाउड स्टोरेज सुरक्षा स्थिति</h4>
+                    <p style="font-size: 12.5px; color: #15803d; margin: 0 0 8px;" id="cloudStatusDescText">
+                        जाँच की जा रही है...
+                    </p>
+                    <div id="cloudStatusBadge" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-weight: 800; font-size: 12.5px;">
+                        <i class="fas fa-spinner fa-spin"></i> लोड हो रहा है...
+                    </div>
                 </div>
 
                 <div style="background: #fef2f2; border: 1px solid #fecaca; padding: 16px; border-radius: 8px;">
