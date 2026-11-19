@@ -773,26 +773,34 @@ function processCountingSheetRows(rows, counting, boothsMaster) {
 
     if (targetSlot) {
       // PS Votes
-      const c1 = colPsC1 !== -1 ? cleanNum(row[colPsC1]) : targetSlot.votes.c1;
-      const c2 = colPsC2 !== -1 ? cleanNum(row[colPsC2]) : targetSlot.votes.c2;
-      const c3 = colPsC3 !== -1 ? cleanNum(row[colPsC3]) : targetSlot.votes.c3;
-      const c4 = colPsC4 !== -1 ? cleanNum(row[colPsC4]) : targetSlot.votes.c4;
-      const c5 = colPsC5 !== -1 ? cleanNum(row[colPsC5]) : targetSlot.votes.c5;
-      const nota = colPsNota !== -1 ? cleanNum(row[colPsNota]) : targetSlot.votes.nota;
+      const c1 = colPsC1 !== -1 ? cleanNum(row[colPsC1]) : 0;
+      const c2 = colPsC2 !== -1 ? cleanNum(row[colPsC2]) : 0;
+      const c3 = colPsC3 !== -1 ? cleanNum(row[colPsC3]) : 0;
+      const c4 = colPsC4 !== -1 ? cleanNum(row[colPsC4]) : 0;
+      const c5 = colPsC5 !== -1 ? cleanNum(row[colPsC5]) : 0;
+      const nota = colPsNota !== -1 ? cleanNum(row[colPsNota]) : 0;
       let psTot = c1 + c2 + c3 + c4 + c5 + nota;
       if (psTot === 0 && colPsTotal !== -1) psTot = cleanNum(row[colPsTotal]);
 
-      targetSlot.votes = { c1, c2, c3, c4, c5, nota, total: psTot };
-
       // ZP Votes
-      const zc1 = colZpC1 !== -1 ? cleanNum(row[colZpC1]) : targetSlot.zp_votes.c1;
-      const zc2 = colZpC2 !== -1 ? cleanNum(row[colZpC2]) : targetSlot.zp_votes.c2;
-      const zc3 = colZpC3 !== -1 ? cleanNum(row[colZpC3]) : targetSlot.zp_votes.c3;
-      const zc4 = colZpC4 !== -1 ? cleanNum(row[colZpC4]) : targetSlot.zp_votes.c4;
-      const znota = colZpNota !== -1 ? cleanNum(row[colZpNota]) : targetSlot.zp_votes.nota;
+      const zc1 = colZpC1 !== -1 ? cleanNum(row[colZpC1]) : 0;
+      const zc2 = colZpC2 !== -1 ? cleanNum(row[colZpC2]) : 0;
+      const zc3 = colZpC3 !== -1 ? cleanNum(row[colZpC3]) : 0;
+      const zc4 = colZpC4 !== -1 ? cleanNum(row[colZpC4]) : 0;
+      const znota = colZpNota !== -1 ? cleanNum(row[colZpNota]) : 0;
       let zpTot = zc1 + zc2 + zc3 + zc4 + znota;
       if (zpTot === 0 && colZpTotal !== -1) zpTot = cleanNum(row[colZpTotal]);
 
+      // SMART DATA PROTECTION: If Google Sheet row is completely blank (0 votes),
+      // but this table was already entered manually on the portal, DO NOT wipe it out!
+      const existingPsTot = Number(targetSlot.votes?.total) || 0;
+      const existingZpTot = Number(targetSlot.zp_votes?.total) || 0;
+      if (psTot === 0 && zpTot === 0 && (existingPsTot > 0 || existingZpTot > 0 || targetSlot.status === 'COMPLETED')) {
+        // Keep portal manual entry safe!
+        continue;
+      }
+
+      targetSlot.votes = { c1, c2, c3, c4, c5, nota, total: psTot };
       targetSlot.zp_votes = { c1: zc1, c2: zc2, c3: zc3, c4: zc4, nota: znota, total: zpTot };
 
       if (psTot > 0 || zpTot > 0) targetSlot.status = 'COMPLETED';
