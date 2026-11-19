@@ -897,7 +897,7 @@ function runMockSimulation(counting, action) {
   let simulatedCount = 0;
   Object.values(slots).forEach(s => {
     if (targetRounds.includes(s.round)) {
-      const polled = Number(s.polled_votes) || 0;
+      const polled = Number(s.polled_votes) > 0 ? Number(s.polled_votes) : (Math.round((Number(s.electors) || 800) * 0.52) || 450);
       
       // PS candidates
       const psList = (psCandidates[s.ps_ward] || []);

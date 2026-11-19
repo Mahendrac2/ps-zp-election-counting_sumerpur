@@ -375,6 +375,8 @@ function renderActiveTab() {
     else if (activeSubtab === 'zp_wards') renderZPWardsView();
     else if (activeSubtab === 'master_matrix') renderMasterMatrixView();
     else if (activeSubtab === 'manual_entry') renderManualEntryView();
+    else if (activeSubtab === 'postal_ballot') renderPostalBallotView();
+    else if (activeSubtab === 'official_reports') renderReportsTab();
     else if (activeSubtab === 'bulletin') renderBulletinView();
 }
 
